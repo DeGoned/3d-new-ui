@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Shopping Cart | ProtoTi</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.01em;
+      background-color: #f8fafc;
+    }
+    @keyframes modal-scale-in {
+      from { opacity: 0; transform: scale(0.94) translateY(6px); }
+      to   { opacity: 1; transform: scale(1)    translateY(0); }
+    }
+    .modal-scale-in {
+      animation: modal-scale-in 0.18s cubic-bezier(0.34, 1.36, 0.64, 1) both;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#0052cc",
+            "primary-hover": "#003ea3",
+            "primary-container": "#e8f0ff",
+            background: "#f8fafc",
+            outline: "#e2e8f0",
+            "on-background": "#0f172a",
+            "on-surface-variant": "#64748b"
+          },
+          borderRadius: {
+            DEFAULT: "0.5rem",
+            lg: "0.75rem",
+            xl: "1rem",
+            full: "9999px"
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+  <div class="fixed top-0 w-full z-50 bg-[#0060fe] text-white text-sm h-10 flex items-center">
+    <div class="flex justify-between items-center w-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+      <div class="flex items-center gap-6">
+        <a href="tel:+8618126397112" class="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+          <span class="material-symbols-outlined text-sm">call</span>
+          <span>+86 18126397112</span>
+        </a>
+        <a href="mailto:hello@prototi.com" class="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+          <span class="material-symbols-outlined text-sm">mail</span>
+          <span>hello@prototi.com</span>
+        </a>
+      </div>
+      <a href="#" class="hidden md:flex items-center gap-2 px-4 py-1 border border-white/60 rounded-full text-xs font-semibold hover:bg-white/10 transition-colors">
+        🎉 2026 Chinese New Year Holiday & ProtoTi Shipping Schedule
+      </a>
+    </div>
+  </div>
+
+  <nav class="fixed top-10 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-slate-200/70 shadow-[0_2px_15px_rgba(0,0,0,0.03)] h-16">
+    <div class="flex justify-between items-center h-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+      <div class="flex items-center gap-5">
+        <a href="/home-v3.html" class="flex items-center shrink-0">
+          <img src="/logo.svg" alt="ProtoTi" class="h-7" />
+        </a>
+        <a href="/quote-manage.html" class="inline-flex items-center gap-2 px-5 py-2 bg-[#0060fe] text-white text-sm font-bold rounded-full hover:brightness-110 active:scale-95 transition-all shadow-sm shadow-[#0060fe]/30">
+          <span class="material-symbols-outlined text-sm">bolt</span>
+          Instant Quote
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="/cart.html" class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          <span class="hidden lg:inline text-sm font-semibold">Cart</span>
+        </a>
+        <div class="relative pb-2 -mb-2" id="user-menu-wrapper">
+          <button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer" id="user-avatar-btn">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span class="hidden lg:inline text-sm font-semibold">hongxin hong</span>
+          </button>
+          <div class="absolute right-0 top-full pt-1 w-44 opacity-0 pointer-events-none translate-y-1 transition-all duration-200 z-50" id="user-dropdown">
+            <div class="bg-white border border-slate-200 rounded-xl shadow-lg py-1">
+              <a href="/" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                <span class="material-symbols-outlined text-[18px] text-slate-400">person</span>
+                Personal Center
+              </a>
+              <div class="my-1 border-t border-slate-100"></div>
+              <a href="/login.html" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
+                <span class="material-symbols-outlined text-[18px]">logout</span>
+                Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mt-[6.5rem] border-y border-amber-200/80 bg-amber-50/80 text-amber-900">
+    <div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 text-sm font-medium">
+        <span class="material-symbols-outlined text-[18px] text-amber-500">error</span>
+        <span>Important: Cart items are retained for 30 days maximum</span>
+      </div>
+      <button id="dismiss-notice" class="text-amber-500 hover:text-amber-700 transition-colors">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+      </button>
+    </div>
+  </div>
+
+  <main class="flex-1 px-8 lg:px-12 xl:px-14 py-10 max-w-[1620px] mx-auto w-full">
+    <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_430px] gap-8 items-start">
+      <section class="bg-white rounded-xl border border-slate-200 shadow-sm p-8 space-y-8">
+        <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div class="flex items-center gap-3">
+            <input id="select-all-cart-items" type="checkbox" checked aria-label="Select all cart items" class="h-5 w-5 shrink-0 cursor-pointer self-center rounded-[6px] border-slate-300 text-primary focus:ring-primary" />
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900">Shopping Cart</h1>
+          </div>
+          <div class="text-sm text-slate-500 md:text-right">
+            <p>4 cart items &nbsp; / &nbsp; 5 total parts</p>
+          </div>
+        </div>
+
+        <article class="border-t border-slate-200 pt-10">
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="flex items-center justify-center w-6 shrink-0">
+                <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
+              </div>
+              <div class="flex-1 grid grid-cols-12 gap-3 items-center">
+                <div class="col-span-4 flex items-center gap-3 pl-2">
+                  <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" data-preview-title="90101001-Exhaust-Manifold-Tubing-rev-.step">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" alt="90101001-Exhaust-Manifold-Tubing-rev-.step" class="w-full h-full object-contain" />
+                  </button>
+                  <div class="flex flex-col gap-1 min-w-0">
+                    <h2 class="font-bold text-sm text-slate-900 break-words">90101001-Exhaust-Manifold-Tubing-rev-.step</h2>
+                    <p class="text-[10px] text-slate-500 font-medium">303.14 × 156.77 × 102.27 mm</p>
+                    <p class="text-[10px] text-slate-500 font-medium">185468.61 mm³ | 163195.11 mm²</p>
+                  </div>
+                </div>
+                <div class="col-span-3 flex flex-col gap-1 min-w-0">
+                  <p class="text-xs font-bold text-slate-900">Material: 1.2 SLM - Stainless Steel 316L - $$$</p>
+                  <p class="text-[10px] text-slate-500">Color: Metallic Gray</p>
+                  <p class="text-[10px] text-slate-500">Post Process: Sand Blasted - Matte</p>
+                  <p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
+                  <p class="text-[10px] text-slate-500">Tolerance: ISO 2768-m</p>
+                  <p class="text-[10px] text-slate-500">Surface Class: Standard Production</p>
+                </div>
+                <div class="col-span-1 flex justify-center">
+                  <input type="number" value="1" min="1" class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                </div>
+                <div class="col-span-2 flex flex-col items-center justify-center text-center">
+                  <p class="text-base font-bold text-primary">$215.33</p>
+                  <p class="mt-0.5 text-[11px] font-medium text-slate-400">$215.33/piece</p>
+                  <p class="mt-0.5 text-[10px] font-medium text-slate-500">Est. 3-5 Days</p>
+                </div>
+                <div class="col-span-2 flex items-center justify-end border-l border-slate-100 pl-2 pr-4 min-w-0">
+                  <button data-delete-btn class="inline-flex items-center gap-1 text-[10px] font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:-translate-y-0.5">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                    </svg>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+              <div>
+                <label class="mb-2 block text-[11px] font-medium text-slate-500">Notes</label>
+                <div class="relative">
+                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
+                  <span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
+                </div>
+              </div>
+              <div>
+                <div class="mb-2 flex items-center gap-4 text-[11px]">
+                  <label class="font-medium text-slate-500">Attachments</label>
+                  <button class="font-semibold text-primary hover:underline">Upload</button>
+                </div>
+                <div class="h-[62px] rounded-lg border border-slate-200 bg-slate-50 px-4 flex items-center text-xs text-slate-400">
+                  No attachments
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="border-t border-slate-200 pt-10">
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="flex items-center justify-center w-6 shrink-0">
+                <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
+              </div>
+              <div class="flex-1 grid grid-cols-12 gap-3 items-center">
+                <div class="col-span-4 flex items-center gap-3 pl-2">
+                  <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" data-preview-title="FUEL RAIL SECONDARY.stp">
+                    <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" alt="FUEL RAIL SECONDARY.stp" class="w-full h-full object-contain" />
+                  </button>
+                  <div class="flex flex-col gap-1 min-w-0">
+                    <h2 class="font-bold text-sm text-slate-900 break-words">FUEL RAIL SECONDARY.stp</h2>
+                    <p class="text-[10px] text-slate-500 font-medium">240.00 × 34.00 × 62.00 mm</p>
+                    <p class="text-[10px] text-slate-500 font-medium">52891.68 mm³ | 41350.53 mm²</p>
+                  </div>
+                </div>
+                <div class="col-span-3 flex flex-col gap-1 min-w-0">
+                  <p class="text-xs font-bold text-slate-900">Material: 1.2 SLM - Stainless Steel 316L - $$$</p>
+                  <p class="text-[10px] text-slate-500">Color: Metallic Gray</p>
+                  <p class="text-[10px] text-slate-500">Post Process: Sand Blasted - Matte</p>
+                  <p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
+                  <p class="text-[10px] text-slate-500">Tolerance: ISO 2768-m</p>
+                  <p class="text-[10px] text-slate-500">Surface Class: Sealing Faces Protected</p>
+                </div>
+                <div class="col-span-1 flex justify-center">
+                  <input type="number" value="1" min="1" class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                </div>
+                <div class="col-span-2 flex flex-col items-center justify-center text-center">
+                  <p class="text-base font-bold text-primary">$59.00</p>
+                  <p class="mt-0.5 text-[11px] font-medium text-slate-400">$59.00/piece</p>
+                  <p class="mt-0.5 text-[10px] font-medium text-slate-500">Est. 3-5 Days</p>
+                </div>
+                <div class="col-span-2 flex items-center justify-end border-l border-slate-100 pl-2 pr-4 min-w-0">
+                  <button data-delete-btn class="inline-flex items-center gap-1 text-[10px] font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:-translate-y-0.5">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                    </svg>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+              <div>
+                <label class="mb-2 block text-[11px] font-medium text-slate-500">Notes</label>
+                <div class="relative">
+                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
+                  <span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
+                </div>
+              </div>
+              <div>
+                <div class="mb-2 flex items-center gap-4 text-[11px]">
+                  <label class="font-medium text-slate-500">Attachments</label>
+                  <button class="font-semibold text-primary hover:underline">Upload</button>
+                </div>
+                <div class="h-[62px] rounded-lg border border-slate-200 bg-slate-50 px-4 flex items-center text-xs text-slate-400">
+                  No attachments
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="border-t border-slate-200 pt-10">
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="flex items-center justify-center w-6 shrink-0">
+                <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
+              </div>
+              <div class="flex-1 grid grid-cols-12 gap-3 items-center">
+                <div class="col-span-4 flex items-center gap-3 pl-2">
+                  <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" data-preview-title="Turbo_Valve_Housing_A.stl">
+                    <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" alt="Turbo_Valve_Housing_A.stl" class="w-full h-full object-contain" />
+                  </button>
+                  <div class="flex flex-col gap-1 min-w-0">
+                    <h2 class="font-bold text-sm text-slate-900 break-words">Turbo_Valve_Housing_A.stl</h2>
+                    <p class="text-[10px] text-slate-500 font-medium">180.60 × 122.40 × 76.30 mm</p>
+                    <p class="text-[10px] text-slate-500 font-medium">84210.88 mm³ | 61244.19 mm²</p>
+                  </div>
+                </div>
+                <div class="col-span-3 flex flex-col gap-1 min-w-0">
+                  <p class="text-xs font-bold text-slate-900">Material: AlSi10Mg - Natural Silver - $$</p>
+                  <p class="text-[10px] text-slate-500">Color: Natural Silver</p>
+                  <p class="text-[10px] text-slate-500">Post Process: Bead Blasted</p>
+                  <p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
+                  <p class="text-[10px] text-slate-500">Tolerance: ISO 2768-f</p>
+                  <p class="text-[10px] text-slate-500">Surface Class: Standard Structural</p>
+                </div>
+                <div class="col-span-1 flex justify-center">
+                  <input type="number" value="2" min="1" class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                </div>
+                <div class="col-span-2 flex flex-col items-center justify-center text-center">
+                  <p class="text-base font-bold text-primary">$132.40</p>
+                  <p class="mt-0.5 text-[11px] font-medium text-slate-400">$66.20/piece</p>
+                  <p class="mt-0.5 text-[10px] font-medium text-slate-500">Est. 4-6 Days</p>
+                </div>
+                <div class="col-span-2 flex items-center justify-end border-l border-slate-100 pl-2 pr-4 min-w-0">
+                  <button data-delete-btn class="inline-flex items-center gap-1 text-[10px] font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:-translate-y-0.5">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                    </svg>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+              <div>
+                <label class="mb-2 block text-[11px] font-medium text-slate-500">Notes</label>
+                <div class="relative">
+                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
+                  <span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
+                </div>
+              </div>
+              <div>
+                <div class="mb-2 flex items-center gap-4 text-[11px]">
+                  <label class="font-medium text-slate-500">Attachments</label>
+                  <button class="font-semibold text-primary hover:underline">Upload</button>
+                </div>
+                <div class="h-[62px] rounded-lg border border-slate-200 bg-slate-50 px-4 flex items-center text-xs text-slate-400">
+                  No attachments
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="border-t border-slate-200 pt-10">
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="flex items-center justify-center w-6 shrink-0">
+                <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
+              </div>
+              <div class="flex-1 grid grid-cols-12 gap-3 items-center">
+                <div class="col-span-4 flex items-center gap-3 pl-2">
+                  <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" data-preview-title="Cooling_Manifold_Beta.step">
+                    <img src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" alt="Cooling_Manifold_Beta.step" class="w-full h-full object-contain" />
+                  </button>
+                  <div class="flex flex-col gap-1 min-w-0">
+                    <h2 class="font-bold text-sm text-slate-900 break-words">Cooling_Manifold_Beta.step</h2>
+                    <p class="text-[10px] text-slate-500 font-medium">128.20 × 95.70 × 64.10 mm</p>
+                    <p class="text-[10px] text-slate-500 font-medium">61220.30 mm³ | 44882.64 mm²</p>
+                  </div>
+                </div>
+                <div class="col-span-3 flex flex-col gap-1 min-w-0">
+                  <p class="text-xs font-bold text-slate-900">Material: Titanium Ti64 - Raw Finish - $$$$</p>
+                  <p class="text-[10px] text-slate-500">Color: Raw Metallic</p>
+                  <p class="text-[10px] text-slate-500">Post Process: Support Removal + QC</p>
+                  <p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
+                  <p class="text-[10px] text-slate-500">Tolerance: ISO 2768-f</p>
+                  <p class="text-[10px] text-slate-500">Surface Class: Pressure-Test Ready</p>
+                  <p class="text-[10px] text-slate-500">Layer Height: 40μm</p>
+                  <p class="text-[10px] text-slate-500">Heat Treatment: Stress Relief</p>
+                  <p class="text-[10px] text-slate-500">Build Orientation: Critical Face Up</p>
+                  <p class="text-[10px] text-slate-500">Support Strategy: Dense Internal Supports</p>
+                  <p class="text-[10px] text-slate-500">Inspection: CMM + Visual QC</p>
+                  <p class="text-[10px] text-slate-500">Surface Roughness Target: Ra 6.3</p>
+                  <p class="text-[10px] text-slate-500">Packaging: Vacuum Bag + Foam Protection</p>
+                </div>
+                <div class="col-span-1 flex justify-center">
+                  <input type="number" value="1" min="1" class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                </div>
+                <div class="col-span-2 flex flex-col items-center justify-center text-center">
+                  <p class="text-base font-bold text-primary">$188.90</p>
+                  <p class="mt-0.5 text-[11px] font-medium text-slate-400">$188.90/piece</p>
+                  <p class="mt-0.5 text-[10px] font-medium text-slate-500">Est. 5-7 Days</p>
+                </div>
+                <div class="col-span-2 flex items-center justify-end border-l border-slate-100 pl-2 pr-4 min-w-0">
+                  <button data-delete-btn class="inline-flex items-center gap-1 text-[10px] font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:-translate-y-0.5">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                    </svg>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+              <div>
+                <label class="mb-2 block text-[11px] font-medium text-slate-500">Notes</label>
+                <div class="relative">
+                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
+                  <span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
+                </div>
+              </div>
+              <div>
+                <div class="mb-2 flex items-center gap-4 text-[11px]">
+                  <label class="font-medium text-slate-500">Attachments</label>
+                  <button class="font-semibold text-primary hover:underline">Upload</button>
+                </div>
+                <div class="h-[62px] rounded-lg border border-slate-200 bg-slate-50 px-4 flex items-center text-xs text-slate-400">
+                  No attachments
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <aside class="space-y-6">
+        <section class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-6">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Address</h3>
+              <button class="text-[10px] font-bold tracking-[0.08em] text-primary hover:underline">+ Add New</button>
+            </div>
+            <div class="relative">
+              <select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
+                <option>1212 123 (Default)</option>
+                <option>Main Warehouse - Building 4</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                <span class="material-symbols-outlined text-lg">expand_more</span>
+              </div>
+            </div>
+            <div class="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-100 relative">
+              <button class="absolute top-4 right-4 text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary text-xl mt-0.5">location_on</span>
+                <div class="text-[11px] text-slate-600 leading-relaxed">
+                  <p class="font-bold text-slate-900">1212 123 <span class="text-primary ml-1">Default</span></p>
+                  <p>Company: 123, Tax ID: 123</p>
+                  <p>123123, kriseooooooo@gmail.com</p>
+                  <p>12312, 123</p>
+                  <p>12312, 123, 123123, Germany</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="mb-4 text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Method</h3>
+            <div class="relative mb-4">
+              <select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
+                <option>Tariff-Free Shipping</option>
+                <option>Express Air (2-3 Days)</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                <span class="material-symbols-outlined text-lg">expand_more</span>
+              </div>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+              <div class="flex justify-between items-start mb-2 gap-4">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-slate-600">local_shipping</span>
+                  <span class="text-xs font-bold text-slate-900">Tariff-Free Shipping</span>
+                </div>
+                <span class="bg-blue-100 text-primary text-[9px] font-bold px-2 py-0.5 rounded-sm">5-7 Business Days</span>
+              </div>
+              <p class="text-[10px] text-slate-500">Carrier: Occasionally Delayed Due to Customs Inspection!</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+          <h2 class="mb-1 text-sm font-bold tracking-[0.08em] text-slate-900">Order Summary</h2>
+          <div class="space-y-4 mt-6">
+            <div class="flex justify-between text-sm gap-4">
+              <span class="text-slate-500">Estimated Production</span>
+              <span class="font-medium text-slate-900 text-right">3-5 business days</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-slate-500">Shipping Fee</span>
+              <span class="font-medium text-slate-900">$65.00</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-slate-500">Subtotal (4 order items)</span>
+              <span class="font-medium text-slate-900">$595.63</span>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex justify-between items-center">
+              <span class="text-lg font-bold text-slate-900">Total</span>
+              <span class="text-3xl font-bold text-primary">$660.63</span>
+            </div>
+          </div>
+          <div class="mt-8 flex flex-col gap-3">
+            <a href="/order-confirmation.html" class="w-full rounded-lg bg-primary py-4 text-center text-sm font-bold tracking-[0.04em] text-white transition-all hover:brightness-110 shadow-md shadow-primary/20">
+              Proceed to Checkout
+            </a>
+            <a href="/quote-manage.html" class="w-full rounded-lg border border-slate-200 bg-white py-4 text-center text-sm font-bold tracking-[0.04em] text-slate-900 transition-all hover:bg-slate-50">
+              Continue Editing
+            </a>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="mt-auto bg-white border-t border-slate-200 pt-12 pb-6">
+    <div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div>
+        <img src="/logo.svg" alt="ProtoTi" class="h-10 mb-4" />
+        <p class="text-sm text-slate-500">Shenzhen ProtoTi Technology Co., LTD</p>
+        <p class="text-sm text-slate-400 mt-1">User Name: kriseoooooo@gmail.com</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-slate-800 mb-4">Contact</h4>
+        <p class="text-sm text-slate-500 flex items-center gap-2 mb-2">
+          <span class="material-symbols-outlined text-sm">call</span> Phone: +86 18126397112
+        </p>
+        <p class="text-sm text-slate-500 flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">mail</span> Email: hello@prototi.com
+        </p>
+      </div>
+      <div>
+        <div class="md:max-w-[332px] md:ml-auto">
+          <h4 class="font-bold text-slate-800 mb-4">Office</h4>
+          <p class="text-sm text-slate-500 flex items-start gap-2">
+            <span class="material-symbols-outlined text-sm mt-0.5">location_on</span>
+            Address: 8th Floor, Biaofan Technology Building, Tower C, No.6 Gongye Road, Baoan, Shenzhen, China, 518104
+          </p>
+          <div class="mt-6 flex items-center gap-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/200px-MasterCard_Logo.svg.png" alt="Mastercard" class="h-6 object-contain" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa" class="h-5 object-contain" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/200px-PayPal.svg.png" alt="PayPal" class="h-5 object-contain" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 mt-8 pt-6 border-t border-slate-100">
+      <p class="text-sm text-slate-400 text-center">© 2018-2025 ProtoTi. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteConfirmModal" class="fixed inset-0 z-[130] hidden items-center justify-center px-4 backdrop-blur-sm bg-slate-950/40">
+    <div class="absolute inset-0" id="deleteModalBackdrop"></div>
+    <div class="modal-scale-in relative z-10 w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <div class="p-6">
+        <!-- Header -->
+        <div class="flex items-center gap-3 mb-5">
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-50 border border-amber-100">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </div>
+          <h3 class="text-base font-bold tracking-tight text-slate-900">Remove from Cart</h3>
+        </div>
+        <!-- Body -->
+        <div class="space-y-2 pl-[52px] mb-7">
+          <p class="text-sm font-medium text-slate-800">Are you sure you want to delete <span id="deleteItemName" class="font-bold break-all"></span>?</p>
+          <p class="text-sm text-slate-400 leading-relaxed">Are you sure you want to remove this item from your cart?</p>
+        </div>
+        <!-- Buttons -->
+        <div class="flex items-center justify-end gap-2.5">
+          <button id="deleteCancelBtn" type="button" class="px-5 py-2 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all duration-150 active:scale-95">
+            Cancel
+          </button>
+          <button id="deleteConfirmBtn" type="button" class="px-5 py-2 text-sm font-semibold text-red-500 bg-white border border-slate-200 rounded-xl hover:bg-red-50 hover:border-red-300 hover:text-red-600 transition-all duration-150 active:scale-95">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modelPreviewModal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-slate-950/55 px-3 py-4 backdrop-blur-sm sm:px-6 sm:py-8">
+    <div class="absolute inset-0" data-model-preview-close></div>
+    <div class="relative z-10 flex h-[92vh] w-full max-w-[min(96vw,1920px)] flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-2xl">
+      <div class="flex items-center justify-between gap-4 border-b border-slate-200 px-5 py-4 sm:px-6">
+        <h3 id="modelPreviewTitle" class="text-xl font-medium tracking-tight text-slate-900 sm:text-[1.95rem]">3D Preview</h3>
+        <button type="button" class="inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900" data-model-preview-close>
+          <span class="material-symbols-outlined text-[22px]">close</span>
+        </button>
+      </div>
+      <div id="modelPreviewStage" class="flex-1 p-3 sm:p-4 [perspective:1600px] cursor-grab active:cursor-grabbing">
+        <div class="flex h-full items-center justify-center overflow-hidden rounded-[1.5rem] bg-slate-50">
+          <img id="modelPreviewImage" src="" alt="Model preview" class="pointer-events-none max-h-full max-w-full object-contain select-none drop-shadow-[0_28px_80px_rgba(15,23,42,0.18)] transition-transform duration-75" referrerpolicy="no-referrer" draggable="false" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropdown = document.getElementById('user-dropdown');
+      const wrapper = document.getElementById('user-menu-wrapper');
+      const dismissNotice = document.getElementById('dismiss-notice');
+      const selectAllCartItems = document.getElementById('select-all-cart-items');
+      const cartItemCheckboxes = Array.from(document.querySelectorAll('[data-cart-item-checkbox]'));
+      const modelPreviewModal = document.getElementById('modelPreviewModal');
+      const modelPreviewImage = document.getElementById('modelPreviewImage');
+      const modelPreviewTitle = document.getElementById('modelPreviewTitle');
+      const modelPreviewStage = document.getElementById('modelPreviewStage');
+      const modelPreviewTriggers = document.querySelectorAll('[data-model-preview-trigger]');
+      const modelPreviewCloseTargets = document.querySelectorAll('[data-model-preview-close]');
+      let previewScale = 1;
+      let previewRotateX = -8;
+      let previewRotateY = 18;
+      let isPreviewDragging = false;
+      let previewPointerX = 0;
+      let previewPointerY = 0;
+
+      if (dropdown && wrapper) {
+        wrapper.addEventListener('mouseenter', () => {
+          dropdown.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-1');
+          dropdown.classList.add('opacity-100', 'translate-y-0');
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+          dropdown.classList.add('opacity-0', 'pointer-events-none', 'translate-y-1');
+          dropdown.classList.remove('opacity-100', 'translate-y-0');
+        });
+      }
+
+      if (dismissNotice) {
+        dismissNotice.addEventListener('click', () => {
+          dismissNotice.closest('div.border-y')?.remove();
+        });
+      }
+
+      if (selectAllCartItems && cartItemCheckboxes.length) {
+        const syncSelectAllState = () => {
+          const checkedCount = cartItemCheckboxes.filter((checkbox) => checkbox.checked).length;
+          selectAllCartItems.checked = checkedCount === cartItemCheckboxes.length;
+          selectAllCartItems.indeterminate = checkedCount > 0 && checkedCount < cartItemCheckboxes.length;
+        };
+
+        selectAllCartItems.addEventListener('change', () => {
+          cartItemCheckboxes.forEach((checkbox) => {
+            checkbox.checked = selectAllCartItems.checked;
+          });
+          selectAllCartItems.indeterminate = false;
+        });
+
+        cartItemCheckboxes.forEach((checkbox) => {
+          checkbox.addEventListener('change', syncSelectAllState);
+        });
+
+        syncSelectAllState();
+      }
+
+      function applyModelPreviewTransform() {
+        if (!modelPreviewImage) return;
+        modelPreviewImage.style.transform = `scale(${previewScale}) rotateX(${previewRotateX}deg) rotateY(${previewRotateY}deg)`;
+      }
+
+      function resetModelPreviewTransform() {
+        previewScale = 1;
+        previewRotateX = -8;
+        previewRotateY = 18;
+        applyModelPreviewTransform();
+      }
+
+      function openModelPreview(src, title) {
+        if (!modelPreviewModal || !modelPreviewImage || !modelPreviewTitle) return;
+        modelPreviewImage.src = src;
+        modelPreviewTitle.textContent = `3D Preview - ${title}`;
+        resetModelPreviewTransform();
+        modelPreviewModal.classList.remove('hidden');
+        modelPreviewModal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModelPreview() {
+        if (!modelPreviewModal || !modelPreviewImage) return;
+        modelPreviewModal.classList.add('hidden');
+        modelPreviewModal.classList.remove('flex');
+        modelPreviewImage.src = '';
+        resetModelPreviewTransform();
+        document.body.style.overflow = '';
+      }
+
+      modelPreviewTriggers.forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+          openModelPreview(trigger.getAttribute('data-preview-src'), trigger.getAttribute('data-preview-title') || 'Model Preview');
+        });
+      });
+
+      modelPreviewCloseTargets.forEach((target) => target.addEventListener('click', closeModelPreview));
+
+      if (modelPreviewStage) {
+        modelPreviewStage.addEventListener('pointerdown', (event) => {
+          isPreviewDragging = true;
+          previewPointerX = event.clientX;
+          previewPointerY = event.clientY;
+        });
+
+        modelPreviewStage.addEventListener('wheel', (event) => {
+          event.preventDefault();
+          previewScale = Math.max(0.72, Math.min(2.4, previewScale - event.deltaY * 0.0012));
+          applyModelPreviewTransform();
+        }, { passive: false });
+
+        modelPreviewStage.addEventListener('dblclick', () => {
+          resetModelPreviewTransform();
+        });
+      }
+
+      window.addEventListener('pointermove', (event) => {
+        if (!isPreviewDragging) return;
+        const deltaX = event.clientX - previewPointerX;
+        const deltaY = event.clientY - previewPointerY;
+        previewPointerX = event.clientX;
+        previewPointerY = event.clientY;
+        previewRotateX = Math.max(-45, Math.min(45, previewRotateX - deltaY * 0.12));
+        previewRotateY += deltaX * 0.18;
+        applyModelPreviewTransform();
+      });
+
+      window.addEventListener('pointerup', () => {
+        isPreviewDragging = false;
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (modelPreviewModal && !modelPreviewModal.classList.contains('hidden')) closeModelPreview();
+          if (deleteConfirmModal && !deleteConfirmModal.classList.contains('hidden')) closeDeleteModal();
+        }
+      });
+
+      // --- Delete confirmation modal ---
+      const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+      const deleteItemName = document.getElementById('deleteItemName');
+      const deleteCancelBtn = document.getElementById('deleteCancelBtn');
+      const deleteConfirmBtn = document.getElementById('deleteConfirmBtn');
+      const deleteModalBackdrop = document.getElementById('deleteModalBackdrop');
+      let pendingDeleteArticle = null;
+
+      function openDeleteModal(article) {
+        const filename = article.querySelector('h2')?.textContent?.trim() || 'this item';
+        if (deleteItemName) deleteItemName.textContent = filename;
+        pendingDeleteArticle = article;
+        deleteConfirmModal.classList.remove('hidden');
+        deleteConfirmModal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeDeleteModal() {
+        deleteConfirmModal.classList.add('hidden');
+        deleteConfirmModal.classList.remove('flex');
+        pendingDeleteArticle = null;
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('[data-delete-btn]').forEach((btn) => {
+        btn.addEventListener('click', () => openDeleteModal(btn.closest('article')));
+      });
+
+      deleteCancelBtn?.addEventListener('click', closeDeleteModal);
+      deleteModalBackdrop?.addEventListener('click', closeDeleteModal);
+
+      deleteConfirmBtn?.addEventListener('click', () => {
+        if (pendingDeleteArticle) {
+          pendingDeleteArticle.style.transition = 'opacity 0.2s, transform 0.2s';
+          pendingDeleteArticle.style.opacity = '0';
+          pendingDeleteArticle.style.transform = 'translateX(12px)';
+          setTimeout(() => pendingDeleteArticle?.remove(), 200);
+        }
+        closeDeleteModal();
+      });
+    });
+  </script>
+</body>
+</html>

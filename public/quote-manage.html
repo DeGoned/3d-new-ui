@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Quotes List | PrecisionForge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.01em;
+            background-color: #f8fafc;
+        }
+        h1, h2, h3, .headline {
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.02em;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#0052cc",
+                "primary-container": "#0052cc",
+                "on-primary": "#ffffff",
+                "on-primary-container": "#ffffff",
+                "surface": "#ffffff",
+                "background": "#f8fafc",
+                "surface-container": "#ffffff",
+                "surface-container-low": "#ffffff",
+                "surface-container-high": "#ffffff",
+                "surface-container-highest": "#f1f5f9",
+                "outline-variant": "#e2e8f0",
+                "on-surface": "#1e293b",
+                "on-surface-variant": "#64748b",
+              },
+              borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- Blue Info Bar -->
+<div class="fixed top-0 w-full z-50 bg-[#0060fe] text-white text-sm h-10 flex items-center">
+<div class="flex justify-between items-center w-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+<div class="flex items-center gap-6">
+<a href="tel:+8618126397112" class="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-sm">call</span>
+<span>+86 18126397112</span>
+</a>
+<a href="mailto:hello@prototi.com" class="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-sm">mail</span>
+<span>hello@prototi.com</span>
+</a>
+</div>
+<a href="#" class="hidden md:flex items-center gap-2 px-4 py-1 border border-white/60 rounded-full text-xs font-semibold hover:bg-white/10 transition-colors">
+🎉 2026 Chinese New Year Holiday & ProtoTi Shipping Schedule
+</a>
+</div>
+</div>
+<!-- TopNavBar -->
+<nav class="fixed top-10 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-outline-variant/30 shadow-[0_2px_15px_rgba(0,0,0,0.03)] h-16">
+<div class="flex justify-between items-center h-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+<div class="flex items-center gap-5">
+<a href="/home-v3.html" class="flex items-center shrink-0">
+<img src="/logo.svg" alt="ProtoTi" class="h-7" />
+</a>
+<a href="/quote-manage.html" class="inline-flex items-center gap-2 px-5 py-2 bg-[#0060fe] text-white text-sm font-bold rounded-full hover:brightness-110 active:scale-95 transition-all shadow-sm shadow-[#0060fe]/30">
+<span class="material-symbols-outlined text-sm">bolt</span>
+Instant Quote
+</a>
+</div>
+<div class="flex items-center gap-4">
+<a href="/cart.html" class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="hidden lg:inline text-sm font-semibold">Cart</span>
+</a>
+<div class="relative pb-2 -mb-2" id="user-menu-wrapper">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer" id="user-avatar-btn">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="hidden lg:inline text-sm font-semibold">hongxin hong</span>
+</button>
+<div class="absolute right-0 top-full pt-1 w-44 opacity-0 pointer-events-none translate-y-1 transition-all duration-200 z-50" id="user-dropdown">
+<div class="bg-white border border-slate-200 rounded-xl shadow-lg py-1">
+<a href="/" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-[18px] text-slate-400">person</span>
+Personal Center
+</a>
+<div class="my-1 border-t border-slate-100"></div>
+<a href="/login.html" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+Log Out
+</a>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</nav>
+<main class="mt-36 px-8 lg:px-12 xl:px-14 pb-20 max-w-[1620px] mx-auto w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_430px] gap-8">
+<!-- Left Section: Upload & Quote List -->
+<div class="min-w-0 space-y-8">
+<!-- Compact File Upload Area -->
+<div class="bg-white border-2 border-dashed border-slate-200 rounded-xl py-4 px-8 flex flex-col items-center justify-center group hover:border-primary/50 hover:bg-slate-50/50 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md">
+<div class="flex flex-col items-center text-center gap-2">
+<div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-primary group-hover:bg-blue-50 group-hover:scale-110 transition-all duration-300">
+<span class="material-symbols-outlined text-xl" data-icon="upload_file">upload_file</span>
+</div>
+<div>
+<p class="font-bold text-base text-slate-900 group-hover:text-primary transition-colors">Drag and drop 3D files here</p>
+<p class="text-xs text-slate-500 mt-1">Supported formats: STL, OBJ, STEP, IGES. &nbsp;|&nbsp; Maximum file size: 100MB.</p>
+</div>
+</div>
+</div>
+
+<!-- Large Card for Quote List -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+<!-- Page Title Aligned Left -->
+<div class="grid gap-3 lg:min-h-[88px] lg:grid-cols-[minmax(0,1fr)_auto]">
+<h1 class="text-2xl font-bold tracking-tight text-slate-900 lg:self-start">My Quotes List</h1>
+<div class="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-500 lg:self-center lg:justify-self-end">
+<span>Total: <span class="text-slate-900">4</span></span>
+<span>Ready: <span class="text-primary">3</span></span>
+<span>Unconf.: <span class="text-slate-900">1</span></span>
+</div>
+</div>
+<!-- Quote Items List -->
+<div class="flex flex-col">
+<!-- Table Header with Select All -->
+<div class="flex items-center gap-4 mb-2 pb-2 border-b border-slate-100">
+    <div class="flex items-center justify-center w-6 shrink-0">
+        <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer" id="selectAll">
+    </div>
+    <div class="flex-1 grid grid-cols-12 gap-4 items-center">
+        <div class="col-span-4 pl-2 text-[11px] font-bold tracking-[0.08em] text-slate-500">File Info</div>
+        <div class="col-span-3 text-[11px] font-bold tracking-[0.08em] text-slate-500">Configuration</div>
+        <div class="col-span-1 text-center text-[11px] font-bold tracking-[0.08em] text-slate-500">Quantity</div>
+        <div class="col-span-2 text-center text-[11px] font-bold tracking-[0.08em] text-slate-500">Price & Time</div>
+        <div class="col-span-2 pl-2 text-[11px] font-bold tracking-[0.08em] text-slate-500">Actions</div>
+    </div>
+</div>
+
+<!-- Item 1 -->
+<div class="py-5 flex items-center gap-4 border-b border-slate-200 hover:bg-slate-50/50 hover:-translate-y-0.5 transition-all duration-300 relative group">
+    <div class="flex items-center justify-center w-6 shrink-0">
+        <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer quote-item-checkbox">
+    </div>
+    <div class="flex-1 grid grid-cols-12 gap-3 items-center">
+        <!-- File Info -->
+        <div class="col-span-4 flex items-center gap-3 pl-2">
+            <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" data-preview-title="Turbine_Housing_V4.stl">
+                <img alt="Turbine_Housing_V4.stl" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw"/>
+            </button>
+            <div class="flex flex-col gap-1 min-w-0">
+                <h3 class="font-bold text-sm text-slate-900 truncate" title="Turbine_Housing_V4.stl">Turbine_Housing_V4.stl</h3>
+                <p class="text-[10px] text-slate-500 font-medium">142 x 88 x 42 mm</p>
+                <p class="text-[10px] text-slate-500 font-medium">124.5 cm³</p>
+            </div>
+        </div>
+
+        <!-- Configuration -->
+        <div class="col-span-3 flex flex-col gap-1 min-w-0">
+            <p class="text-xs font-bold text-slate-900 truncate" title="Material: 1.2 SLM - Stainless Steel 316L - $$$">Material: 1.2 SLM - Stainless Steel 316L - $$$</p>
+            <p class="text-[10px] text-slate-500 truncate">Color: Metallic Gray</p>
+            <p class="text-[10px] text-slate-500 truncate">Post Process: Sand Blasted - Matte</p>
+            <p class="text-[10px] text-slate-500 truncate">Printer: SLM1-280*280*350mm</p>
+            
+            <!-- Collapsible Extra Configuration -->
+            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t border-slate-100" id="extraConfig1">
+                <p class="text-[10px] text-slate-500 truncate">Infill: 100% Solid</p>
+                <p class="text-[10px] text-slate-500 truncate">Layer Height: 0.1mm</p>
+                <p class="text-[10px] text-slate-500 truncate">Thread Insert: None</p>
+            </div>
+            <button class="text-[10px] text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfig1">
+                <span>More</span>
+                <span class="material-symbols-outlined text-[12px] transition-transform duration-200">expand_more</span>
+            </button>
+        </div>
+
+        <!-- Quantity -->
+        <div class="col-span-1 flex justify-center">
+            <input class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="number" value="1" min="1"/>
+        </div>
+
+        <!-- Price & Time -->
+        <div class="col-span-2 flex flex-col items-center justify-center">
+            <p class="text-base font-bold text-primary">$284.50</p>
+            <p class="text-[10px] text-slate-400 font-medium mt-0.5">$284.50/piece</p>
+            <p class="mt-0.5 text-center text-[9px] font-medium text-slate-500">Est. 4-6 Days</p>
+        </div>
+
+        <!-- Actions -->
+        <div class="col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 pl-2 border-l border-slate-100 min-w-0">
+            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="edit">edit</span> Edit Configurations
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="attachment">attachment</span> Attachment
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span> Duplicate
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Turbine_Housing_V4.stl">
+                <span class="material-symbols-outlined text-[14px]" data-icon="delete">delete</span> Delete
+            </button>
+        </div>
+    </div>
+</div>
+<!-- Item 2 -->
+<div class="py-5 flex items-center gap-4 border-b border-slate-200 hover:bg-slate-50/50 hover:-translate-y-0.5 transition-all duration-300 relative group">
+    <div class="flex items-center justify-center w-6 shrink-0">
+        <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer quote-item-checkbox">
+    </div>
+    <div class="flex-1 grid grid-cols-12 gap-3 items-center">
+        <!-- File Info -->
+        <div class="col-span-4 flex items-center gap-3 pl-2">
+            <div class="w-16 h-16 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100 shrink-0">
+                <span class="material-symbols-outlined text-slate-300 text-3xl">view_in_ar</span>
+            </div>
+            <div class="flex flex-col gap-1 min-w-0">
+                <h3 class="font-bold text-sm text-slate-900 truncate" title="Base_Plate_Alpha.obj">Base_Plate_Alpha.obj</h3>
+                <p class="text-[10px] text-slate-500 font-medium">200 x 200 x 10 mm</p>
+                <p class="text-[10px] text-slate-500 font-medium">400.0 cm³</p>
+            </div>
+        </div>
+
+        <!-- Configuration -->
+        <div class="col-span-3 flex items-center">
+            <span class="text-sm font-semibold text-slate-500">Not Configured</span>
+        </div>
+
+        <!-- Quantity -->
+        <div class="col-span-1 flex justify-center">
+            <input class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary text-slate-500 bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="number" value="1" min="1" disabled/>
+        </div>
+
+        <!-- Price & Time -->
+        <div class="col-span-2 flex flex-col items-center justify-center text-center">
+            <p class="text-[11px] font-bold text-slate-400">Not Configured</p>
+        </div>
+
+        <!-- Actions -->
+        <div class="col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 pl-2 border-l border-slate-100 min-w-0">
+            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="settings">settings</span> Configure Now
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="attachment">attachment</span> Attachment
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span> Duplicate
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Base_Plate_Alpha.obj">
+                <span class="material-symbols-outlined text-[14px]" data-icon="delete">delete</span> Delete
+            </button>
+</div>
+</div>
+</div>
+
+<!-- Item 3 -->
+<div class="py-5 flex items-center gap-4 border-b border-slate-200 hover:bg-slate-50/50 hover:-translate-y-0.5 transition-all duration-300 relative group">
+    <div class="flex items-center justify-center w-6 shrink-0">
+        <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer quote-item-checkbox">
+    </div>
+    <div class="flex-1 grid grid-cols-12 gap-3 items-center">
+        <div class="col-span-4 flex items-center gap-3 pl-2">
+            <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" data-preview-title="Turbo_Valve_Housing_A.stl">
+                <img alt="Turbo_Valve_Housing_A.stl" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80"/>
+            </button>
+            <div class="flex flex-col gap-1 min-w-0">
+                <h3 class="font-bold text-sm text-slate-900 truncate" title="Turbo_Valve_Housing_A.stl">Turbo_Valve_Housing_A.stl</h3>
+                <p class="text-[10px] text-slate-500 font-medium">180.6 x 122.4 x 76.3 mm</p>
+                <p class="text-[10px] text-slate-500 font-medium">84.2 cm³</p>
+            </div>
+        </div>
+        <div class="col-span-3 flex flex-col gap-1 min-w-0">
+            <p class="text-xs font-bold text-slate-900 truncate">Material: AlSi10Mg - Natural Silver - $$</p>
+            <p class="text-[10px] text-slate-500 truncate">Color: Natural Silver</p>
+            <p class="text-[10px] text-slate-500 truncate">Post Process: Bead Blasted</p>
+            <p class="text-[10px] text-slate-500 truncate">Printer: SLM1-280*280*350mm</p>
+            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t border-slate-100" id="extraConfig3">
+                <p class="text-[10px] text-slate-500 truncate">Tolerance: ISO 2768-m</p>
+                <p class="text-[10px] text-slate-500 truncate">Support Strategy: Auto</p>
+                <p class="text-[10px] text-slate-500 truncate">Surface Class: Standard</p>
+            </div>
+            <button class="text-[10px] text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfig3">
+                <span>More</span>
+                <span class="material-symbols-outlined text-[12px] transition-transform duration-200">expand_more</span>
+            </button>
+        </div>
+        <div class="col-span-1 flex justify-center">
+            <input class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="number" value="2" min="1"/>
+        </div>
+        <div class="col-span-2 flex flex-col items-center justify-center">
+            <p class="text-base font-bold text-primary">$132.40</p>
+            <p class="text-[10px] text-slate-400 font-medium mt-0.5">$66.20/piece</p>
+            <p class="mt-0.5 text-center text-[9px] font-medium text-slate-500">Est. 4-6 Days</p>
+        </div>
+        <div class="col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 pl-2 border-l border-slate-100 min-w-0">
+            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="edit">edit</span> Edit Configurations
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="attachment">attachment</span> Attachment
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span> Duplicate
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Turbo_Valve_Housing_A.stl">
+                <span class="material-symbols-outlined text-[14px]" data-icon="delete">delete</span> Delete
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Item 4 -->
+<div class="py-5 flex items-center gap-4 border-b border-slate-200 hover:bg-slate-50/50 hover:-translate-y-0.5 transition-all duration-300 relative group">
+    <div class="flex items-center justify-center w-6 shrink-0">
+        <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer quote-item-checkbox">
+    </div>
+    <div class="flex-1 grid grid-cols-12 gap-3 items-center">
+        <div class="col-span-4 flex items-center gap-3 pl-2">
+            <div class="w-16 h-16 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100 shrink-0">
+                <span class="material-symbols-outlined text-slate-300 text-3xl">view_in_ar</span>
+            </div>
+            <div class="flex flex-col gap-1 min-w-0">
+                <h3 class="font-bold text-sm text-slate-900 truncate" title="Cooling_Manifold_Beta.step">Cooling_Manifold_Beta.step</h3>
+                <p class="text-[10px] text-slate-500 font-medium">128.2 x 95.7 x 64.1 mm</p>
+                <p class="text-[10px] text-slate-500 font-medium">61.2 cm³</p>
+            </div>
+        </div>
+        <div class="col-span-3 flex flex-col gap-1 min-w-0">
+            <p class="text-xs font-bold text-slate-900 truncate">Material: Titanium Ti64 - Raw Finish - $$$$</p>
+            <p class="text-[10px] text-slate-500 truncate">Color: Raw Metallic</p>
+            <p class="text-[10px] text-slate-500 truncate">Post Process: Support Removal + QC</p>
+            <p class="text-[10px] text-slate-500 truncate">Printer: SLM1-280*280*350mm</p>
+            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t border-slate-100" id="extraConfig4">
+                <p class="text-[10px] text-slate-500 truncate">Tolerance: ISO 2768-f</p>
+                <p class="text-[10px] text-slate-500 truncate">Inspection: Visual + Critical Dimensions</p>
+                <p class="text-[10px] text-slate-500 truncate">Cleaning: Ultrasonic</p>
+            </div>
+            <button class="text-[10px] text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfig4">
+                <span>More</span>
+                <span class="material-symbols-outlined text-[12px] transition-transform duration-200">expand_more</span>
+            </button>
+        </div>
+        <div class="col-span-1 flex justify-center">
+            <input class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="number" value="1" min="1"/>
+        </div>
+        <div class="col-span-2 flex flex-col items-center justify-center">
+            <p class="text-base font-bold text-primary">$188.90</p>
+            <p class="text-[10px] text-slate-400 font-medium mt-0.5">$188.90/piece</p>
+            <p class="mt-0.5 text-center text-[9px] font-medium text-slate-500">Est. 5-7 Days</p>
+        </div>
+        <div class="col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 pl-2 border-l border-slate-100 min-w-0">
+            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="edit">edit</span> Edit Configurations
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="attachment">attachment</span> Attachment
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span> Duplicate
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Cooling_Manifold_Beta.step">
+                <span class="material-symbols-outlined text-[14px]" data-icon="delete">delete</span> Delete
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar (Right Side) -->
+<aside class="flex flex-col gap-6">
+
+<!-- Shipping Details -->
+<section class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-6 order-2">
+<div>
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Address</h3>
+<button id="addNewAddressBtn" class="text-[10px] font-bold tracking-[0.08em] text-primary hover:underline">+ Add New</button>
+</div>
+<div class="relative">
+    <select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
+        <option>1212 123 (Default)</option>
+        <option>Main Warehouse - Building 4</option>
+    </select>
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+        <span class="material-symbols-outlined text-lg">expand_more</span>
+    </div>
+</div>
+<div class="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-100 relative">
+<button id="editAddressBtn" class="absolute top-4 right-4 text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5">location_on</span>
+<div class="text-[11px] text-slate-600 leading-relaxed">
+<p class="font-bold text-slate-900">1212 123 <span class="text-primary ml-1">Default</span></p>
+<p>Company: 123, Tax ID: 123</p>
+<p>123123, kriseooooooo@gmail.com</p>
+<p>12312, 123</p>
+<p>12312, 123, 123123, Germany</p>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="mb-4 text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Method</h3>
+<div class="relative mb-4">
+    <select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
+        <option>Tariff-Free Shipping</option>
+        <option>Express Air (2-3 Days)</option>
+    </select>
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+        <span class="material-symbols-outlined text-lg">expand_more</span>
+    </div>
+</div>
+<div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-600">local_shipping</span>
+<span class="text-xs font-bold text-slate-900">Tariff-Free Shipping</span>
+</div>
+<span class="bg-blue-100 text-primary text-[9px] font-bold px-2 py-0.5 rounded-sm">5-7 Business Days</span>
+</div>
+<p class="text-[10px] text-slate-500">Carrier: Occasionally Delayed Due to Customs Inspection!</p>
+</div>
+</div>
+</section>
+
+<!-- Order Summary -->
+<section class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm order-3">
+<h2 class="mb-1 text-sm font-bold tracking-[0.08em] text-slate-900">Order Summary</h2>
+<div class="space-y-4 mt-6">
+<div class="flex justify-between text-sm gap-4">
+<span class="text-slate-500">Estimated Production</span>
+<span class="font-medium text-slate-900 text-right">3-5 business days</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500">Shipping Fee</span>
+<span class="font-medium text-slate-900">$65.00</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500">Subtotal (4 quote items)</span>
+<span class="font-medium text-slate-900">$605.80</span>
+</div>
+<div class="pt-4 border-t border-slate-100 flex justify-between items-center">
+<span class="text-lg font-bold text-slate-900">Total</span>
+<span class="text-3xl font-bold text-primary">$670.80</span>
+</div>
+</div>
+<div class="mt-8 flex flex-col gap-3">
+<button onclick="window.location.href='order-confirmation.html'" class="w-full rounded-lg bg-primary py-4 text-sm font-bold tracking-[0.04em] text-white transition-all hover:brightness-110 shadow-md shadow-primary/20">
+                        Place Order
+                    </button>
+<button class="w-full rounded-lg border border-slate-200 bg-white py-4 text-sm font-bold tracking-[0.04em] text-slate-900 transition-all hover:bg-slate-50">
+                        Add to Cart
+                    </button>
+</div>
+</section>
+
+</aside>
+</main>
+<footer class="mt-auto bg-white border-t border-slate-200 pt-12 pb-6">
+<div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 grid grid-cols-1 md:grid-cols-3 gap-10">
+<div>
+<img src="/logo.svg" alt="ProtoTi" class="h-10 mb-4" />
+<p class="text-sm text-slate-500">Shenzhen ProtoTi Technology Co., LTD</p>
+<p class="text-sm text-slate-400 mt-1">User Name: kriseoooooo@gmail.com</p>
+</div>
+<div>
+<h4 class="font-bold text-slate-800 mb-4">Contact</h4>
+<p class="text-sm text-slate-500 flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-sm">call</span> Phone: +86 18126397112
+</p>
+<p class="text-sm text-slate-500 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">mail</span> Email: hello@prototi.com
+</p>
+</div>
+<div>
+<div class="md:max-w-[332px] md:ml-auto">
+<h4 class="font-bold text-slate-800 mb-4">Office</h4>
+<p class="text-sm text-slate-500 flex items-start gap-2">
+<span class="material-symbols-outlined text-sm mt-0.5">location_on</span>
+Address: 8th Floor, Biaofan Technology Building, Tower C, No.6 Gongye Road, Baoan, Shenzhen, China, 518104
+</p>
+<div class="mt-6 flex items-center gap-3">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/200px-MasterCard_Logo.svg.png" alt="Mastercard" class="h-6 object-contain" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa" class="h-5 object-contain" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/200px-PayPal.svg.png" alt="PayPal" class="h-5 object-contain" />
+</div>
+</div>
+</div>
+</div>
+<div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 mt-8 pt-6 border-t border-slate-100">
+<p class="text-sm text-slate-400 text-center">© 2018-2025 ProtoTi. All Rights Reserved.</p>
+</div>
+</footer>
+
+<!-- Address Modal -->
+<div id="addressModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100] hidden items-center justify-center opacity-0 transition-opacity duration-300">
+    <div id="addressModalContent" class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
+        <!-- Sticky Header -->
+        <div class="flex items-center justify-between px-8 py-5 border-b border-slate-100 shrink-0">
+            <h3 id="addressModalTitle" class="text-base font-bold text-slate-900">Add New Address</h3>
+            <button id="closeAddressModalBtn" class="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors">
+                <span class="material-symbols-outlined text-lg">close</span>
+            </button>
+        </div>
+        <!-- Scrollable Body -->
+        <div class="overflow-y-auto px-8 py-6 flex-1">
+            <form id="addressForm" class="space-y-5" novalidate>
+                <!-- Name Row -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">First Name <span class="text-red-500">*</span></label>
+                        <input id="addr_firstName" type="text" placeholder="John" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                    </div>
+                    <div>
+                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Last Name <span class="text-red-500">*</span></label>
+                        <input id="addr_lastName" type="text" placeholder="Smith" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                    </div>
+                </div>
+                <!-- Company + Tax ID -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Company Name</label>
+                        <input id="addr_company" type="text" placeholder="Acme Corp." class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                    </div>
+                    <div>
+                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Tax ID / VAT Number</label>
+                        <input id="addr_taxId" type="text" placeholder="DE123456789" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                    </div>
+                </div>
+                <!-- Email + Phone -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Email <span class="text-red-500">*</span></label>
+                        <input id="addr_email" type="email" placeholder="john@example.com" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                    </div>
+                    <div>
+                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Phone</label>
+                        <input id="addr_phone" type="tel" placeholder="+1 555 000 0000" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                    </div>
+                </div>
+                <!-- Country -->
+                <div>
+                    <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Country / Region <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <select id="addr_country" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 pr-10 text-sm text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
+                            <option value="">Select country…</option>
+                            <option value="US">United States</option>
+                            <option value="GB">United Kingdom</option>
+                            <option value="DE">Germany</option>
+                            <option value="FR">France</option>
+                            <option value="IT">Italy</option>
+                            <option value="ES">Spain</option>
+                            <option value="NL">Netherlands</option>
+                            <option value="BE">Belgium</option>
+                            <option value="CH">Switzerland</option>
+                            <option value="AT">Austria</option>
+                            <option value="SE">Sweden</option>
+                            <option value="NO">Norway</option>
+                            <option value="DK">Denmark</option>
+                            <option value="FI">Finland</option>
+                            <option value="PL">Poland</option>
+                            <option value="CZ">Czech Republic</option>
+                            <option value="PT">Portugal</option>
+                            <option value="CA">Canada</option>
+                            <option value="AU">Australia</option>
+                            <option value="JP">Japan</option>
+                            <option value="CN">China</option>
+                            <option value="KR">South Korea</option>
+                            <option value="SG">Singapore</option>
+                            <option value="HK">Hong Kong</option>
+                            <option value="TW">Taiwan</option>
+                            <option value="IN">India</option>
+                            <option value="BR">Brazil</option>
+                            <option value="MX">Mexico</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
+                            <span class="material-symbols-outlined text-lg">expand_more</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Street Address -->
+                <div>
+                    <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Street Address <span class="text-red-500">*</span></label>
+                    <input id="addr_line1" type="text" placeholder="123 Main Street" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                </div>
+                <!-- Address Line 2 -->
+                <div>
+                    <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Address Line 2 <span class="text-slate-300 font-normal normal-case">Optional</span></label>
+                    <input id="addr_line2" type="text" placeholder="Apt, Suite, Unit…" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                </div>
+                <!-- Postal + City + State -->
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Postal Code <span class="text-red-500">*</span></label>
+                        <input id="addr_postal" type="text" placeholder="10001" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                    </div>
+                    <div>
+                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">City <span class="text-red-500">*</span></label>
+                        <input id="addr_city" type="text" placeholder="New York" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                    </div>
+                    <div>
+                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">State / Province</label>
+                        <input id="addr_state" type="text" placeholder="NY" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                    </div>
+                </div>
+                <!-- Set as Default -->
+                <label class="flex items-center gap-3 cursor-pointer select-none pt-1">
+                    <input id="addr_default" type="checkbox" class="w-4 h-4 rounded border-slate-300 text-primary accent-primary cursor-pointer" />
+                    <span class="text-sm text-slate-600 font-medium">Set as default address</span>
+                </label>
+            </form>
+        </div>
+        <!-- Sticky Footer -->
+        <div class="flex items-center justify-end gap-3 px-8 py-5 border-t border-slate-100 shrink-0">
+            <button id="cancelAddressBtn" class="px-6 py-2.5 rounded-lg border border-slate-200 text-slate-600 text-sm font-semibold hover:bg-slate-50 transition-colors">
+                Cancel
+            </button>
+            <button id="saveAddressBtn" class="px-6 py-2.5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors shadow-sm">
+                Save Address
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteConfirmModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] hidden items-center justify-center opacity-0 transition-opacity duration-300">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 transform scale-95 transition-transform duration-300" id="deleteModalContent">
+        <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-orange-500">warning</span>
+            </div>
+            <div class="flex-1 pt-1">
+                <h3 class="text-lg font-bold text-slate-900">Confirm Delete</h3>
+                <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+                    Are you sure you want to delete file "<span id="deleteFileName" class="font-semibold text-slate-700"></span>"? This action cannot be undone.
+                </p>
+            </div>
+        </div>
+        <div class="mt-8 flex justify-end gap-3">
+            <button id="cancelDeleteBtn" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-600 text-sm font-semibold hover:bg-slate-50 transition-colors">
+                Cancel
+            </button>
+            <button id="confirmDeleteBtn" class="px-5 py-2.5 rounded-lg border border-red-200 text-red-600 bg-white text-sm font-semibold hover:bg-red-50 hover:border-red-300 transition-colors">
+                Delete
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="modelPreviewModal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-slate-950/55 px-3 py-4 backdrop-blur-sm sm:px-6 sm:py-8">
+    <div class="absolute inset-0" data-model-preview-close></div>
+    <div class="relative z-10 flex h-[92vh] w-full max-w-[min(96vw,1920px)] flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-2xl">
+        <div class="flex items-center justify-between gap-4 border-b border-slate-200 px-5 py-4 sm:px-6">
+            <h3 id="modelPreviewTitle" class="text-xl font-medium tracking-tight text-slate-900 sm:text-[1.95rem]">3D Preview</h3>
+            <button type="button" class="inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900" data-model-preview-close>
+                <span class="material-symbols-outlined text-[22px]">close</span>
+            </button>
+        </div>
+        <div id="modelPreviewStage" class="flex-1 p-3 sm:p-4 [perspective:1600px] cursor-grab active:cursor-grabbing">
+            <div class="flex h-full items-center justify-center overflow-hidden rounded-[1.5rem] bg-slate-50">
+                <img id="modelPreviewImage" src="" alt="Model preview" class="pointer-events-none max-h-full max-w-full object-contain select-none drop-shadow-[0_28px_80px_rgba(15,23,42,0.18)] transition-transform duration-75" referrerpolicy="no-referrer" draggable="false" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectAllCheckbox = document.getElementById('selectAll');
+        const itemCheckboxes = document.querySelectorAll('.quote-item-checkbox');
+
+        // Handle Select All click
+        selectAllCheckbox.addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            itemCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        // Handle individual item clicks
+        itemCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const allChecked = Array.from(itemCheckboxes).every(cb => cb.checked);
+                const someChecked = Array.from(itemCheckboxes).some(cb => cb.checked);
+                
+                selectAllCheckbox.checked = allChecked;
+                // Optional: indeterminate state if some but not all are checked
+                selectAllCheckbox.indeterminate = someChecked && !allChecked;
+            });
+        });
+
+        // Delete Modal Logic
+        const deleteBtns = document.querySelectorAll('.delete-model-btn');
+        const modal = document.getElementById('deleteConfirmModal');
+        const modalContent = document.getElementById('deleteModalContent');
+        const cancelBtn = document.getElementById('cancelDeleteBtn');
+        const confirmBtn = document.getElementById('confirmDeleteBtn');
+        const fileNameSpan = document.getElementById('deleteFileName');
+
+        function openModal(fileName) {
+            fileNameSpan.textContent = fileName;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            // Trigger reflow for animation
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            // Wait for animation to finish before hiding
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        deleteBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const fileName = e.currentTarget.getAttribute('data-filename');
+                openModal(fileName);
+            });
+        });
+
+        cancelBtn.addEventListener('click', closeModal);
+        
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        // Handle actual delete confirmation
+        confirmBtn.addEventListener('click', () => {
+            console.log('Item deleted:', fileNameSpan.textContent);
+            // Add actual delete logic here
+            closeModal();
+        });
+
+        // Toggle More Configuration Info
+        const toggleBtns = document.querySelectorAll('.toggle-config-btn');
+        toggleBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const targetId = btn.getAttribute('data-target');
+                const targetEl = document.getElementById(targetId);
+                const spanText = btn.querySelector('span:first-child');
+                const icon = btn.querySelector('.material-symbols-outlined');
+
+                if (targetEl.classList.contains('hidden')) {
+                    targetEl.classList.remove('hidden');
+                    targetEl.classList.add('flex');
+                    spanText.textContent = 'Less';
+                    icon.classList.add('rotate-180');
+                } else {
+                    targetEl.classList.add('hidden');
+                    targetEl.classList.remove('flex');
+                    spanText.textContent = 'More';
+                    icon.classList.remove('rotate-180');
+                }
+            });
+        });
+
+        // Address Modal Logic
+        const addressModal = document.getElementById('addressModal');
+        const addressModalContent = document.getElementById('addressModalContent');
+        const addressModalTitle = document.getElementById('addressModalTitle');
+        const closeAddressModalBtn = document.getElementById('closeAddressModalBtn');
+        const cancelAddressBtn = document.getElementById('cancelAddressBtn');
+        const saveAddressBtn = document.getElementById('saveAddressBtn');
+        const addNewAddressBtn = document.getElementById('addNewAddressBtn');
+        const editAddressBtn = document.getElementById('editAddressBtn');
+
+        const addrFields = ['firstName','lastName','company','taxId','email','phone','country','line1','line2','postal','city','state','default'];
+
+        function clearAddressForm() {
+            addrFields.forEach(f => {
+                const el = document.getElementById('addr_' + f);
+                if (!el) return;
+                if (el.type === 'checkbox') el.checked = false;
+                else el.value = '';
+            });
+        }
+
+        function openAddressModal(isEdit) {
+            addressModalTitle.textContent = isEdit ? 'Edit Address' : 'Add New Address';
+            if (!isEdit) clearAddressForm();
+            addressModal.classList.remove('hidden');
+            addressModal.classList.add('flex');
+            void addressModal.offsetWidth;
+            addressModal.classList.remove('opacity-0');
+            addressModalContent.classList.remove('scale-95');
+            addressModalContent.classList.add('scale-100');
+        }
+
+        function closeAddressModal() {
+            addressModal.classList.add('opacity-0');
+            addressModalContent.classList.remove('scale-100');
+            addressModalContent.classList.add('scale-95');
+            setTimeout(() => {
+                addressModal.classList.remove('flex');
+                addressModal.classList.add('hidden');
+            }, 300);
+        }
+
+        addNewAddressBtn.addEventListener('click', () => openAddressModal(false));
+        editAddressBtn.addEventListener('click', () => openAddressModal(true));
+        closeAddressModalBtn.addEventListener('click', closeAddressModal);
+        cancelAddressBtn.addEventListener('click', closeAddressModal);
+        addressModal.addEventListener('click', (e) => { if (e.target === addressModal) closeAddressModal(); });
+
+        saveAddressBtn.addEventListener('click', () => {
+            // Basic required field check
+            const required = ['addr_firstName','addr_lastName','addr_email','addr_country','addr_line1','addr_postal','addr_city'];
+            const missing = required.some(id => !document.getElementById(id).value.trim());
+            if (missing) {
+                required.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (!el.value.trim()) {
+                        el.classList.add('border-red-400','ring-2','ring-red-200');
+                        el.addEventListener('input', () => el.classList.remove('border-red-400','ring-2','ring-red-200'), { once: true });
+                    }
+                });
+                return;
+            }
+            // TODO: persist address data
+            closeAddressModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !addressModal.classList.contains('hidden')) closeAddressModal();
+        });
+
+        // User avatar dropdown
+        const avatarBtn = document.getElementById('user-avatar-btn');
+        const dropdown = document.getElementById('user-dropdown');
+        const wrapper = document.getElementById('user-menu-wrapper');
+
+        wrapper.addEventListener('mouseenter', () => {
+            dropdown.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-1');
+            dropdown.classList.add('opacity-100', 'translate-y-0');
+        });
+        wrapper.addEventListener('mouseleave', () => {
+            dropdown.classList.add('opacity-0', 'pointer-events-none', 'translate-y-1');
+            dropdown.classList.remove('opacity-100', 'translate-y-0');
+        });
+
+        const modelPreviewModal = document.getElementById('modelPreviewModal');
+        const modelPreviewImage = document.getElementById('modelPreviewImage');
+        const modelPreviewTitle = document.getElementById('modelPreviewTitle');
+        const modelPreviewStage = document.getElementById('modelPreviewStage');
+        const modelPreviewTriggers = document.querySelectorAll('[data-model-preview-trigger]');
+        const modelPreviewCloseTargets = document.querySelectorAll('[data-model-preview-close]');
+        let previewScale = 1;
+        let previewRotateX = -8;
+        let previewRotateY = 18;
+        let isPreviewDragging = false;
+        let previewPointerX = 0;
+        let previewPointerY = 0;
+
+        function applyModelPreviewTransform() {
+            if (!modelPreviewImage) return;
+            modelPreviewImage.style.transform = `scale(${previewScale}) rotateX(${previewRotateX}deg) rotateY(${previewRotateY}deg)`;
+        }
+
+        function resetModelPreviewTransform() {
+            previewScale = 1;
+            previewRotateX = -8;
+            previewRotateY = 18;
+            applyModelPreviewTransform();
+        }
+
+        function openModelPreview(src, title) {
+            if (!modelPreviewModal || !modelPreviewImage || !modelPreviewTitle) return;
+            modelPreviewImage.src = src;
+            modelPreviewTitle.textContent = `3D Preview - ${title}`;
+            resetModelPreviewTransform();
+            modelPreviewModal.classList.remove('hidden');
+            modelPreviewModal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModelPreview() {
+            if (!modelPreviewModal || !modelPreviewImage) return;
+            modelPreviewModal.classList.add('hidden');
+            modelPreviewModal.classList.remove('flex');
+            modelPreviewImage.src = '';
+            resetModelPreviewTransform();
+            document.body.style.overflow = '';
+        }
+
+        modelPreviewTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                openModelPreview(trigger.getAttribute('data-preview-src'), trigger.getAttribute('data-preview-title') || 'Model Preview');
+            });
+        });
+
+        modelPreviewCloseTargets.forEach(target => target.addEventListener('click', closeModelPreview));
+
+        if (modelPreviewStage) {
+            modelPreviewStage.addEventListener('pointerdown', (event) => {
+                isPreviewDragging = true;
+                previewPointerX = event.clientX;
+                previewPointerY = event.clientY;
+            });
+
+            modelPreviewStage.addEventListener('wheel', (event) => {
+                event.preventDefault();
+                previewScale = Math.max(0.72, Math.min(2.4, previewScale - event.deltaY * 0.0012));
+                applyModelPreviewTransform();
+            }, { passive: false });
+
+            modelPreviewStage.addEventListener('dblclick', () => {
+                resetModelPreviewTransform();
+            });
+        }
+
+        window.addEventListener('pointermove', (event) => {
+            if (!isPreviewDragging) return;
+            const deltaX = event.clientX - previewPointerX;
+            const deltaY = event.clientY - previewPointerY;
+            previewPointerX = event.clientX;
+            previewPointerY = event.clientY;
+            previewRotateX = Math.max(-45, Math.min(45, previewRotateX - deltaY * 0.12));
+            previewRotateY += deltaX * 0.18;
+            applyModelPreviewTransform();
+        });
+
+        window.addEventListener('pointerup', () => {
+            isPreviewDragging = false;
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modelPreviewModal && !modelPreviewModal.classList.contains('hidden')) {
+                closeModelPreview();
+            }
+        });
+    });
+</script>
+
+</body></html>

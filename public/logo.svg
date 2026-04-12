@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="131.41283mm"
+   height="36.950199mm"
+   viewBox="0 0 131.41283 36.950199"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="ProtoTi-Logo+text-line.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#cccccc"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1"
+     inkscape:cx="274"
+     inkscape:cy="99.5"
+     inkscape:window-width="1427"
+     inkscape:window-height="865"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     showgrid="false">
+    <inkscape:grid
+       id="grid17"
+       units="mm"
+       originx="-38.290257"
+       originy="-2.0835445"
+       spacingx="0.99999998"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       dotted="false"
+       gridanglex="30"
+       gridanglez="30"
+       visible="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <rect
+       x="64.0625"
+       y="357.81247"
+       width="642.1875"
+       height="184.37498"
+       id="rect1" />
+    <rect
+       x="118.75"
+       y="80.468758"
+       width="853.125"
+       height="810.15625"
+       id="rect3" />
+    <linearGradient
+       id="linearGradient17"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop17" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop18" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-13.430017 : -7.753829 : 0"
+       inkscape:vp_y="0 : -133.5911 : 0"
+       inkscape:vp_z="13.430018 : -7.753829 : 0"
+       inkscape:persp3d-origin="49.220643 : 67.228711 : 1"
+       id="perspective4" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-3.553359 : -2.0515328 : 0"
+       inkscape:vp_y="2.1642456e-15 : -35.345979 : 0"
+       inkscape:vp_z="3.5533593 : -2.0515329 : 0"
+       inkscape:persp3d-origin="-0.20620345 : 63.589861 : 1"
+       id="perspective4-3" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-16.116021 : -9.3045894 : 0"
+       inkscape:vp_y="9.8157908e-15 : -160.30932 : 0"
+       inkscape:vp_z="16.116022 : -9.3045898 : 0"
+       inkscape:persp3d-origin="45.864772 : 22.067457 : 1"
+       id="perspective4-5" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-13.430017 : -7.7538245 : 0"
+       inkscape:vp_y="8.1798257e-15 : -133.59111 : 0"
+       inkscape:vp_z="13.430018 : -7.7538248 : 0"
+       inkscape:persp3d-origin="48.220643 : -33.771275 : 1"
+       id="perspective4-0" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient17"
+       id="radialGradient20"
+       cx="122.01287"
+       cy="19.530544"
+       fx="122.01287"
+       fy="19.530544"
+       r="36.740154"
+       gradientTransform="matrix(1,0,0,0.24105677,0,14.822574)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient17"
+       id="radialGradient21"
+       cx="122.01287"
+       cy="70.53054"
+       fx="122.01287"
+       fy="70.53054"
+       r="36.740154"
+       gradientTransform="matrix(1,0,0,0.24105677,0,53.528677)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient17"
+       id="radialGradient22"
+       cx="120.6338"
+       cy="120.53055"
+       fx="120.6338"
+       fy="120.53055"
+       r="36.740154"
+       gradientTransform="matrix(1,0,0,0.24105677,0,91.475844)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="图层 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-38.290257,-2.0835443)">
+    <path
+       id="path3-5-6"
+       style="fill:#0060fe;fill-opacity:1;stroke-width:0.264583"
+       d="m 31.057971,40.785048 -14.048455,8.110916 v 16.221832 l 4.390312,2.534548 V 62.582795 56.95334 51.430512 l 9.658143,-5.576369 9.658143,5.576369 v 11.152283 l -9.658143,5.576368 -5.268284,-3.04182 v 5.069549 l 5.268284,3.041367 14.048456,-8.110463 V 48.895964 Z"
+       transform="matrix(1.1389193,0,0,1.1389193,18.917791,-44.367334)" />
+    <path
+       style="font-weight:500;font-size:25.4px;font-family:Kanit;-inkscape-font-specification:'Kanit Medium';fill:#0060fe;stroke-width:0.700414"
+       d="m 73.08152,29.764891 v -16.3576 h 7.6708 q 1.9304,0 3.1496,0.7366 1.2446,0.7366 1.8542,2.0066 0.6096,1.27 0.6096,2.8956 0,1.651 -0.7112,2.921 -0.6858,1.27 -1.9812,1.9812 -1.27,0.6858 -3.0226,0.6858 h -4.1402 v 5.1308 z m 3.429,-7.8486 h 3.429 q 1.4732,0 2.2098,-0.762 0.762,-0.7874 0.762,-2.1082 0,-1.4224 -0.7112,-2.159 -0.7112,-0.762 -2.1336,-0.762 h -3.556 z m 11.760189,7.8486 v -16.3576 h 7.8486 q 2.8194,0 4.140201,1.4986 1.3208,1.4732 1.3208,3.9878 0,1.651 -0.8636,2.8448 -0.838201,1.1938 -2.387601,1.7272 0.4064,0.3302 0.635,0.7112 0.254,0.381 0.508,1.016 l 1.981201,4.572 h -3.556001 l -1.9304,-4.3942 q -0.254,-0.5588 -0.5588,-0.7874 -0.3048,-0.2286 -1.016,-0.2286 h -2.6924 v 5.4102 z m 3.429,-8.255 h 3.5306 q 1.3462,0 2.1082,-0.5842 0.762,-0.6096 0.762,-2.032 0,-1.3716 -0.6604,-2.0066 -0.6604,-0.635 -2.0066,-0.635 h -3.7338 z m 19.329421,8.509 q -7.9502,0 -7.9502,-8.3566 0,-4.4958 2.0066,-6.5024 2.0066,-2.0066 5.9436,-2.0066 3.937,0 5.9436,2.0066 2.0066,2.0066 2.0066,6.5024 0,8.3566 -7.9502,8.3566 z m 0,-2.921 q 2.3114,0 3.3782,-1.3208 1.0922,-1.3462 1.0922,-4.1148 0,-3.0734 -1.0922,-4.318 -1.0668,-1.27 -3.3782,-1.27 -2.3114,0 -3.4036,1.27 -1.0668,1.2446 -1.0668,4.318 0,2.7686 1.0668,4.1148 1.0922,1.3208 3.4036,1.3208 z m 13.843,2.667 v -13.716 h -5.0292 v -2.6416 h 13.462 v 2.6416 h -5.0038 v 13.716 z m 17.24657,0.254 q -7.9502,0 -7.9502,-8.3566 0,-4.4958 2.0066,-6.5024 2.0066,-2.0066 5.9436,-2.0066 3.937,0 5.9436,2.0066 2.0066,2.0066 2.0066,6.5024 0,8.3566 -7.9502,8.3566 z m 0,-2.921 q 2.3114,0 3.3782,-1.3208 1.0922,-1.3462 1.0922,-4.1148 0,-3.0734 -1.0922,-4.318 -1.0668,-1.27 -3.3782,-1.27 -2.3114,0 -3.4036,1.27 -1.0668,1.2446 -1.0668,4.318 0,2.7686 1.0668,4.1148 1.0922,1.3208 3.4036,1.3208 z m 13.84301,2.667 v -13.716 h -5.0292 v -2.6416 h 13.462 v 2.6416 h -5.0038 v 13.716 z m 10.31238,0 v -16.3576 h 3.429 v 16.3576 z"
+       id="text16-0-9"
+       aria-label="PROTOTI" />
+    <path
+       id="path2-9"
+       style="fill:#0060fe;fill-opacity:1;stroke-width:0.198181"
+       d="m 54.290516,13.630487 -6.000151,3.46387 6.000151,3.46439 5.999633,-3.46439 z" />
+    <path
+       id="path5-0"
+       style="fill:#dbe2ef;fill-opacity:1;stroke-width:0.198181"
+       d="m 60.290149,17.094357 -5.999633,3.46439 v 6.92826 l 5.999633,-3.46439 z" />
+    <path
+       id="path6-2"
+       style="fill:#112d4e;fill-opacity:1;stroke-width:0.198181"
+       d="m 48.290882,17.094357 5.999634,3.46439 v 6.92826 l -5.999634,-3.46439 z" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text3"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:96px;font-family:Poppins;-inkscape-font-specification:'Poppins Semi-Bold';white-space:pre;shape-inside:url(#rect3);display:inline;fill:#112d4e" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text1"
+       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:96px;font-family:Kanit;-inkscape-font-specification:'Kanit Medium';white-space:pre;shape-inside:url(#rect1);display:inline;fill:#112d4e" />
+  </g>
+</svg>

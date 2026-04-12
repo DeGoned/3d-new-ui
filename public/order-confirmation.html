@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout | PRECISION CORE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0052cc",
+                        "primary-hover": "#003ea3",
+                        "on-primary": "#ffffff",
+                        "background": "#f8fafc",
+                        "surface": "#ffffff",
+                        "on-surface": "#1e293b",
+                        "on-surface-variant": "#64748b",
+                        "outline": "#e2e8f0",
+                        "outline-variant": "#f1f5f9",
+                        "success": "#10b981",
+                    },
+                    fontFamily: {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: { 
+                        "DEFAULT": "8px", 
+                        "lg": "12px", 
+                        "xl": "16px",
+                        "full": "9999px" 
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                        '3d': '0 10px 30px -5px rgba(25, 120, 229, 0.2), 0 8px 10px -6px rgba(25, 120, 229, 0.1)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: 'Inter', sans-serif;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f1f5f9;
+        }
+        .input-focus:focus {
+            border-color: #0052cc;
+            box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.1);
+            outline: none;
+        }
+        .model-details {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transform: translateY(-6px);
+            transition: max-height 320ms ease, opacity 240ms ease, transform 320ms ease, margin-top 320ms ease;
+        }
+        .model-details.is-open {
+            opacity: 1;
+            max-height: 520px;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased bg-slate-50">
+<!-- Blue Info Bar -->
+<div class="fixed top-0 w-full z-50 bg-[#0060fe] text-white text-sm h-10 flex items-center">
+<div class="flex justify-between items-center w-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+<div class="flex items-center gap-6">
+<a href="tel:+8618126397112" class="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-sm">call</span>
+<span>+86 18126397112</span>
+</a>
+<a href="mailto:hello@prototi.com" class="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-sm">mail</span>
+<span>hello@prototi.com</span>
+</a>
+</div>
+<a href="#" class="hidden md:flex items-center gap-2 px-4 py-1 border border-white/60 rounded-full text-xs font-semibold hover:bg-white/10 transition-colors">
+🎉 2026 Chinese New Year Holiday & ProtoTi Shipping Schedule
+</a>
+</div>
+</div>
+<!-- TopNavBar -->
+<nav class="fixed top-10 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-outline-variant/30 shadow-[0_2px_15px_rgba(0,0,0,0.03)] h-16">
+<div class="flex justify-between items-center h-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+<div class="flex items-center gap-5">
+<a href="/home-v3.html" class="flex items-center shrink-0">
+<img src="/logo.svg" alt="ProtoTi" class="h-7" />
+</a>
+<a href="/quote-manage.html" class="inline-flex items-center gap-2 px-5 py-2 bg-[#0060fe] text-white text-sm font-bold rounded-full hover:brightness-110 active:scale-95 transition-all shadow-sm shadow-[#0060fe]/30">
+<span class="material-symbols-outlined text-sm">bolt</span>
+Instant Quote
+</a>
+</div>
+<div class="flex items-center gap-4">
+<a href="/cart.html" class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="hidden lg:inline text-sm font-semibold">Cart</span>
+</a>
+<div class="relative pb-2 -mb-2" id="user-menu-wrapper">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer" id="user-avatar-btn">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="hidden lg:inline text-sm font-semibold">hongxin hong</span>
+</button>
+<div class="absolute right-0 top-full pt-1 w-44 opacity-0 pointer-events-none translate-y-1 transition-all duration-200 z-50" id="user-dropdown">
+<div class="bg-white border border-slate-200 rounded-xl shadow-lg py-1">
+<a href="/" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-[18px] text-slate-400">person</span>
+Personal Center
+</a>
+<div class="my-1 border-t border-slate-100"></div>
+<a href="/login.html" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+Log Out
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-36 pb-20 px-4 md:px-8 xl:px-12 max-w-[1620px] mx-auto">
+<div class="mb-6">
+    <a href="quote-manage.html" class="inline-flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-primary transition-colors">
+        <span class="material-symbols-outlined text-lg">arrow_back</span>
+        Back to Quote List
+    </a>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_430px] gap-8 items-start">
+<!-- Main Content: Left Column -->
+<div class="min-w-0 space-y-6">
+<!-- Order Items Card -->
+<section class="bg-white p-6 rounded-lg card-shadow">
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2">
+<div class="flex flex-col gap-1">
+<h2 class="text-2xl font-bold tracking-tight text-slate-900">Order Details</h2>
+<p class="text-xs text-slate-500">Order # ORD260319-112007</p>
+</div>
+<button id="toggle-all-details" class="inline-flex items-center gap-2 self-start rounded-lg border border-slate-200 px-4 py-2 text-xs font-bold tracking-[0.04em] text-slate-600 transition-all hover:border-primary/30 hover:bg-blue-50/40 hover:text-primary md:self-auto">
+<span class="material-symbols-outlined text-base">unfold_more</span>
+<span id="toggle-all-label">Expand All</span>
+</button>
+</div>
+
+<div class="space-y-4 mt-6">
+<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
+<div class="p-5">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
+<div class="md:col-span-4 flex items-center gap-3 pl-2">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" data-preview-title="90101001-Exhaust-Manifold-Tubing-rev-.step">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" alt="90101001-Exhaust-Manifold-Tubing-rev-.step" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="90101001-Exhaust-Manifold-Tubing-rev-.step">90101001-Exhaust-Manifold-Tubing-rev-.step</h3>
+<p class="text-[10px] text-slate-500 font-medium">303.14 x 156.77 x 102.27 mm</p>
+<p class="text-[10px] text-slate-500 font-medium">185468.61 mm³ | 163195.11 mm²</p>
+</div>
+</div>
+<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
+<p class="text-xs font-bold text-slate-900">Material: 1.2 SLM - Stainless Steel 316L - $$$</p>
+<p class="text-[10px] text-slate-500">Color: Metallic Gray</p>
+<p class="text-[10px] text-slate-500">Post Process: Sand Blasted - Matte</p>
+<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
+<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-m</p>
+<p class="text-[10px] text-slate-500">Surface Class: Standard Production</p>
+</div>
+<div class="md:col-span-1 flex md:justify-center">
+<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">1</div>
+</div>
+<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
+<p class="text-base font-bold text-primary">$215.33</p>
+<p class="text-[10px] text-slate-400 font-medium mt-0.5">$215.33/piece</p>
+<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 3-5 Days</p>
+</div>
+<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
+<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<span>Expand</span>
+<span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+</div>
+<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="font-medium">Attachments</span>
+</div>
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-medium">Notes</span>
+</div>
+</div>
+<div class="model-details mt-0">
+<div class="mt-5 space-y-1 text-[11px] leading-relaxed text-slate-500">
+<p><span class="font-semibold text-slate-700">Dimensions:</span> 303.14 x 156.77 x 102.27 mm</p>
+<p><span class="font-semibold text-slate-700">Material:</span> Stainless Steel 316L / Metallic Gray</p>
+<p><span class="font-semibold text-slate-700">Process:</span> Sand Blasted - Matte</p>
+<p><span class="font-semibold text-slate-700">Printer:</span> SLM1-280*280*350mm</p>
+<p><span class="font-semibold text-slate-700">Tolerance:</span> ISO 2768-m / Standard Production</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
+</label>
+<div class="bg-slate-50 border border-slate-100 rounded-lg p-3 flex items-center justify-center h-[62px]">
+<p class="text-xs text-slate-400">No attachments</p>
+</div>
+</div>
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
+</label>
+<div class="relative">
+<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Add notes here..." rows="2" maxlength="500"></textarea>
+<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+
+<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
+<div class="p-5">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
+<div class="md:col-span-4 flex items-center gap-3 pl-2">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" data-preview-title="FUEL RAIL SECONDARY.stp">
+<img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" alt="FUEL RAIL SECONDARY.stp" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="FUEL RAIL SECONDARY.stp">FUEL RAIL SECONDARY.stp</h3>
+<p class="text-[10px] text-slate-500 font-medium">240.00 x 34.00 x 62.00 mm</p>
+<p class="text-[10px] text-slate-500 font-medium">52891.68 mm³ | 41350.53 mm²</p>
+</div>
+</div>
+<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
+<p class="text-xs font-bold text-slate-900">Material: 1.2 SLM - Stainless Steel 316L - $$$</p>
+<p class="text-[10px] text-slate-500">Color: Metallic Gray</p>
+<p class="text-[10px] text-slate-500">Post Process: Sand Blasted - Matte</p>
+<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
+<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-m</p>
+<p class="text-[10px] text-slate-500">Surface Class: Sealing Faces Protected</p>
+</div>
+<div class="md:col-span-1 flex md:justify-center">
+<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">1</div>
+</div>
+<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
+<p class="text-base font-bold text-primary">$59.00</p>
+<p class="text-[10px] text-slate-400 font-medium mt-0.5">$59.00/piece</p>
+<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 3-5 Days</p>
+</div>
+<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
+<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<span>Expand</span>
+<span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+</div>
+<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="font-medium">Attachments</span>
+<span class="absolute -top-2 -right-1 inline-flex min-w-[18px] h-[18px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">1</span>
+</div>
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-medium">Notes</span>
+<span class="absolute -top-2 -right-2 inline-flex h-[18px] items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white">...</span>
+</div>
+</div>
+<div class="model-details mt-0">
+<div class="mt-5 space-y-1 text-[11px] leading-relaxed text-slate-500">
+<p><span class="font-semibold text-slate-700">Dimensions:</span> 240.00 x 34.00 x 62.00 mm</p>
+<p><span class="font-semibold text-slate-700">Material:</span> Stainless Steel 316L / Metallic Gray</p>
+<p><span class="font-semibold text-slate-700">Process:</span> Sand Blasted - Matte</p>
+<p><span class="font-semibold text-slate-700">Printer:</span> SLM1-280*280*350mm</p>
+<p><span class="font-semibold text-slate-700">Tolerance:</span> ISO 2768-m / Sealing Faces Protected</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
+</label>
+<div class="bg-white border border-slate-200 rounded-lg p-2 flex flex-col gap-2 h-[62px] overflow-y-auto">
+<div class="flex items-center justify-between text-xs bg-slate-50 p-1.5 rounded">
+<div class="flex items-center gap-2 truncate">
+<span class="material-symbols-outlined text-[14px] text-blue-500">picture_as_pdf</span>
+<span class="truncate text-slate-700 font-medium">O-ring_seal_specs.pdf</span>
+</div>
+<button class="text-slate-400 hover:text-red-500" type="button"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+</div>
+</div>
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
+</label>
+<div class="relative">
+<textarea class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" rows="2" maxlength="500">Please ensure the inner channels are completely clear of support material powder. The surface finish is critical for the O-ring seal.</textarea>
+<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">142 / 500</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+
+<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
+<div class="p-5">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
+<div class="md:col-span-4 flex items-center gap-3 pl-2">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" data-preview-title="Turbo_Valve_Housing_A.stl">
+<img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" alt="Turbo_Valve_Housing_A.stl" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="Turbo_Valve_Housing_A.stl">Turbo_Valve_Housing_A.stl</h3>
+<p class="text-[10px] text-slate-500 font-medium">180.60 x 122.40 x 76.30 mm</p>
+<p class="text-[10px] text-slate-500 font-medium">84210.88 mm³ | 61244.19 mm²</p>
+</div>
+</div>
+<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
+<p class="text-xs font-bold text-slate-900">Material: AlSi10Mg - Natural Silver - $$</p>
+<p class="text-[10px] text-slate-500">Color: Natural Silver</p>
+<p class="text-[10px] text-slate-500">Post Process: Bead Blasted</p>
+<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
+<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-f</p>
+<p class="text-[10px] text-slate-500">Surface Class: Standard Structural</p>
+</div>
+<div class="md:col-span-1 flex md:justify-center">
+<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">2</div>
+</div>
+<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
+<p class="text-base font-bold text-primary">$132.40</p>
+<p class="text-[10px] text-slate-400 font-medium mt-0.5">$66.20/piece</p>
+<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 4-6 Days</p>
+</div>
+<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
+<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<span>Expand</span>
+<span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+</div>
+<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="font-medium">Attachments</span>
+</div>
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-medium">Notes</span>
+</div>
+</div>
+<div class="model-details mt-0">
+<div class="mt-5 space-y-1 text-[11px] leading-relaxed text-slate-500">
+<p><span class="font-semibold text-slate-700">Dimensions:</span> 180.60 x 122.40 x 76.30 mm</p>
+<p><span class="font-semibold text-slate-700">Material:</span> Aluminum AlSi10Mg / Natural Silver</p>
+<p><span class="font-semibold text-slate-700">Process:</span> Bead Blasted</p>
+<p><span class="font-semibold text-slate-700">Printer:</span> SLM1-280*280*350mm</p>
+<p><span class="font-semibold text-slate-700">Tolerance:</span> ISO 2768-f / Structural Assembly Ready</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
+</label>
+<div class="bg-slate-50 border border-slate-100 rounded-lg p-3 flex items-center justify-center h-[62px]">
+<p class="text-xs text-slate-400">No attachments</p>
+</div>
+</div>
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
+</label>
+<div class="relative">
+<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Add notes here..." rows="2" maxlength="500"></textarea>
+<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+
+<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
+<div class="p-5">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
+<div class="md:col-span-4 flex items-center gap-3 pl-2">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" data-preview-title="Cooling_Manifold_Beta.step">
+<img src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" alt="Cooling_Manifold_Beta.step" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="Cooling_Manifold_Beta.step">Cooling_Manifold_Beta.step</h3>
+<p class="text-[10px] text-slate-500 font-medium">128.20 x 95.70 x 64.10 mm</p>
+<p class="text-[10px] text-slate-500 font-medium">61220.30 mm³ | 44882.64 mm²</p>
+</div>
+</div>
+<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
+<p class="text-xs font-bold text-slate-900">Material: Titanium Ti64 - Raw Finish - $$$$</p>
+<p class="text-[10px] text-slate-500">Color: Raw Metallic</p>
+<p class="text-[10px] text-slate-500">Post Process: Support Removal + QC</p>
+<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
+<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-f</p>
+<p class="text-[10px] text-slate-500">Surface Class: Pressure-Test Ready</p>
+<p class="text-[10px] text-slate-500">Layer Height: 40μm</p>
+<p class="text-[10px] text-slate-500">Heat Treatment: Stress Relief</p>
+<p class="text-[10px] text-slate-500">Build Orientation: Critical Face Up</p>
+<p class="text-[10px] text-slate-500">Support Strategy: Dense Internal Supports</p>
+<p class="text-[10px] text-slate-500">Inspection: CMM + Visual QC</p>
+<p class="text-[10px] text-slate-500">Surface Roughness Target: Ra 6.3</p>
+<p class="text-[10px] text-slate-500">Packaging: Vacuum Bag + Foam Protection</p>
+</div>
+<div class="md:col-span-1 flex md:justify-center">
+<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">1</div>
+</div>
+<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
+<p class="text-base font-bold text-primary">$188.90</p>
+<p class="text-[10px] text-slate-400 font-medium mt-0.5">$188.90/piece</p>
+<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 5-7 Days</p>
+</div>
+<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
+<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<span>Expand</span>
+<span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+</div>
+<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="font-medium">Attachments</span>
+</div>
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-medium">Notes</span>
+</div>
+</div>
+<div class="model-details mt-0">
+<div class="mt-5 space-y-1 text-[11px] leading-relaxed text-slate-500">
+<p><span class="font-semibold text-slate-700">Dimensions:</span> 128.20 x 95.70 x 64.10 mm</p>
+<p><span class="font-semibold text-slate-700">Material:</span> Titanium Ti64 / Raw Finish</p>
+<p><span class="font-semibold text-slate-700">Process:</span> Support Removal + QC</p>
+<p><span class="font-semibold text-slate-700">Printer:</span> SLM1-280*280*350mm</p>
+<p><span class="font-semibold text-slate-700">Tolerance:</span> ISO 2768-f / Pressure-Test Ready</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
+</label>
+<div class="bg-slate-50 border border-slate-100 rounded-lg p-3 flex items-center justify-center h-[62px]">
+<p class="text-xs text-slate-400">No attachments</p>
+</div>
+</div>
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
+</label>
+<div class="relative">
+<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Add notes here..." rows="2" maxlength="500"></textarea>
+<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+
+<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
+<div class="p-5">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
+<div class="md:col-span-4 flex items-center gap-3 pl-2">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" data-preview-title="Pump_Bracket_Gamma.step">
+<img src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" alt="Pump_Bracket_Gamma.step" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="Pump_Bracket_Gamma.step">Pump_Bracket_Gamma.step</h3>
+<p class="text-[10px] text-slate-500 font-medium">156.00 x 88.00 x 42.00 mm</p>
+<p class="text-[10px] text-slate-500 font-medium">48880.15 mm³ | 29112.83 mm²</p>
+</div>
+</div>
+<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
+<p class="text-xs font-bold text-slate-900">Material: Stainless Steel 316L - Metallic Gray - $$$</p>
+<p class="text-[10px] text-slate-500">Color: Metallic Gray</p>
+<p class="text-[10px] text-slate-500">Post Process: Shot Peened + Deburred</p>
+<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
+<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-f</p>
+<p class="text-[10px] text-slate-500">Surface Class: Inspection Points Attached</p>
+</div>
+<div class="md:col-span-1 flex md:justify-center">
+<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">1</div>
+</div>
+<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
+<p class="text-base font-bold text-primary">$96.40</p>
+<p class="text-[10px] text-slate-400 font-medium mt-0.5">$96.40/piece</p>
+<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 4-6 Days</p>
+</div>
+<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
+<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<span>Expand</span>
+<span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+</div>
+<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="font-medium">Attachments</span>
+<span class="absolute -top-2 -right-1 inline-flex min-w-[18px] h-[18px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">2</span>
+</div>
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-medium">Notes</span>
+</div>
+</div>
+<div class="model-details mt-0">
+<div class="mt-5 space-y-1 text-[11px] leading-relaxed text-slate-500">
+<p><span class="font-semibold text-slate-700">Dimensions:</span> 156.00 x 88.00 x 42.00 mm</p>
+<p><span class="font-semibold text-slate-700">Material:</span> Stainless Steel 316L / Metallic Gray</p>
+<p><span class="font-semibold text-slate-700">Process:</span> Shot Peened + Deburred</p>
+<p><span class="font-semibold text-slate-700">Printer:</span> SLM1-280*280*350mm</p>
+<p><span class="font-semibold text-slate-700">Tolerance:</span> ISO 2768-f / Inspection Points Attached</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
+</label>
+<div class="bg-white border border-slate-200 rounded-lg p-2 flex flex-col gap-2 h-[62px] overflow-y-auto">
+<div class="flex items-center justify-between text-xs bg-slate-50 p-1.5 rounded">
+<div class="flex items-center gap-2 truncate">
+<span class="material-symbols-outlined text-[14px] text-blue-500">picture_as_pdf</span>
+<span class="truncate text-slate-700 font-medium">inspection_points.pdf</span>
+</div>
+<button class="text-slate-400 hover:text-red-500" type="button"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+<div class="flex items-center justify-between text-xs bg-slate-50 p-1.5 rounded">
+<div class="flex items-center gap-2 truncate">
+<span class="material-symbols-outlined text-[14px] text-blue-500">description</span>
+<span class="truncate text-slate-700 font-medium">surface_finish_notes.txt</span>
+</div>
+<button class="text-slate-400 hover:text-red-500" type="button"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+</div>
+</div>
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
+</label>
+<div class="relative">
+<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Add notes here..." rows="2" maxlength="500"></textarea>
+<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+
+<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
+<div class="p-5">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
+<div class="md:col-span-4 flex items-center gap-3 pl-2">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" data-preview-title="Nozzle_Array_Epsilon.stl">
+<img src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" alt="Nozzle_Array_Epsilon.stl" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="Nozzle_Array_Epsilon.stl">Nozzle_Array_Epsilon.stl</h3>
+<p class="text-[10px] text-slate-500 font-medium">92.40 x 48.70 x 36.50 mm</p>
+<p class="text-[10px] text-slate-500 font-medium">18332.20 mm³ | 11228.40 mm²</p>
+</div>
+</div>
+<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
+<p class="text-xs font-bold text-slate-900">Material: AlSi10Mg - Natural Silver - $$</p>
+<p class="text-[10px] text-slate-500">Color: Natural Silver</p>
+<p class="text-[10px] text-slate-500">Post Process: Fine Bead Blast</p>
+<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
+<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-f</p>
+<p class="text-[10px] text-slate-500">Surface Class: Sharp Outlet Edges</p>
+</div>
+<div class="md:col-span-1 flex md:justify-center">
+<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">1</div>
+</div>
+<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
+<p class="text-base font-bold text-primary">$74.50</p>
+<p class="text-[10px] text-slate-400 font-medium mt-0.5">$74.50/piece</p>
+<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 2-4 Days</p>
+</div>
+<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
+<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<span>Expand</span>
+<span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+</div>
+<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="font-medium">Attachments</span>
+</div>
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-medium">Notes</span>
+<span class="absolute -top-2 -right-2 inline-flex h-[18px] items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white">...</span>
+</div>
+</div>
+<div class="model-details mt-0">
+<div class="mt-5 space-y-1 text-[11px] leading-relaxed text-slate-500">
+<p><span class="font-semibold text-slate-700">Dimensions:</span> 92.40 x 48.70 x 36.50 mm</p>
+<p><span class="font-semibold text-slate-700">Material:</span> Aluminum AlSi10Mg / Natural Silver</p>
+<p><span class="font-semibold text-slate-700">Process:</span> Fine Bead Blast</p>
+<p><span class="font-semibold text-slate-700">Printer:</span> SLM1-280*280*350mm</p>
+<p><span class="font-semibold text-slate-700">Tolerance:</span> ISO 2768-f / Sharp Outlet Edges</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
+</label>
+<div class="bg-slate-50 border border-slate-100 rounded-lg p-3 flex items-center justify-center h-[62px]">
+<p class="text-xs text-slate-400">No attachments</p>
+</div>
+</div>
+<div>
+<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
+</label>
+<div class="relative">
+<textarea class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" rows="2" maxlength="500">Please keep the channel edges sharp and avoid additional smoothing on the outlet openings.</textarea>
+<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">92 / 500</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Global Order Note -->
+<div class="mt-6 pt-6 border-t border-slate-100">
+    <label class="text-sm font-bold text-slate-900 mb-3 block">Order Note</label>
+    <textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-sm p-4 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none min-h-[100px]" placeholder="Add global remarks for this order..."></textarea>
+</div>
+</section>
+<!-- Shipping Address Card -->
+<section class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-6">
+<div>
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Address</h3>
+<button class="text-[10px] font-bold tracking-[0.08em] text-primary hover:underline">+ Add New</button>
+</div>
+<div class="relative">
+<select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
+<option>1212 123 (Default)</option>
+<option>Main Warehouse - Building 4</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+<span class="material-symbols-outlined text-lg">expand_more</span>
+</div>
+</div>
+<div class="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-100 relative">
+<button class="absolute top-4 right-4 text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5">location_on</span>
+<div class="text-[11px] text-slate-600 leading-relaxed">
+<p class="font-bold text-slate-900">1212 123 <span class="text-primary ml-1">Default</span></p>
+<p>Company: 123, Tax ID: 123</p>
+<p>123123, kriseooooooo@gmail.com</p>
+<p>12312, 123</p>
+<p>12312, 123, 123123, Germany</p>
+</div>
+</div>
+</div>
+</div>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input id="toggle-billing-address" class="w-4 h-4 rounded border-slate-300 text-primary focus:ring-primary transition-all" type="checkbox"/>
+<span class="text-sm text-slate-500 group-hover:text-slate-700 transition-colors">Use different billing address</span>
+</label>
+<div id="billing-address-section" class="hidden pt-2 border-t border-slate-100">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-[10px] font-bold tracking-[0.08em] text-slate-500">Billing Address</h3>
+<button class="text-[10px] font-bold tracking-[0.08em] text-primary hover:underline">+ Add New</button>
+</div>
+<div class="relative">
+<select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
+<option>Billing Company HQ</option>
+<option>Billing Department Address</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+<span class="material-symbols-outlined text-lg">expand_more</span>
+</div>
+</div>
+<div class="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-100 relative">
+<button class="absolute top-4 right-4 text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5">location_on</span>
+<div class="text-[11px] text-slate-600 leading-relaxed">
+<p class="font-bold text-slate-900">Billing Company HQ <span class="text-primary ml-1">Default</span></p>
+<p>Company: ProtoTi Europe, Tax ID: DE888123</p>
+<p>finance@prototi.com, +49 0000 123456</p>
+<p>Innovation Park 12</p>
+<p>Berlin, 10115, Germany</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Shipping Method -->
+<section class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+<h3 class="mb-4 text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Method</h3>
+<div class="relative mb-4">
+<select id="shipping-method-select" class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
+<option value="tariff-free" data-badge="5-7 Business Days" data-copy="Carrier: Occasionally Delayed Due to Customs Inspection!">Tariff-Free Shipping</option>
+<option value="express-air" data-badge="2-3 Business Days" data-copy="Carrier: Priority routing with additional surcharge.">Express Air (2-3 Days)</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+<span class="material-symbols-outlined text-lg">expand_more</span>
+</div>
+</div>
+<div id="shipping-method-card" class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-600">local_shipping</span>
+<span id="shipping-method-label" class="text-xs font-bold text-slate-900">Tariff-Free Shipping</span>
+</div>
+<span id="shipping-method-badge" class="bg-blue-100 text-primary text-[9px] font-bold px-2 py-0.5 rounded-sm">5-7 Business Days</span>
+</div>
+<p id="shipping-method-copy" class="text-[10px] text-slate-500">Carrier: Occasionally Delayed Due to Customs Inspection!</p>
+</div>
+</section>
+<!-- Payment Method -->
+<section class="bg-white p-6 rounded-lg card-shadow">
+<h2 class="font-bold text-base tracking-tight text-slate-900 mb-6">Payment Instrument (支付方式)</h2>
+<div class="space-y-3">
+<label class="flex items-center p-4 rounded-lg border-2 border-primary bg-blue-50/20 cursor-pointer">
+<input checked="" class="w-4 h-4 border-slate-300 text-primary focus:ring-primary mr-4" name="payment" type="radio"/>
+<div class="flex items-center flex-1">
+<div class="bg-white p-1 rounded border border-slate-100 mr-3">
+<svg class="w-12 h-4" viewbox="0 0 40 15"><path d="M12.9 11.2c.2-.5.4-1 .6-1.5L15 4.3c.1-.4 0-.7-.3-.8-.1-.1-.3-.1-.5-.1h-2.1c-.3 0-.6.2-.7.6l-.3 1.2h-2.9l.4-1.2c.1-.4-.1-.6-.4-.6h-2c-.3 0-.6.2-.7.5L3.8 11.2c-.1.3 0 .6.3.8.1.1.2.1.4.1h2.1c.3 0 .6-.2.7-.5l.3-1.1h2.9l-.3 1.1c-.1.3.1.6.4.6h2.1c.2-.1.5-.3.6-.6zM7.5 8.7h1.4l.2-.9H7.8l-.3.9zm13.3-5.3c-.4-.1-.8-.1-1.2-.1h-3c-.4 0-.8.3-.9.7L14.1 9.4l-.1.4-.4 1.5c-.1.4.1.7.5.7h2.2c.4 0 .7-.3.8-.7l.2-.8h3.3c1.7 0 3.1-1.4 3.1-3s-1.4-3.1-3.1-3.1zm-.6 3.6h-1.6l.3-1.2h1.6c.4 0 .8.4.8.8-.1.3-.4.4-.8.4z" fill="#003087"></path><path d="M30.7 3.4h-2.1c-.4 0-.7.3-.8.7l-.3 1.3h-2l.3-1.3c.1-.4-.2-.7-.6-.7h-2.1c-.4 0-.7.3-.8.7l-1.5 6.7c-.1.4.2.7.6.7h2.1c.4 0 .7-.3.8-.7l.3-1.4h2l-.3 1.4c-.1.4.2.7.6.7h2.1c.4 0 .7-.3.8-.7l1.5-6.7c.1-.4-.2-.7-.6-.7z" fill="#003087"></path></svg>
+</div>
+<span class="text-sm font-medium text-slate-900">PayPal Fast and Secure Payment</span>
+</div>
+<span class="text-[10px] font-bold tracking-[0.08em] text-success">Recommended</span>
+</label>
+<label class="flex items-center p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer">
+<input class="w-4 h-4 border-slate-300 text-primary focus:ring-primary mr-4" name="payment" type="radio"/>
+<div class="flex items-center flex-1">
+<div class="flex gap-1 mr-3">
+<div class="w-8 h-5 bg-slate-100 rounded-sm flex items-center justify-center"><span class="text-[8px] font-bold text-slate-400">VISA</span></div>
+<div class="w-8 h-5 bg-slate-100 rounded-sm flex items-center justify-center"><span class="text-[8px] font-bold text-slate-400">MC</span></div>
+</div>
+<span class="text-sm font-medium text-slate-900">Credit or Debit Card</span>
+</div>
+</label>
+<label class="flex items-center p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer">
+<input class="w-4 h-4 border-slate-300 text-primary focus:ring-primary mr-4" name="payment" type="radio"/>
+<div class="flex items-center flex-1">
+<span class="material-symbols-outlined mr-3 text-slate-400">account_balance</span>
+<span class="text-sm font-medium text-slate-900">Bank Transfer</span>
+</div>
+</label>
+</div>
+<button class="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-primary py-4 text-sm font-bold tracking-[0.04em] text-white transition-all hover:bg-primary-hover shadow-md shadow-primary/20 active:scale-[0.99]">
+<span>Confirm Payment</span>
+</button>
+</section>
+</div>
+<!-- Sidebar: Right Column -->
+<aside class="space-y-6">
+<!-- Order Summary -->
+<div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+<h2 class="mb-1 text-sm font-bold tracking-[0.08em] text-slate-900">Order Summary</h2>
+<div class="space-y-4 mt-6">
+<div class="flex justify-between text-sm gap-4">
+<span class="text-slate-500">Estimated Production</span>
+<span class="font-medium text-slate-900 text-right">3-5 business days</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500">Shipping Fee</span>
+<span class="font-medium text-slate-900">$65.00</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500">Subtotal (6 order items)</span>
+<span class="font-medium text-slate-900">$766.53</span>
+</div>
+<div id="coupon-discount-row" class="hidden flex justify-between text-sm">
+<span class="text-slate-500">Coupon Discount</span>
+<span id="coupon-discount-value" class="font-medium text-emerald-600">-$20.00</span>
+</div>
+</div>
+<div class="pt-4 border-t border-slate-100">
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-slate-900">Total</span>
+<div class="text-right">
+<div id="summary-original-total" class="hidden mb-1 text-xl leading-none font-semibold text-slate-400 line-through decoration-2 decoration-slate-400">$831.53</div>
+<div id="summary-total" class="text-3xl leading-none font-bold text-primary transition-colors duration-200">$831.53</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Coupons Card -->
+<div class="bg-white p-6 rounded-lg card-shadow sticky top-24">
+<div class="flex justify-between items-center mb-4">
+    <h2 class="font-bold text-base tracking-tight text-slate-900">Coupons</h2>
+    <button class="text-slate-400 hover:text-primary transition-colors" title="Refresh coupons"><span class="material-symbols-outlined text-sm">refresh</span></button>
+</div>
+<div class="space-y-3">
+    <div class="relative">
+        <select id="coupon-select" class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
+            <option value="">Select a coupon</option>
+            <option value="new_usd20" data-discount="20.00" data-label="$20.00 Off — Expires: Jul 1">Cash Savings  $20.00 Off — Expires: Jul 1</option>
+            <option value="bulk10" data-discount="10.00" data-label="$10.00 Off — Expires: Aug 15">Volume Bonus  $10.00 Off — Expires: Aug 15</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+            <span class="material-symbols-outlined text-lg">expand_more</span>
+        </div>
+    </div>
+    <div id="coupon-applied-summary" class="hidden rounded-lg border border-primary/30 bg-blue-50 px-4 py-3 text-[13px]">
+        <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2 min-w-0">
+                <span class="bg-lime-100 text-lime-700 text-[11px] font-medium px-3 py-1 rounded-md whitespace-nowrap">Cash Savings</span>
+                <span id="coupon-applied-label" class="truncate text-slate-700">$20.00 Off — Expires: Jul 1</span>
+            </div>
+            <button id="remove-coupon-btn" class="text-red-500 hover:text-red-600 transition-colors">
+                <span class="material-symbols-outlined text-sm">close</span>
+            </button>
+        </div>
+    </div>
+    <div id="coupon-available-card" class="hidden rounded-xl border border-emerald-200 bg-[radial-gradient(circle_at_top_left,_rgba(187,247,208,0.55),_rgba(255,255,255,0.96)_65%)] px-5 py-4">
+        <div class="flex items-start justify-between gap-4">
+            <div>
+                <p class="text-sm text-slate-500">Code: new_usd20</p>
+                <div class="mt-4 flex items-end gap-2 whitespace-nowrap">
+                    <span class="text-[2.2rem] leading-none font-light text-emerald-600">$20</span>
+                    <span class="text-lg leading-none text-slate-700">Off, no order minimum</span>
+                </div>
+                <p class="mt-4 text-sm text-slate-500">-45 uses left</p>
+                <p class="mt-3 text-sm text-slate-500">Expires: Jul 1, 2026</p>
+            </div>
+            <span class="bg-lime-100 text-lime-700 text-[11px] font-medium px-3 py-1 rounded-md whitespace-nowrap">Cash Savings</span>
+        </div>
+    </div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Background Decoration (Subtle Gradients) -->
+<div class="fixed top-0 right-0 w-[50vw] h-[512px] bg-primary/5 blur-[120px] -z-10 rounded-full"></div>
+<div class="fixed bottom-0 left-0 w-[30vw] h-[307px] bg-primary/5 blur-[100px] -z-10 rounded-full"></div>
+<script>
+    const modelCards = Array.from(document.querySelectorAll('[data-model-card]'));
+    const toggleAllButton = document.getElementById('toggle-all-details');
+    const toggleAllLabel = document.getElementById('toggle-all-label');
+
+    function setCardExpanded(card, expanded) {
+        const details = card.querySelector('.model-details');
+        const button = card.querySelector('.toggle-model-details');
+        const icon = button.querySelector('.material-symbols-outlined');
+        const label = button.querySelector('span:first-child');
+
+        details.classList.toggle('is-open', expanded);
+        details.classList.toggle('mt-3', expanded);
+        details.classList.toggle('mt-0', !expanded);
+        button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        label.textContent = expanded ? 'Collapse' : 'Expand';
+        icon.textContent = expanded ? 'expand_less' : 'expand_more';
+        icon.classList.toggle('rotate-180', !expanded);
+    }
+
+    function syncToggleAllLabel() {
+        const allExpanded = modelCards.every((card) => card.querySelector('.model-details').classList.contains('is-open'));
+        toggleAllLabel.textContent = allExpanded ? 'Collapse All' : 'Expand All';
+        toggleAllButton.querySelector('.material-symbols-outlined').textContent = allExpanded ? 'unfold_less' : 'unfold_more';
+    }
+
+    modelCards.forEach((card) => {
+        const button = card.querySelector('.toggle-model-details');
+        button.addEventListener('click', () => {
+            const details = card.querySelector('.model-details');
+            const expanded = !details.classList.contains('is-open');
+            setCardExpanded(card, expanded);
+            syncToggleAllLabel();
+        });
+    });
+
+    toggleAllButton.addEventListener('click', () => {
+        const shouldExpand = toggleAllLabel.textContent === 'Expand All';
+        modelCards.forEach((card) => setCardExpanded(card, shouldExpand));
+        syncToggleAllLabel();
+    });
+</script>
+<!-- Footer -->
+<footer class="bg-white border-t border-slate-200 pt-12 pb-6">
+<div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 grid grid-cols-1 md:grid-cols-3 gap-10">
+<div>
+<img src="/logo.svg" alt="ProtoTi" class="h-10 mb-4" />
+<p class="text-sm text-slate-500">Shenzhen ProtoTi Technology Co., LTD</p>
+<p class="text-sm text-slate-400 mt-1">User Name: kriseoooooo@gmail.com</p>
+</div>
+<div>
+<h4 class="font-bold text-slate-800 mb-4">Contact</h4>
+<p class="text-sm text-slate-500 flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-sm">call</span> Phone: +86 18126397112
+</p>
+<p class="text-sm text-slate-500 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">mail</span> Email: hello@prototi.com
+</p>
+</div>
+<div>
+<div class="md:max-w-[332px] md:ml-auto">
+<h4 class="font-bold text-slate-800 mb-4">Office</h4>
+<p class="text-sm text-slate-500 flex items-start gap-2">
+<span class="material-symbols-outlined text-sm mt-0.5">location_on</span>
+Address: 8th Floor, Biaofan Technology Building, Tower C, No.6 Gongye Road, Baoan, Shenzhen, China, 518104
+</p>
+<div class="mt-6 flex items-center gap-3">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/200px-MasterCard_Logo.svg.png" alt="Mastercard" class="h-6 object-contain" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa" class="h-5 object-contain" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/200px-PayPal.svg.png" alt="PayPal" class="h-5 object-contain" />
+</div>
+</div>
+</div>
+</div>
+<div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 mt-8 pt-6 border-t border-slate-100">
+<p class="text-sm text-slate-400 text-center">© 2018-2025 ProtoTi. All Rights Reserved.</p>
+</div>
+</footer>
+<div id="modelPreviewModal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-slate-950/55 px-3 py-4 backdrop-blur-sm sm:px-6 sm:py-8">
+<div class="absolute inset-0" data-model-preview-close></div>
+<div class="relative z-10 flex h-[92vh] w-full max-w-[min(96vw,1920px)] flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-2xl">
+<div class="flex items-center justify-between gap-4 border-b border-slate-200 px-5 py-4 sm:px-6">
+<h3 id="modelPreviewTitle" class="text-xl font-medium tracking-tight text-slate-900 sm:text-[1.95rem]">3D Preview</h3>
+<button type="button" class="inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900" data-model-preview-close>
+<span class="material-symbols-outlined text-[22px]">close</span>
+</button>
+</div>
+<div id="modelPreviewStage" class="flex-1 p-3 sm:p-4 [perspective:1600px] cursor-grab active:cursor-grabbing">
+<div class="flex h-full items-center justify-center overflow-hidden rounded-[1.5rem] bg-slate-50">
+<img id="modelPreviewImage" src="" alt="Model preview" class="pointer-events-none max-h-full max-w-full object-contain select-none drop-shadow-[0_28px_80px_rgba(15,23,42,0.18)] transition-transform duration-75" referrerpolicy="no-referrer" draggable="false" />
+</div>
+</div>
+</div>
+</div>
+<script>
+const wrapper = document.getElementById('user-menu-wrapper');
+const dropdown = document.getElementById('user-dropdown');
+if (wrapper && dropdown) {
+  wrapper.addEventListener('mouseenter', () => {
+    dropdown.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-1');
+    dropdown.classList.add('opacity-100', 'translate-y-0');
+  });
+  wrapper.addEventListener('mouseleave', () => {
+    dropdown.classList.add('opacity-0', 'pointer-events-none', 'translate-y-1');
+    dropdown.classList.remove('opacity-100', 'translate-y-0');
+  });
+}
+
+const billingToggle = document.getElementById('toggle-billing-address');
+const billingSection = document.getElementById('billing-address-section');
+if (billingToggle && billingSection) {
+  billingToggle.addEventListener('change', () => {
+    billingSection.classList.toggle('hidden', !billingToggle.checked);
+  });
+}
+
+const shippingMethodSelect = document.getElementById('shipping-method-select');
+const shippingMethodLabel = document.getElementById('shipping-method-label');
+const shippingMethodBadge = document.getElementById('shipping-method-badge');
+const shippingMethodCopy = document.getElementById('shipping-method-copy');
+if (shippingMethodSelect && shippingMethodLabel && shippingMethodBadge && shippingMethodCopy) {
+  const syncShippingMethod = () => {
+    const option = shippingMethodSelect.options[shippingMethodSelect.selectedIndex];
+    shippingMethodLabel.textContent = option.textContent;
+    shippingMethodBadge.textContent = option.dataset.badge || '';
+    shippingMethodCopy.textContent = option.dataset.copy || '';
+  };
+  shippingMethodSelect.addEventListener('change', syncShippingMethod);
+  syncShippingMethod();
+}
+
+const couponSelect = document.getElementById('coupon-select');
+const removeCouponBtn = document.getElementById('remove-coupon-btn');
+const couponDiscountRow = document.getElementById('coupon-discount-row');
+const couponDiscountValue = document.getElementById('coupon-discount-value');
+const summaryOriginalTotal = document.getElementById('summary-original-total');
+const summaryTotal = document.getElementById('summary-total');
+const couponAppliedSummary = document.getElementById('coupon-applied-summary');
+const couponAppliedLabel = document.getElementById('coupon-applied-label');
+const couponAvailableCard = document.getElementById('coupon-available-card');
+
+if (
+  couponSelect &&
+  removeCouponBtn &&
+  couponDiscountRow &&
+  couponDiscountValue &&
+  summaryOriginalTotal &&
+  summaryTotal &&
+  couponAppliedSummary &&
+  couponAppliedLabel &&
+  couponAvailableCard
+) {
+  const baseTotal = 831.53;
+
+  const applyCoupon = () => {
+    const option = couponSelect.options[couponSelect.selectedIndex];
+    const discount = Number(option?.dataset?.discount || 0);
+    if (!discount) return;
+    couponDiscountRow.classList.remove('hidden');
+    couponAppliedSummary.classList.remove('hidden');
+    couponAvailableCard.classList.remove('hidden');
+    couponAvailableCard.classList.add('opacity-70');
+    couponDiscountValue.textContent = `-$${discount.toFixed(2)}`;
+    couponAppliedLabel.textContent = option.dataset.label || option.textContent;
+    summaryOriginalTotal.classList.remove('hidden');
+    summaryOriginalTotal.textContent = `$${baseTotal.toFixed(2)}`;
+    summaryTotal.textContent = `$${(baseTotal - discount).toFixed(2)}`;
+  };
+
+  const removeCoupon = () => {
+    couponSelect.value = '';
+    couponDiscountRow.classList.add('hidden');
+    couponAppliedSummary.classList.add('hidden');
+    couponAvailableCard.classList.add('hidden');
+    couponAvailableCard.classList.remove('opacity-70');
+    summaryOriginalTotal.classList.add('hidden');
+    summaryTotal.textContent = `$${baseTotal.toFixed(2)}`;
+  };
+
+  couponSelect.addEventListener('change', () => {
+    if (!couponSelect.value) {
+      removeCoupon();
+      return;
+    }
+    applyCoupon();
+  });
+  removeCouponBtn.addEventListener('click', removeCoupon);
+}
+
+const modelPreviewModal = document.getElementById('modelPreviewModal');
+const modelPreviewImage = document.getElementById('modelPreviewImage');
+const modelPreviewTitle = document.getElementById('modelPreviewTitle');
+const modelPreviewStage = document.getElementById('modelPreviewStage');
+const modelPreviewTriggers = document.querySelectorAll('[data-model-preview-trigger]');
+const modelPreviewCloseTargets = document.querySelectorAll('[data-model-preview-close]');
+let previewScale = 1;
+let previewRotateX = -8;
+let previewRotateY = 18;
+let isPreviewDragging = false;
+let previewPointerX = 0;
+let previewPointerY = 0;
+
+function applyModelPreviewTransform() {
+  if (!modelPreviewImage) return;
+  modelPreviewImage.style.transform = `scale(${previewScale}) rotateX(${previewRotateX}deg) rotateY(${previewRotateY}deg)`;
+}
+
+function resetModelPreviewTransform() {
+  previewScale = 1;
+  previewRotateX = -8;
+  previewRotateY = 18;
+  applyModelPreviewTransform();
+}
+
+function openModelPreview(src, title) {
+  if (!modelPreviewModal || !modelPreviewImage || !modelPreviewTitle) return;
+  modelPreviewImage.src = src;
+  modelPreviewTitle.textContent = `3D Preview - ${title}`;
+  resetModelPreviewTransform();
+  modelPreviewModal.classList.remove('hidden');
+  modelPreviewModal.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModelPreview() {
+  if (!modelPreviewModal || !modelPreviewImage) return;
+  modelPreviewModal.classList.add('hidden');
+  modelPreviewModal.classList.remove('flex');
+  modelPreviewImage.src = '';
+  resetModelPreviewTransform();
+  document.body.style.overflow = '';
+}
+
+modelPreviewTriggers.forEach((trigger) => {
+  trigger.addEventListener('click', () => {
+    openModelPreview(trigger.getAttribute('data-preview-src'), trigger.getAttribute('data-preview-title') || 'Model Preview');
+  });
+});
+
+modelPreviewCloseTargets.forEach((target) => target.addEventListener('click', closeModelPreview));
+
+if (modelPreviewStage) {
+  modelPreviewStage.addEventListener('pointerdown', (event) => {
+    isPreviewDragging = true;
+    previewPointerX = event.clientX;
+    previewPointerY = event.clientY;
+  });
+
+  modelPreviewStage.addEventListener('wheel', (event) => {
+    event.preventDefault();
+    previewScale = Math.max(0.72, Math.min(2.4, previewScale - event.deltaY * 0.0012));
+    applyModelPreviewTransform();
+  }, { passive: false });
+
+  modelPreviewStage.addEventListener('dblclick', () => {
+    resetModelPreviewTransform();
+  });
+}
+
+window.addEventListener('pointermove', (event) => {
+  if (!isPreviewDragging) return;
+  const deltaX = event.clientX - previewPointerX;
+  const deltaY = event.clientY - previewPointerY;
+  previewPointerX = event.clientX;
+  previewPointerY = event.clientY;
+  previewRotateX = Math.max(-45, Math.min(45, previewRotateX - deltaY * 0.12));
+  previewRotateY += deltaX * 0.18;
+  applyModelPreviewTransform();
+});
+
+window.addEventListener('pointerup', () => {
+  isPreviewDragging = false;
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && modelPreviewModal && !modelPreviewModal.classList.contains('hidden')) {
+    closeModelPreview();
+  }
+});
+</script>
+</body></html>
