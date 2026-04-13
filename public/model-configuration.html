@@ -20,9 +20,9 @@
               "on-secondary-container": "#eee4ff",
               "surface-container-lowest": "#ffffff",
               "surface-tint": "#004ee8",
-              "surface-container-highest": "#e5e2e1",
-              "outline-variant": "#c3c5d8",
-              "outline": "#737687",
+              "surface-container-highest": "#f1f5f9",
+              "outline-variant": "#e2e8f0",
+              "outline": "#94a3b8",
               "inverse-surface": "#313030",
               "on-primary-fixed-variant": "#003ab3",
               "secondary-fixed-dim": "#cfbcff",
@@ -31,34 +31,34 @@
               "on-secondary": "#ffffff",
               "secondary-container": "#7836ff",
               "on-tertiary-fixed": "#380d00",
-              "surface-container-high": "#ebe7e7",
-              "background": "#fcf9f8",
+              "surface-container-high": "#ffffff",
+              "background": "#f8fafc",
               "primary-fixed": "#dce1ff",
-              "surface": "#fcf9f8",
+              "surface": "#ffffff",
               "on-tertiary-fixed-variant": "#802a00",
               "on-tertiary": "#ffffff",
               "on-error-container": "#93000a",
-              "surface-container-low": "#f6f3f2",
+              "surface-container-low": "#ffffff",
               "on-secondary-fixed": "#22005d",
               "on-error": "#ffffff",
               "error-container": "#ffdad6",
               "on-primary": "#ffffff",
-              "on-surface-variant": "#434656",
+              "on-surface-variant": "#64748b",
               "tertiary": "#9e3500",
               "primary-fixed-dim": "#b6c4ff",
               "tertiary-container": "#c74500",
-              "surface-bright": "#fcf9f8",
+              "surface-bright": "#f8fafc",
               "inverse-primary": "#b6c4ff",
               "on-primary-fixed": "#001550",
-              "surface-dim": "#dcd9d9",
+              "surface-dim": "#eef2f7",
               "on-secondary-fixed-variant": "#5400cc",
-              "on-surface": "#1c1b1b",
+              "on-surface": "#1e293b",
               "on-tertiary-container": "#fff4f1",
               "tertiary-fixed": "#ffdbcf",
               "error": "#ba1a1a",
-              "surface-container": "#f0edec",
-              "surface-variant": "#e5e2e1",
-              "on-background": "#1c1b1b",
+              "surface-container": "#ffffff",
+              "surface-variant": "#f1f5f9",
+              "on-background": "#1e293b",
               "inverse-on-surface": "#f3f0ef",
               "primary": "#0049db",
               "secondary-fixed": "#e9ddff"
@@ -77,15 +77,18 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        body { font-family: 'Inter', sans-serif; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
         h1, h2, h3 { font-family: 'Manrope', sans-serif; }
         .glass-panel {
-            background: rgba(252, 249, 248, 0.7);
+            background: rgba(248, 250, 252, 0.72);
             backdrop-filter: blur(12px);
         }
     </style>
 </head>
-<body class="bg-surface text-on-surface">
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
 <!-- Blue Info Bar -->
 <div class="fixed top-0 w-full z-50 bg-[#0060fe] text-white text-sm h-10 flex items-center">
 <div class="flex justify-between items-center w-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
@@ -145,15 +148,8 @@ Log Out
 </nav>
 <main class="pt-[6.5rem] pb-20 min-h-screen flex flex-col md:flex-row">
 <!-- Left Side: Configuration (Active Workspace) -->
-<section class="w-full md:flex-1 md:min-w-0 p-8 md:p-16 md:pb-12 bg-surface overflow-y-auto flex flex-col md:min-h-[calc(100vh-4rem)]">
+<section class="w-full md:flex-1 md:min-w-0 p-8 md:p-16 md:pb-12 bg-background overflow-y-auto flex flex-col md:min-h-[calc(100vh-4rem)]">
 <div class="max-w-[920px] mx-auto space-y-12 w-full flex-1 flex flex-col">
-<!-- Back to List Link -->
-<div class="-mt-8 mb-4">
-<a class="flex items-center text-sm font-semibold text-primary hover:underline transition-all" href="quote-manage.html">
-<span class="material-symbols-outlined text-sm mr-1">arrow_back</span>
-                    Back to List
-                </a>
-</div>
 <!-- Tabs and Quantity -->
 <div class="flex justify-between items-center border-b border-outline-variant/30 mb-6 mt-2">
     <div class="flex space-x-8">
@@ -183,9 +179,14 @@ Log Out
 <option value="Carbon Fiber Composites">Carbon Fiber Composites</option>
 <option value="Flexible Materials">Flexible Materials</option>
 <option value="Ceramic-Filled Polymers">Ceramic-Filled Polymers</option>
+<option value="Customize">Customize</option>
 </select>
 </div>
-<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div id="materialCustomFields" class="hidden space-y-2">
+<label class="block text-xs font-bold tracking-[0.08em] text-on-surface-variant">Custom Content</label>
+<input id="materialCustomInput" class="w-full bg-surface-container-low border-none rounded-xl text-sm px-4 py-3.5 focus:ring-2 focus:ring-primary outline-none placeholder:text-slate-300" type="text" placeholder="Please enter custom content"/>
+</div>
+<div id="materialOptionsGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-4">
 <!-- Material Card: Nylon -->
 <div class="group relative p-4 bg-surface-container-lowest rounded-xl border border-transparent hover:border-primary-container transition-all cursor-pointer shadow-sm">
 <div class="flex justify-between items-start mb-3">
@@ -276,7 +277,12 @@ Log Out
     <option value="Metal Finishes">Metal Finishes</option>
     <option value="Anodized Colors">Anodized Colors</option>
     <option value="Industrial Coatings">Industrial Coatings</option>
+    <option value="Customize">Customize</option>
   </select>
+</div>
+<div id="colorCustomFields" class="hidden space-y-2">
+  <label class="block text-xs font-bold tracking-[0.08em] text-on-surface-variant">Custom Content</label>
+  <input id="colorCustomInput" class="w-full bg-surface-container-low border-none rounded-xl text-sm px-4 py-3.5 focus:ring-2 focus:ring-primary outline-none placeholder:text-slate-300" type="text" placeholder="Please enter custom content"/>
 </div>
 <div id="colorSwatchesContainer" class="flex gap-4">
 <button class="flex flex-col items-center gap-1.5">
@@ -302,9 +308,30 @@ Log Out
 </select>
 </div>
 </div>
+<div class="space-y-4">
+<label class="block text-xs font-bold tracking-[0.08em] text-on-surface-variant">04. Priority Build</label>
+<div class="inline-flex w-full max-w-[240px] rounded-2xl bg-surface-container-low p-1.5">
+<label class="flex-1 cursor-pointer">
+<input checked="" class="peer sr-only" name="priorityBuild" type="radio" value="on"/>
+<span class="flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold text-on-surface-variant transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-md">On</span>
+</label>
+<label class="flex-1 cursor-pointer">
+<input class="peer sr-only" name="priorityBuild" type="radio" value="off"/>
+<span class="flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold text-on-surface-variant transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-md">Off</span>
+</label>
+</div>
+<p class="text-xs leading-relaxed text-on-surface-variant">Enable an expedited production review for this model when you need a faster internal queue slot.</p>
+</div>
+
+<div class="space-y-4">
+<label class="block text-xs font-bold tracking-[0.08em] text-on-surface-variant">05. Support Clearance</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl text-sm p-4 h-14 focus:ring-2 focus:ring-primary outline-none [appearance:textfield] placeholder:text-slate-300 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" min="0" step="0.1" type="number" value="0.8"/>
+<p class="text-xs leading-relaxed text-on-surface-variant">Set the minimum clearance you want us to preserve around support-sensitive areas during preparation.</p>
+</div>
+
 <!-- Notes & Attachments -->
 <div class="space-y-4">
-<label class="block text-xs font-bold tracking-[0.08em] text-on-surface-variant">04. Notes &amp; Documentation</label>
+<label class="block text-xs font-bold tracking-[0.08em] text-on-surface-variant">06. Notes &amp; Documentation</label>
 <div class="flex flex-col gap-4">
 <textarea class="w-full bg-surface-container-low border-none rounded-xl text-sm p-4 h-24 focus:ring-2 focus:ring-primary outline-none resize-none" placeholder="Order Notes..."></textarea>
 <div class="space-y-1">
@@ -335,7 +362,7 @@ Log Out
 </div>
 </section>
 <!-- Right Side: Summary & Preview -->
-<section class="w-full md:w-[440px] md:shrink-0 bg-surface-container-low p-4 md:p-6 sticky top-[6.5rem] h-fit md:min-h-[calc(100vh-6.5rem)]">
+<section class="w-full md:w-[440px] md:shrink-0 bg-background p-4 md:p-6 sticky top-[6.5rem] h-fit md:min-h-[calc(100vh-6.5rem)]">
 <div class="h-full flex flex-col space-y-5">
 <!-- File Information Card -->
 <div class="bg-transparent rounded-xl border border-outline-variant/50 p-5 flex flex-col">
@@ -365,11 +392,11 @@ Log Out
     </div>
 </div>
 <!-- Order Detail Panel -->
-<div class="bg-primary-container rounded-2xl text-on-primary-container shadow-xl shadow-primary/10 mb-auto" style="padding:20px;padding-top:23px;padding-bottom:23px">
+<div id="pricingPanel" class="bg-primary-container rounded-2xl text-on-primary-container shadow-xl shadow-primary/10 mb-auto" style="padding:20px;padding-top:23px;padding-bottom:23px">
 <div class="space-y-4">
 <div class="flex items-start justify-between gap-4">
 <span class="text-sm font-medium text-on-primary-container/80">Unit Price</span>
-<span class="text-sm font-medium text-on-primary-container">$2,145.00</span>
+<span id="unitPriceValue" class="text-sm font-medium text-on-primary-container">$2,145.00</span>
 </div>
 <div class="flex items-start justify-between gap-4">
 <span class="text-sm font-medium text-on-primary-container/80">Quantity</span>
@@ -378,14 +405,14 @@ Log Out
 <div class="border-t border-white/20 pt-4 space-y-4">
 <div class="flex items-start justify-between gap-4">
 <span class="text-sm font-medium text-on-primary-container/80">Estimated Delivery</span>
-<span class="inline-flex items-center gap-1.5 text-right text-sm font-semibold text-on-primary-container">
+<span id="estimatedDeliveryValue" class="inline-flex items-center gap-1.5 text-right text-sm font-semibold text-on-primary-container">
 <span class="material-symbols-outlined text-base">local_shipping</span>
 3-5 Business Days
 </span>
 </div>
 <div class="flex items-start justify-between gap-4">
 <span class="text-sm font-medium text-on-primary-container/80">Total</span>
-<span class="text-right text-2xl font-extrabold tracking-tighter text-on-primary-container">$2,145.00</span>
+<span id="totalPriceValue" class="text-right text-2xl font-extrabold tracking-tighter text-on-primary-container">$2,145.00</span>
 </div>
 </div>
 </div>
@@ -581,15 +608,49 @@ document.addEventListener('keydown', (e) => {
 const materialGroupSelect = document.getElementById('materialGroupSelect');
 const materialGroupTag = document.getElementById('materialGroupTag');
 const materialGroupTagText = document.getElementById('materialGroupTagText');
+const materialCustomFields = document.getElementById('materialCustomFields');
+const materialOptionsGrid = document.getElementById('materialOptionsGrid');
+const pricingPanel = document.getElementById('pricingPanel');
+const unitPriceValue = document.getElementById('unitPriceValue');
+const totalPriceValue = document.getElementById('totalPriceValue');
+const estimatedDeliveryValue = document.getElementById('estimatedDeliveryValue');
+
+function syncManualQuoteState() {
+  const isCustomMaterial = materialGroupSelect?.value === 'Customize';
+  const isCustomColor = colorGroupSelect?.value === 'Customize';
+  const manualQuoteMode = Boolean(isCustomMaterial || isCustomColor);
+
+  if (!pricingPanel || !unitPriceValue || !totalPriceValue || !estimatedDeliveryValue) return;
+
+  unitPriceValue.textContent = manualQuoteMode ? '≈ $2,145.00' : '$2,145.00';
+  totalPriceValue.textContent = manualQuoteMode ? '≈ $2,145.00' : '$2,145.00';
+  estimatedDeliveryValue.innerHTML = `
+    <span class="material-symbols-outlined text-base">local_shipping</span>
+    ${manualQuoteMode ? '8-13 Business Days' : '3-5 Business Days'}
+  `;
+
+  unitPriceValue.classList.toggle('text-amber-300', manualQuoteMode);
+  unitPriceValue.classList.toggle('text-on-primary-container', !manualQuoteMode);
+  totalPriceValue.classList.toggle('text-amber-300', manualQuoteMode);
+  totalPriceValue.classList.toggle('text-on-primary-container', !manualQuoteMode);
+}
+
+function syncMaterialGroupUI() {
+  if (!materialGroupSelect || !materialGroupTag || !materialGroupTagText || !materialCustomFields || !materialOptionsGrid) return;
+
+  const val = materialGroupSelect.value;
+  const isCustom = val === 'Customize';
+
+  materialCustomFields.classList.toggle('hidden', !isCustom);
+  materialOptionsGrid.classList.toggle('hidden', isCustom);
+  materialGroupTag.classList.add('hidden');
+  materialGroupSelect.classList.remove('hidden');
+
+  syncManualQuoteState();
+}
+
 if (materialGroupSelect) {
-  materialGroupSelect.addEventListener('change', () => {
-    const val = materialGroupSelect.value;
-    if (val) {
-      materialGroupTagText.textContent = val;
-      materialGroupTag.classList.remove('hidden');
-      materialGroupSelect.classList.add('hidden');
-    }
-  });
+  materialGroupSelect.addEventListener('change', syncMaterialGroupUI);
 }
 
 // Color Group: swap swatches based on selected group, hide dropdown and show tag
@@ -625,6 +686,7 @@ const colorGroupSelect = document.getElementById('colorGroupSelect');
 const colorGroupTag = document.getElementById('colorGroupTag');
 const colorGroupTagText = document.getElementById('colorGroupTagText');
 const colorSwatchesContainer = document.getElementById('colorSwatchesContainer');
+const colorCustomFields = document.getElementById('colorCustomFields');
 
 function renderColorSwatches(groupName) {
   const swatches = colorGroups[groupName] || colorGroups['Standard'];
@@ -636,16 +698,29 @@ function renderColorSwatches(groupName) {
   `).join('');
 }
 
-if (colorGroupSelect) {
-  colorGroupSelect.addEventListener('change', () => {
-    const val = colorGroupSelect.value;
+function syncColorGroupUI() {
+  if (!colorGroupSelect || !colorGroupTag || !colorGroupTagText || !colorSwatchesContainer || !colorCustomFields) return;
+
+  const val = colorGroupSelect.value;
+  const isCustom = val === 'Customize';
+
+  colorCustomFields.classList.toggle('hidden', !isCustom);
+  colorSwatchesContainer.classList.toggle('hidden', isCustom);
+
+  if (!isCustom) {
     renderColorSwatches(val);
-    if (val !== 'Standard') {
-      colorGroupTagText.textContent = val;
-      colorGroupTag.classList.remove('hidden');
-      colorGroupSelect.classList.add('hidden');
-    }
-  });
+  }
+  colorGroupTag.classList.add('hidden');
+  colorGroupSelect.classList.remove('hidden');
+
+  syncManualQuoteState();
 }
+
+if (colorGroupSelect) {
+  colorGroupSelect.addEventListener('change', syncColorGroupUI);
+  syncColorGroupUI();
+}
+
+syncMaterialGroupUI();
 </script>
 </body></html>

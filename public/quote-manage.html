@@ -125,11 +125,11 @@ Log Out
 <!-- Large Card for Quote List -->
 <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
 <!-- Page Title Aligned Left -->
-<div class="grid gap-3 lg:min-h-[88px] lg:grid-cols-[minmax(0,1fr)_auto]">
+<div class="grid gap-3 lg:min-h-[72px] lg:grid-cols-[minmax(0,1fr)_auto]">
 <h1 class="text-2xl font-bold tracking-tight text-slate-900 lg:self-start">My Quotes List</h1>
-<div class="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-500 lg:self-center lg:justify-self-end">
-<span>Total: <span class="text-slate-900">4</span></span>
-<span>Ready: <span class="text-primary">3</span></span>
+<div class="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-500 lg:self-center lg:justify-self-end lg:-translate-y-[15px]">
+<span>Total: <span class="text-slate-900">5</span></span>
+<span>Ready: <span class="text-primary">4</span></span>
 <span>Unconf.: <span class="text-slate-900">1</span></span>
 </div>
 </div>
@@ -146,6 +146,71 @@ Log Out
         <div class="col-span-1 text-center text-[11px] font-bold tracking-[0.08em] text-slate-500">Quantity</div>
         <div class="col-span-2 text-center text-[11px] font-bold tracking-[0.08em] text-slate-500">Price & Time</div>
         <div class="col-span-2 pl-2 text-[11px] font-bold tracking-[0.08em] text-slate-500">Actions</div>
+    </div>
+</div>
+
+<!-- Manual Quote Item -->
+<div class="py-5 flex items-center gap-4 border-b border-slate-200 bg-amber-50/40 hover:bg-amber-50/70 hover:-translate-y-0.5 transition-all duration-300 relative group">
+    <div class="flex items-center justify-center w-6 shrink-0">
+        <input type="checkbox" checked class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer quote-item-checkbox">
+    </div>
+    <div class="flex-1 grid grid-cols-12 gap-3 items-center">
+        <div class="col-span-4 flex items-center gap-3 pl-2">
+            <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" data-preview-title="4in Tri Tee r2.step">
+                <img alt="4in Tri Tee r2.step" class="w-full h-full object-contain" src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80"/>
+            </button>
+            <div class="flex flex-col gap-1 min-w-0">
+                <span class="inline-flex w-fit items-center rounded-md bg-amber-100 px-2 py-1 text-[10px] font-semibold text-amber-700">Manual Quotation Required</span>
+                <h3 class="font-bold text-sm text-slate-900 truncate" title="4in Tri Tee r2.step">4in Tri Tee r2.step</h3>
+                <p class="text-[10px] text-slate-500 font-medium">260.35 x 118.92 x 189.64 mm</p>
+                <p class="text-[10px] text-slate-500 font-medium">216444.62 mm³ | 223382.00 mm²</p>
+            </div>
+        </div>
+
+        <div class="col-span-3 flex flex-col gap-1 min-w-0">
+            <p class="text-xs font-bold text-slate-900 truncate">Process: CNC Machining</p>
+            <p class="text-[10px] text-slate-500 truncate">Material: 123123 <span class="text-primary font-semibold">(Custom)</span></p>
+            <p class="text-[10px] text-slate-500 truncate">Color: 123123 <span class="text-primary font-semibold">(Custom)</span></p>
+            <p class="text-[10px] text-slate-500 truncate">Surface Finish: As Machined (Ra 3.2)</p>
+            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t border-amber-200/70" id="extraConfigManual">
+                <p class="text-[10px] text-slate-500 truncate">Tolerance: ISO 2768-medium (m)</p>
+                <p class="text-[10px] text-slate-500 truncate">Machining Complexity: 3 Axis Multi-Setup</p>
+                <p class="text-[10px] text-slate-500 truncate">Cosmetic Requirement: Functional Only</p>
+                <p class="text-[10px] text-slate-500 truncate">Threads: No</p>
+            </div>
+            <button class="text-[10px] text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfigManual">
+                <span>More</span>
+                <span class="material-symbols-outlined text-[12px] transition-transform duration-200">expand_more</span>
+            </button>
+        </div>
+
+        <div class="col-span-1 flex justify-center">
+            <input class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="number" value="1" min="1"/>
+        </div>
+
+        <div class="col-span-2 flex flex-col items-center justify-center">
+            <p class="text-base font-bold text-amber-500">≈ $1341.83</p>
+            <p class="text-[10px] text-amber-500/80 font-medium mt-0.5">≈ $1341.83/piece</p>
+            <p class="mt-0.5 text-center text-[9px] font-medium text-slate-500">Est. 8-13 Business Days</p>
+        </div>
+
+        <div class="col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 pl-2 border-l border-slate-100 min-w-0">
+            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="edit">edit</span> Edit Configurations
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="attachment">attachment</span> Attachment
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span> Duplicate
+            </button>
+            <button class="flex items-center gap-1 text-[10px] font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="4in Tri Tee r2.step">
+                <span class="material-symbols-outlined text-[14px]" data-icon="delete">delete</span> Delete
+            </button>
+        </div>
     </div>
 </div>
 
@@ -456,19 +521,19 @@ Log Out
 <div class="space-y-4 mt-6">
 <div class="flex justify-between text-sm gap-4">
 <span class="text-slate-500">Estimated Production</span>
-<span class="font-medium text-slate-900 text-right">3-5 business days</span>
+<span class="font-medium text-slate-900 text-right">8-13 business days</span>
 </div>
 <div class="flex justify-between text-sm">
 <span class="text-slate-500">Shipping Fee</span>
-<span class="font-medium text-slate-900">$65.00</span>
+<span class="font-medium text-amber-500">≈ $65.00</span>
 </div>
 <div class="flex justify-between text-sm">
-<span class="text-slate-500">Subtotal (4 quote items)</span>
-<span class="font-medium text-slate-900">$605.80</span>
+<span class="text-slate-500">Subtotal (5 quote items)</span>
+<span class="font-medium text-amber-500">≈ $1947.63</span>
 </div>
 <div class="pt-4 border-t border-slate-100 flex justify-between items-center">
 <span class="text-lg font-bold text-slate-900">Total</span>
-<span class="text-3xl font-bold text-primary">$670.80</span>
+<span class="text-3xl font-bold text-amber-500">≈ $2012.63</span>
 </div>
 </div>
 <div class="mt-8 flex flex-col gap-3">
