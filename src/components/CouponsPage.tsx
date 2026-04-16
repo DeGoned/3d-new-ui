@@ -15,42 +15,54 @@ const coupons = [
   {
     id: 1,
     code: "March-8off",
-    highlight: "8% Off",
-    condition: "No order minimum",
+    highlight: "8%",
+    condition: "off, no order minimum",
     uses: "986 uses left",
     expires: "Apr 1, 2026",
     type: "Percentage Deal",
-    color: "bg-blue-50 text-blue-600 border-blue-100"
+    border: "border-blue-200",
+    bg: "bg-[radial-gradient(circle_at_top_left,_rgba(191,219,254,0.55),_rgba(255,255,255,0.96)_65%)]",
+    text: "text-blue-600",
+    tag: "bg-sky-100 text-sky-700"
   },
   {
     id: 2,
     code: "new_freeship",
-    highlight: "Free Shipping",
-    condition: "On orders over $200.00",
+    highlight: "Free shipping",
+    condition: "on orders over $200.00",
     uses: "10 uses left",
     expires: "Jul 1, 2026",
     type: "Free Shipping",
-    color: "bg-purple-50 text-purple-600 border-purple-100"
+    border: "border-violet-200",
+    bg: "bg-[radial-gradient(circle_at_top_left,_rgba(221,214,254,0.55),_rgba(255,255,255,0.96)_65%)]",
+    text: "text-violet-600",
+    tag: "bg-purple-100 text-purple-700"
   },
   {
     id: 3,
     code: "new_10off",
-    highlight: "10% Off",
-    condition: "On orders over $50.00",
+    highlight: "10%",
+    condition: "off orders over $50.00",
     uses: "12 uses left",
     expires: "Jul 1, 2026",
     type: "Percentage Deal",
-    color: "bg-indigo-50 text-indigo-600 border-indigo-100"
+    border: "border-amber-200",
+    bg: "bg-[radial-gradient(circle_at_top_left,_rgba(253,230,138,0.45),_rgba(255,255,255,0.96)_65%)]",
+    text: "text-amber-600",
+    tag: "bg-orange-100 text-orange-700"
   },
   {
     id: 4,
     code: "new_usd20",
-    highlight: "$20 Off",
-    condition: "No order minimum",
+    highlight: "$20",
+    condition: "OFF, no order minimum",
     uses: "32 uses left",
     expires: "Jul 1, 2026",
     type: "Cash Savings",
-    color: "bg-emerald-50 text-emerald-600 border-emerald-100"
+    border: "border-emerald-200",
+    bg: "bg-[radial-gradient(circle_at_top_left,_rgba(187,247,208,0.55),_rgba(255,255,255,0.96)_65%)]",
+    text: "text-emerald-600",
+    tag: "bg-lime-100 text-lime-700"
   }
 ];
 
@@ -107,45 +119,23 @@ export const CouponsPage = () => {
               className="grid grid-cols-1 md:grid-cols-2 gap-6"
             >
               {coupons.map((coupon) => (
-                <div 
+                <div
                   key={coupon.id}
-                  className="bg-white border border-outline rounded-xl p-8 hover:shadow-lg hover:shadow-primary/5 transition-all group relative overflow-hidden"
+                  className={cn("rounded-xl border px-5 py-4 hover:shadow-lg transition-all", coupon.border, coupon.bg)}
                 >
-                  <div className={cn("absolute top-0 right-0 rounded-bl-xl px-4 py-1 text-[10px] font-black tracking-[0.08em]", coupon.color)}>
-                    {coupon.type}
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-2 text-slate-400">
-                      <Tag size={14} />
-                      <span className="text-xs font-bold tracking-[0.08em]">Code: {coupon.code}</span>
-                    </div>
-
+                  <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h3 className="text-[1.75rem] font-bold leading-tight tracking-tight text-on-background">
-                        {coupon.highlight}
-                      </h3>
-                      <p className="mt-1.5 text-sm text-slate-400 font-normal">
-                        {coupon.condition}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-4 border-t border-outline/50">
-                      <div className="flex items-center space-x-4">
-                        <div className="flex items-center space-x-1 text-slate-500">
-                          <Clock size={14} />
-                          <span className="text-xs font-medium">{coupon.uses}</span>
-                        </div>
-                        <div className="flex items-center space-x-1 text-slate-500">
-                          <Calendar size={14} />
-                          <span className="text-xs font-medium">Expires: {coupon.expires}</span>
-                        </div>
+                      <p className="text-sm text-slate-500">Code: {coupon.code}</p>
+                      <div className="mt-4 flex items-end gap-2 whitespace-nowrap">
+                        <span className={cn("text-[2.2rem] leading-none font-light", coupon.text)}>{coupon.highlight}</span>
+                        <span className="text-lg leading-none text-slate-700">{coupon.condition}</span>
                       </div>
-                      <button className="text-primary font-bold text-xs flex items-center hover:underline">
-                        Use Now
-                        <ChevronRight size={14} className="ml-1" />
-                      </button>
+                      <p className="mt-4 text-sm text-slate-500">-{coupon.uses}</p>
+                      <p className="mt-3 text-sm text-slate-500">Expires: {coupon.expires}</p>
                     </div>
+                    <span className={cn("text-xs font-medium px-3 py-1 rounded-md whitespace-nowrap shrink-0", coupon.tag)}>
+                      {coupon.type}
+                    </span>
                   </div>
                 </div>
               ))}

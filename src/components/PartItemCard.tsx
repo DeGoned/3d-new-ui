@@ -26,6 +26,7 @@ interface PartItemCardProps {
   rightAside?: React.ReactNode;
   footerActions?: React.ReactNode;
   tone?: 'plain' | 'soft';
+  borderless?: boolean;
 }
 
 export const PartItemCard: React.FC<PartItemCardProps> = ({
@@ -35,6 +36,7 @@ export const PartItemCard: React.FC<PartItemCardProps> = ({
   rightAside,
   footerActions,
   tone = 'plain',
+  borderless = false,
 }: PartItemCardProps) => {
   const [previewOpen, setPreviewOpen] = useState(false);
 
@@ -53,7 +55,10 @@ export const PartItemCard: React.FC<PartItemCardProps> = ({
             <button
               type="button"
               onClick={() => setPreviewOpen(true)}
-              className="flex h-40 w-full items-center justify-center rounded-[1.25rem] border border-outline/70 bg-white p-4 shadow-sm transition-transform hover:scale-[1.01]"
+              className={cn(
+                "flex h-40 w-full items-center justify-center rounded-[1.25rem] p-4 transition-transform hover:scale-[1.01]",
+                borderless ? 'bg-slate-50' : 'border border-outline/70 bg-white shadow-sm'
+              )}
             >
               <img
                 src={item.image}
@@ -76,18 +81,18 @@ export const PartItemCard: React.FC<PartItemCardProps> = ({
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex flex-wrap gap-2">
                 {item.attachmentName ? (
-                  <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-2 text-xs font-semibold text-slate-500 ring-1 ring-outline">
+                  <span className={cn("inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold text-slate-500", borderless ? 'bg-slate-100' : 'bg-white ring-1 ring-outline')}>
                     <Paperclip size={14} />
                     {item.attachmentName}
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-2 text-xs font-semibold text-slate-400 ring-1 ring-outline">
+                  <span className={cn("inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold text-slate-400", borderless ? 'bg-slate-100' : 'bg-white ring-1 ring-outline')}>
                     <Paperclip size={14} />
                     No attachments
                   </span>
                 )}
                 {item.note ? (
-                  <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-2 text-xs font-semibold text-slate-500 ring-1 ring-outline">
+                  <span className={cn("inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold text-slate-500", borderless ? 'bg-slate-100' : 'bg-white ring-1 ring-outline')}>
                     <MessageSquare size={14} />
                     Notes attached
                   </span>
@@ -96,7 +101,7 @@ export const PartItemCard: React.FC<PartItemCardProps> = ({
               {topAction}
             </div>
 
-            <div className="grid gap-4 border-t border-outline/70 pt-5 md:grid-cols-2 xl:grid-cols-3">
+            <div className={cn("grid gap-4 pt-5 md:grid-cols-2 xl:grid-cols-3", !borderless && 'border-t border-outline/70')}>
               <div>
                 <p className="text-[10px] font-black tracking-[0.08em] text-slate-400">Material</p>
                 <p className="mt-2 text-sm font-semibold text-slate-800">{item.material}</p>
@@ -112,7 +117,7 @@ export const PartItemCard: React.FC<PartItemCardProps> = ({
             </div>
 
             {item.note ? (
-              <div className="rounded-[1.25rem] border border-outline bg-white px-4 py-3">
+              <div className={cn("rounded-[1.25rem] px-4 py-3", borderless ? 'bg-slate-50' : 'border border-outline bg-white')}>
                 <p className="text-[10px] font-black tracking-[0.08em] text-slate-400">Part Notes</p>
                 <p className="mt-2 text-sm text-slate-500">{item.note}</p>
               </div>
@@ -121,7 +126,7 @@ export const PartItemCard: React.FC<PartItemCardProps> = ({
             {footerActions ? <div className="border-t border-outline/70 pt-4">{footerActions}</div> : null}
           </div>
 
-          <aside className="rounded-[1.5rem] border border-outline/70 bg-white p-5">
+          <aside className={cn("rounded-[1.5rem] p-5", borderless ? 'bg-slate-50' : 'border border-outline/70 bg-white')}>
             {rightAside}
           </aside>
         </div>

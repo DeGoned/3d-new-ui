@@ -7,6 +7,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="./shared-part-card.css" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -60,6 +61,13 @@
             box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.1);
             outline: none;
         }
+        .model-card.is-collapsed .collapsible-block {
+            display: none;
+        }
+        .model-card.is-collapsed .collapsible-lines {
+            display: none;
+        }
+        /* collapsed-indicators visibility controlled by JS in setCardExpanded */
         .model-details {
             max-height: 0;
             opacity: 0;
@@ -69,26 +77,130 @@
         }
         .model-details.is-open {
             opacity: 1;
-            max-height: 520px;
+            max-height: 960px;
             transform: translateY(0);
         }
-        .model-card .summary-file p,
-        .model-card .summary-config p:not(:first-child) {
-            display: none;
+        .order-model-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
         }
-        .model-card:not(.is-collapsed) .summary-badges {
-            display: none;
+        .order-model-media {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 0;
+            width: 100%;
         }
-        .model-card .summary-file,
-        .model-card .summary-config {
-            gap: 0;
+        .order-model-config {
+            min-width: 0;
+        }
+        .order-model-qty {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .order-model-qty-value {
+            display: inline-flex;
+            width: 3rem;
+            height: 2rem;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #94a3b8;
+            font-size: 0.875rem;
+            font-weight: 600;
+            user-select: none;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .order-model-price {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .order-model-collapsed-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .order-model-footer {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .order-model-manual-fields {
+            display: grid;
+            gap: 0.75rem;
+        }
+        @media (min-width: 1024px) {
+            .order-model-layout {
+                display: grid;
+                grid-template-columns: minmax(320px, 380px) minmax(220px, 280px) 88px 176px minmax(0, 1fr);
+                column-gap: 1.5rem;
+                row-gap: 1.5rem;
+                align-items: start;
+            }
+            .order-model-media {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            .model-card:not(.is-collapsed) .order-model-media {
+                align-self: center;
+            }
+            .order-model-config {
+                grid-column: 2;
+                grid-row: 1;
+            }
+            .order-model-qty {
+                grid-column: 3;
+                grid-row: 1;
+                align-self: center;
+                justify-content: center;
+            }
+            .order-model-price {
+                grid-column: 4;
+                grid-row: 1;
+                align-self: center;
+                align-items: flex-end;
+                text-align: right;
+            }
+            .order-model-collapsed-meta {
+                grid-column: 1;
+                grid-row: 2;
+            }
+            .model-card.is-collapsed .order-model-layout {
+                grid-template-columns: minmax(320px, 380px) 88px 176px minmax(0, 1fr);
+            }
+            .model-card.is-collapsed .order-model-qty {
+                grid-column: 2;
+            }
+            .model-card.is-collapsed .order-model-price {
+                grid-column: 3;
+            }
+            .order-model-footer {
+                grid-template-columns: minmax(320px, 380px) minmax(220px, 280px) 88px 176px minmax(0, 1fr);
+                align-items: start;
+                column-gap: 1.5rem;
+            }
+            .order-model-footer > :first-child {
+                grid-column: 1;
+            }
+            .order-model-footer > :last-child {
+                grid-column: 2 / 6;
+            }
+            .order-model-manual-fields {
+                grid-template-columns: minmax(0, 1fr);
+            }
         }
     </style>
 </head>
 <body class="antialiased bg-slate-50">
 <!-- Blue Info Bar -->
 <div class="fixed top-0 w-full z-50 bg-[#0060fe] text-white text-sm h-10 flex items-center">
-<div class="flex justify-between items-center w-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+<div class="flex justify-between items-center w-full max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20">
 <div class="flex items-center gap-6">
 <a href="tel:+8618126397112" class="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
 <span class="material-symbols-outlined text-sm">call</span>
@@ -106,7 +218,7 @@
 </div>
 <!-- TopNavBar -->
 <nav class="fixed top-10 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-outline-variant/30 shadow-[0_2px_15px_rgba(0,0,0,0.03)] h-16">
-<div class="flex justify-between items-center h-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+<div class="flex justify-between items-center h-full max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20">
 <div class="flex items-center gap-5">
 <a href="/home-v3.html" class="flex items-center shrink-0">
 <img src="/logo.svg" alt="ProtoTi" class="h-7" />
@@ -158,7 +270,7 @@ Log Out
 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2">
 <div class="flex flex-col gap-1">
 <h2 class="text-2xl font-bold tracking-tight text-slate-900">Order Details</h2>
-<p class="text-xs text-slate-500">Order # ORD260319-112007</p>
+<p id="order-reference" class="text-xs text-slate-500">Order # ORD260319-112007</p>
 </div>
 <button id="toggle-all-details" class="inline-flex items-center gap-2 self-start rounded-lg border border-slate-200 px-4 py-2 text-xs font-bold tracking-[0.04em] text-slate-600 transition-all hover:border-primary/30 hover:bg-blue-50/40 hover:text-primary md:self-auto">
 <span class="material-symbols-outlined text-base">unfold_more</span>
@@ -167,63 +279,31 @@ Log Out
 </div>
 
 <div class="space-y-4 mt-6">
-<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-amber-50/40" data-model-card>
-<div class="p-5">
-<div class="mb-3">
-<span class="inline-flex items-center rounded-md bg-amber-100 px-2.5 py-1 text-[10px] font-semibold text-amber-700">Manual Quotation Required</span>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
-<div class="md:col-span-4 flex items-center gap-3 pl-2">
-<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" data-preview-title="4in Tri Tee r2.step">
-<img src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" alt="4in Tri Tee r2.step" class="w-full h-full object-contain" />
-</button>
-<div class="flex flex-col gap-1 min-w-0">
-<h3 class="font-bold text-sm text-slate-900 break-words" title="4in Tri Tee r2.step">4in Tri Tee r2.step</h3>
-<p class="text-[10px] text-slate-500 font-medium">260.35 x 118.92 x 189.64 mm</p>
-<p class="text-[10px] text-slate-500 font-medium">216444.62 mm³ | 223382.00 mm²</p>
-</div>
-</div>
-<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
-<p class="text-xs font-bold text-slate-900">Process: CNC Machining</p>
-<p class="text-[10px] text-slate-500">Material: 123123 <span class="text-primary font-semibold">(Custom)</span></p>
-<p class="text-[10px] text-slate-500">Color: 123123 <span class="text-primary font-semibold">(Custom)</span></p>
-<p class="text-[10px] text-slate-500">Surface Finish: As Machined (Ra 3.2)</p>
-<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-medium (m)</p>
-<p class="text-[10px] text-slate-500">Machining Complexity: 3 Axis Multi-Setup</p>
-</div>
-<div class="md:col-span-1 flex md:justify-center">
-<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">1</div>
-</div>
-<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
-<p class="text-base font-bold text-amber-500">≈ $1341.83</p>
-<p class="text-[10px] text-amber-500/80 font-medium mt-0.5">≈ $1341.83/piece</p>
-<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 8-13 Days</p>
-</div>
-<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
-<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<!-- Card 1: Manual Quotation -->
+<article class="model-card border border-slate-200 rounded-2xl bg-amber-50/40" data-model-card>
+<div class="p-5 space-y-4">
+<!-- Top bar: yellow label + expand button -->
+<div class="flex items-center justify-between gap-4">
+<span class="proto-part-manual-badge inline-flex items-center rounded-md bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">Manual Quotation Required</span>
+<button class="toggle-model-details inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
 <span>Expand</span>
 <span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
 </button>
 </div>
+<div class="order-model-layout">
+<div class="order-model-media">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="/manual-quote-preview.svg" data-preview-title="4in Tri Tee r2.step">
+<img src="/manual-quote-preview.svg" alt="4in Tri Tee r2.step" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0 w-[200px]">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="4in Tri Tee r2.step">4in Tri Tee r2.step</h3>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">260.35 x 118.92 x 189.64 mm</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">216444.62 mm³</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">223382.00 mm²</p>
 </div>
-<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
-<div class="relative inline-flex items-center gap-1.5 pr-4">
-<span class="material-symbols-outlined text-[14px]">attachment</span>
-<span class="font-medium">Attachments</span>
 </div>
-<div class="relative inline-flex items-center gap-1.5 pr-4">
-<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
-<span class="font-medium">Notes</span>
-</div>
-</div>
-<div class="model-details mt-0">
-<div class="mt-5 grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-3 md:items-start">
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-4 md:pl-2">
-<p><span class="font-semibold text-slate-700">Dimensions:</span> 260.35 x 118.92 x 189.64 mm</p>
-<p><span class="font-semibold text-slate-700">Volume:</span> 216444.62 mm³</p>
-<p><span class="font-semibold text-slate-700">Surface Area:</span> 223382.00 mm²</p>
-</div>
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-3">
+<div class="order-model-config collapsible-block">
+<div class="space-y-1 text-xs leading-relaxed text-slate-500">
 <p><span class="font-semibold text-slate-700">Process:</span> CNC Machining</p>
 <p><span class="font-semibold text-slate-700">Material:</span> 123123 <span class="text-primary font-semibold">(Custom)</span></p>
 <p><span class="font-semibold text-slate-700">Color:</span> 123123 <span class="text-primary font-semibold">(Custom)</span></p>
@@ -239,79 +319,15 @@ Log Out
 <p><span class="font-semibold text-slate-700">Request Manual Quote:</span> Not if necessary</p>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
-<div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
-<span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
-</label>
-<div class="bg-slate-50 border border-slate-100 rounded-lg p-3 flex items-center justify-center h-[62px]">
-<p class="text-xs text-slate-400">No attachments</p>
+<div class="order-model-qty">
+<div class="order-model-qty-value" aria-label="Quantity 1">1</div>
 </div>
+<div class="order-model-price proto-part-price-block proto-part-price-block--end">
+<p class="text-base font-bold text-amber-500">≈ $1341.83</p>
+<p class="text-xs text-amber-500/80 font-medium mt-0.5">≈ $1341.83/piece</p>
+<p class="mt-1 text-xs font-medium text-slate-500">Est. 8-13 Days</p>
 </div>
-<div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
-<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
-</label>
-<div class="relative">
-<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Add notes here..." rows="2" maxlength="500"></textarea>
-<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
-</div>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
-<div>
-<label class="mb-2 block text-[11px] font-medium text-slate-500">Manual Assessed Price</label>
-<div class="flex h-[44px] items-center rounded-lg border border-amber-200 bg-amber-50 px-4 text-sm font-semibold text-amber-600">≈ $1341.83</div>
-</div>
-<div>
-<label class="mb-2 block text-[11px] font-medium text-slate-500">Target Price</label>
-<div class="relative">
-<span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm font-medium text-slate-400">$</span>
-<input type="text" value="111.00" class="h-[44px] w-full rounded-lg border border-slate-200 bg-white pl-8 pr-4 text-sm text-slate-700 focus:border-primary focus:ring-1 focus:ring-primary" />
-</div>
-</div>
-</div>
-</div>
-</div>
-</article>
-
-<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
-<div class="p-5">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
-<div class="md:col-span-4 flex items-center gap-3 pl-2">
-<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" data-preview-title="90101001-Exhaust-Manifold-Tubing-rev-.step">
-<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" alt="90101001-Exhaust-Manifold-Tubing-rev-.step" class="w-full h-full object-contain" />
-</button>
-<div class="flex flex-col gap-1 min-w-0">
-<h3 class="font-bold text-sm text-slate-900 break-words" title="90101001-Exhaust-Manifold-Tubing-rev-.step">90101001-Exhaust-Manifold-Tubing-rev-.step</h3>
-<p class="text-[10px] text-slate-500 font-medium">303.14 x 156.77 x 102.27 mm</p>
-<p class="text-[10px] text-slate-500 font-medium">185468.61 mm³ | 163195.11 mm²</p>
-</div>
-</div>
-<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
-<p class="text-xs font-bold text-slate-900">Material: 1.2 SLM - Stainless Steel 316L - $$$</p>
-<p class="text-[10px] text-slate-500">Color: Metallic Gray</p>
-<p class="text-[10px] text-slate-500">Post Process: Sand Blasted - Matte</p>
-<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
-<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-m</p>
-<p class="text-[10px] text-slate-500">Surface Class: Standard Production</p>
-</div>
-<div class="md:col-span-1 flex md:justify-center">
-<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">1</div>
-</div>
-<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
-<p class="text-base font-bold text-primary">$215.33</p>
-<p class="text-[10px] text-slate-400 font-medium mt-0.5">$215.33/piece</p>
-<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 3-5 Days</p>
-</div>
-<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
-<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
-<span>Expand</span>
-<span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
-</button>
-</div>
-</div>
-<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
+<div class="order-model-collapsed-meta collapsed-indicators flex-wrap items-center gap-4 text-xs text-slate-500">
 <div class="relative inline-flex items-center gap-1.5 pr-4">
 <span class="material-symbols-outlined text-[14px]">attachment</span>
 <span class="font-medium">Attachments</span>
@@ -321,14 +337,68 @@ Log Out
 <span class="font-medium">Notes</span>
 </div>
 </div>
-<div class="model-details mt-0">
-<div class="mt-5 grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-3 md:items-start">
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-4 md:pl-2">
-<p><span class="font-semibold text-slate-700">Dimensions:</span> 303.14 x 156.77 x 102.27 mm</p>
-<p><span class="font-semibold text-slate-700">Volume:</span> 185468.61 mm³</p>
-<p><span class="font-semibold text-slate-700">Surface Area:</span> 163195.11 mm²</p>
 </div>
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-3">
+<!-- Expandable section -->
+<div class="model-details mt-0">
+<div class="order-model-footer mt-5">
+<div>
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
+</label>
+<div class="bg-slate-50 border border-slate-100 rounded-lg p-3 flex items-center justify-center h-[62px]">
+<p class="text-xs text-slate-400">No attachments</p>
+</div>
+</div>
+<div>
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
+</label>
+<div class="relative">
+<textarea class="w-full bg-slate-100 border border-slate-200 rounded-lg text-xs p-3 text-slate-700 resize-none cursor-not-allowed opacity-70" placeholder="Add notes here..." rows="2" maxlength="500" readonly></textarea>
+<span class="absolute bottom-2 right-2 text-xs text-slate-400">0 / 500</span>
+</div>
+</div>
+</div>
+<div class="order-model-manual-fields mt-5">
+<div>
+<label class="mb-2 block text-xs font-medium text-slate-500">Manual Assessed Price</label>
+<div class="flex h-[36px] items-center rounded-lg border border-amber-200 bg-amber-50 px-3 text-sm font-semibold text-amber-600">≈ $1341.83</div>
+</div>
+<div>
+<label class="mb-2 block text-xs font-medium text-slate-500">Target Price</label>
+<div class="relative">
+<span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm font-medium text-slate-400">$</span>
+<input type="text" value="111.00" class="h-[36px] w-full rounded-lg border border-slate-200 bg-white pl-8 pr-4 text-sm text-slate-700 focus:border-primary focus:ring-1 focus:ring-primary" />
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+
+<!-- Card 2: 90101001-Exhaust-Manifold -->
+<article class="model-card border border-slate-200 rounded-2xl bg-white" data-model-card>
+<div class="p-5 space-y-4">
+<div class="flex items-center justify-end">
+<button class="toggle-model-details inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<span>Expand</span>
+<span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+<div class="order-model-layout">
+<div class="order-model-media">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" data-preview-title="90101001-Exhaust-Manifold-Tubing-rev-.step">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" alt="90101001-Exhaust-Manifold-Tubing-rev-.step" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0 w-[200px]">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="90101001-Exhaust-Manifold-Tubing-rev-.step">90101001-Exhaust-Manifold-Tubing-rev-.step</h3>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">303.14 x 156.77 x 102.27 mm</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">185468.61 mm³</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">163195.11 mm²</p>
+</div>
+</div>
+<div class="order-model-config collapsible-block">
+<div class="space-y-1 text-xs leading-relaxed text-slate-500">
 <p><span class="font-semibold text-slate-700">Material:</span> Stainless Steel 316L</p>
 <p><span class="font-semibold text-slate-700">Color:</span> Metallic Gray</p>
 <p><span class="font-semibold text-slate-700">Process:</span> Sand Blasted - Matte</p>
@@ -337,9 +407,29 @@ Log Out
 <p><span class="font-semibold text-slate-700">Surface Class:</span> Standard Production</p>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+<div class="order-model-qty">
+<div class="order-model-qty-value" aria-label="Quantity 1">1</div>
+</div>
+<div class="order-model-price proto-part-price-block proto-part-price-block--end">
+<p class="text-base font-bold text-primary">$215.33</p>
+<p class="text-xs text-slate-400 font-medium mt-0.5">$215.33/piece</p>
+<p class="mt-1 text-xs font-medium text-slate-500">Est. 3-5 Days</p>
+</div>
+<div class="order-model-collapsed-meta collapsed-indicators flex-wrap items-center gap-4 text-xs text-slate-500">
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="font-medium">Attachments</span>
+</div>
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-medium">Notes</span>
+</div>
+</div>
+</div>
+<div class="model-details mt-0">
+<div class="order-model-footer mt-5">
 <div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
 <span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
 </label>
 <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 flex items-center justify-center h-[62px]">
@@ -347,12 +437,12 @@ Log Out
 </div>
 </div>
 <div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
 <span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
 </label>
 <div class="relative">
-<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Add notes here..." rows="2" maxlength="500"></textarea>
-<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
+<textarea class="w-full bg-slate-100 border border-slate-200 rounded-lg text-xs p-3 text-slate-700 resize-none cursor-not-allowed opacity-70" placeholder="Add notes here..." rows="2" maxlength="500" readonly></textarea>
+<span class="absolute bottom-2 right-2 text-xs text-slate-400">0 / 500</span>
 </div>
 </div>
 </div>
@@ -360,62 +450,29 @@ Log Out
 </div>
 </article>
 
-<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
-<div class="p-5">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
-<div class="md:col-span-4 flex items-center gap-3 pl-2">
-<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" data-preview-title="FUEL RAIL SECONDARY.stp">
-<img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" alt="FUEL RAIL SECONDARY.stp" class="w-full h-full object-contain" />
-</button>
-<div class="flex flex-col gap-1 min-w-0">
-<h3 class="font-bold text-sm text-slate-900 break-words" title="FUEL RAIL SECONDARY.stp">FUEL RAIL SECONDARY.stp</h3>
-<p class="text-[10px] text-slate-500 font-medium">240.00 x 34.00 x 62.00 mm</p>
-<p class="text-[10px] text-slate-500 font-medium">52891.68 mm³ | 41350.53 mm²</p>
-</div>
-</div>
-<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
-<p class="text-xs font-bold text-slate-900">Material: 1.2 SLM - Stainless Steel 316L - $$$</p>
-<p class="text-[10px] text-slate-500">Color: Metallic Gray</p>
-<p class="text-[10px] text-slate-500">Post Process: Sand Blasted - Matte</p>
-<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
-<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-m</p>
-<p class="text-[10px] text-slate-500">Surface Class: Sealing Faces Protected</p>
-</div>
-<div class="md:col-span-1 flex md:justify-center">
-<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">1</div>
-</div>
-<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
-<p class="text-base font-bold text-primary">$59.00</p>
-<p class="text-[10px] text-slate-400 font-medium mt-0.5">$59.00/piece</p>
-<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 3-5 Days</p>
-</div>
-<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
-<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<!-- Card 3: FUEL RAIL SECONDARY -->
+<article class="model-card border border-slate-200 rounded-2xl bg-white" data-model-card>
+<div class="p-5 space-y-4">
+<div class="flex items-center justify-end">
+<button class="toggle-model-details inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
 <span>Expand</span>
 <span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
 </button>
 </div>
+<div class="order-model-layout">
+<div class="order-model-media">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" data-preview-title="FUEL RAIL SECONDARY.stp">
+<img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" alt="FUEL RAIL SECONDARY.stp" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0 w-[200px]">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="FUEL RAIL SECONDARY.stp">FUEL RAIL SECONDARY.stp</h3>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">240.00 x 34.00 x 62.00 mm</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">52891.68 mm³</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">41350.53 mm²</p>
 </div>
-<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
-<div class="relative inline-flex items-center gap-1.5 pr-4">
-<span class="material-symbols-outlined text-[14px]">attachment</span>
-<span class="font-medium">Attachments</span>
-<span class="absolute -top-2 -right-1 inline-flex min-w-[18px] h-[18px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">1</span>
 </div>
-<div class="relative inline-flex items-center gap-1.5 pr-4">
-<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
-<span class="font-medium">Notes</span>
-<span class="absolute -top-2 -right-2 inline-flex h-[18px] items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white">...</span>
-</div>
-</div>
-<div class="model-details mt-0">
-<div class="mt-5 grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-3 md:items-start">
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-4 md:pl-2">
-<p><span class="font-semibold text-slate-700">Dimensions:</span> 240.00 x 34.00 x 62.00 mm</p>
-<p><span class="font-semibold text-slate-700">Volume:</span> 52891.68 mm³</p>
-<p><span class="font-semibold text-slate-700">Surface Area:</span> 41350.53 mm²</p>
-</div>
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-3">
+<div class="order-model-config collapsible-block">
+<div class="space-y-1 text-xs leading-relaxed text-slate-500">
 <p><span class="font-semibold text-slate-700">Material:</span> Stainless Steel 316L</p>
 <p><span class="font-semibold text-slate-700">Color:</span> Metallic Gray</p>
 <p><span class="font-semibold text-slate-700">Process:</span> Sand Blasted - Matte</p>
@@ -424,9 +481,31 @@ Log Out
 <p><span class="font-semibold text-slate-700">Surface Class:</span> Sealing Faces Protected</p>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+<div class="order-model-qty">
+<div class="order-model-qty-value" aria-label="Quantity 1">1</div>
+</div>
+<div class="order-model-price proto-part-price-block proto-part-price-block--end">
+<p class="text-base font-bold text-primary">$59.00</p>
+<p class="text-xs text-slate-400 font-medium mt-0.5">$59.00/piece</p>
+<p class="mt-1 text-xs font-medium text-slate-500">Est. 3-5 Days</p>
+</div>
+<div class="order-model-collapsed-meta collapsed-indicators flex-wrap items-center gap-4 text-xs text-slate-500">
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="font-medium">Attachments</span>
+<span class="absolute -top-2 -right-1 inline-flex min-w-[18px] h-[18px] items-center justify-center rounded-full bg-red-500 px-1 text-xs font-bold text-white">1</span>
+</div>
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-medium">Notes</span>
+<span class="absolute -top-2 -right-2 inline-flex h-[18px] items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-bold text-white">...</span>
+</div>
+</div>
+</div>
+<div class="model-details mt-0">
+<div class="order-model-footer mt-5">
 <div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
 <span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
 </label>
 <div class="bg-white border border-slate-200 rounded-lg p-2 flex flex-col gap-2 h-[62px] overflow-y-auto">
@@ -440,12 +519,12 @@ Log Out
 </div>
 </div>
 <div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
 <span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
 </label>
 <div class="relative">
-<textarea class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" rows="2" maxlength="500">Please ensure the inner channels are completely clear of support material powder. The surface finish is critical for the O-ring seal.</textarea>
-<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">142 / 500</span>
+<textarea class="w-full bg-slate-100 border border-slate-200 rounded-lg text-xs p-3 text-slate-700 resize-none cursor-not-allowed opacity-70" rows="2" maxlength="500" readonly>Please ensure the inner channels are completely clear of support material powder. The surface finish is critical for the O-ring seal.</textarea>
+<span class="absolute bottom-2 right-2 text-xs text-slate-400">142 / 500</span>
 </div>
 </div>
 </div>
@@ -453,60 +532,29 @@ Log Out
 </div>
 </article>
 
-<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
-<div class="p-5">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
-<div class="md:col-span-4 flex items-center gap-3 pl-2">
-<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" data-preview-title="Turbo_Valve_Housing_A.stl">
-<img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" alt="Turbo_Valve_Housing_A.stl" class="w-full h-full object-contain" />
-</button>
-<div class="flex flex-col gap-1 min-w-0">
-<h3 class="font-bold text-sm text-slate-900 break-words" title="Turbo_Valve_Housing_A.stl">Turbo_Valve_Housing_A.stl</h3>
-<p class="text-[10px] text-slate-500 font-medium">180.60 x 122.40 x 76.30 mm</p>
-<p class="text-[10px] text-slate-500 font-medium">84210.88 mm³ | 61244.19 mm²</p>
-</div>
-</div>
-<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
-<p class="text-xs font-bold text-slate-900">Material: AlSi10Mg - Natural Silver - $$</p>
-<p class="text-[10px] text-slate-500">Color: Natural Silver</p>
-<p class="text-[10px] text-slate-500">Post Process: Bead Blasted</p>
-<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
-<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-f</p>
-<p class="text-[10px] text-slate-500">Surface Class: Standard Structural</p>
-</div>
-<div class="md:col-span-1 flex md:justify-center">
-<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">2</div>
-</div>
-<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
-<p class="text-base font-bold text-primary">$132.40</p>
-<p class="text-[10px] text-slate-400 font-medium mt-0.5">$66.20/piece</p>
-<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 4-6 Days</p>
-</div>
-<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
-<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<!-- Card 4: Turbo_Valve_Housing_A -->
+<article class="model-card border border-slate-200 rounded-2xl bg-white" data-model-card>
+<div class="p-5 space-y-4">
+<div class="flex items-center justify-end">
+<button class="toggle-model-details inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
 <span>Expand</span>
 <span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
 </button>
 </div>
+<div class="order-model-layout">
+<div class="order-model-media">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" data-preview-title="Turbo_Valve_Housing_A.stl">
+<img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" alt="Turbo_Valve_Housing_A.stl" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0 w-[200px]">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="Turbo_Valve_Housing_A.stl">Turbo_Valve_Housing_A.stl</h3>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">180.60 x 122.40 x 76.30 mm</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">84210.88 mm³</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">61244.19 mm²</p>
 </div>
-<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
-<div class="relative inline-flex items-center gap-1.5 pr-4">
-<span class="material-symbols-outlined text-[14px]">attachment</span>
-<span class="font-medium">Attachments</span>
 </div>
-<div class="relative inline-flex items-center gap-1.5 pr-4">
-<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
-<span class="font-medium">Notes</span>
-</div>
-</div>
-<div class="model-details mt-0">
-<div class="mt-5 grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-3 md:items-start">
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-4 md:pl-2">
-<p><span class="font-semibold text-slate-700">Dimensions:</span> 180.60 x 122.40 x 76.30 mm</p>
-<p><span class="font-semibold text-slate-700">Volume:</span> 84210.88 mm³</p>
-<p><span class="font-semibold text-slate-700">Surface Area:</span> 61244.19 mm²</p>
-</div>
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-3">
+<div class="order-model-config collapsible-block">
+<div class="space-y-1 text-xs leading-relaxed text-slate-500">
 <p><span class="font-semibold text-slate-700">Material:</span> Aluminum AlSi10Mg</p>
 <p><span class="font-semibold text-slate-700">Color:</span> Natural Silver</p>
 <p><span class="font-semibold text-slate-700">Process:</span> Bead Blasted</p>
@@ -515,73 +563,15 @@ Log Out
 <p><span class="font-semibold text-slate-700">Surface Class:</span> Standard Structural</p>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
-<div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
-<span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
-</label>
-<div class="bg-slate-50 border border-slate-100 rounded-lg p-3 flex items-center justify-center h-[62px]">
-<p class="text-xs text-slate-400">No attachments</p>
+<div class="order-model-qty">
+<div class="order-model-qty-value" aria-label="Quantity 2">2</div>
 </div>
+<div class="order-model-price proto-part-price-block proto-part-price-block--end">
+<p class="text-base font-bold text-primary">$132.40</p>
+<p class="text-xs text-slate-400 font-medium mt-0.5">$66.20/piece</p>
+<p class="mt-1 text-xs font-medium text-slate-500">Est. 4-6 Days</p>
 </div>
-<div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
-<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
-</label>
-<div class="relative">
-<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Add notes here..." rows="2" maxlength="500"></textarea>
-<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</article>
-
-<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
-<div class="p-5">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
-<div class="md:col-span-4 flex items-center gap-3 pl-2">
-<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" data-preview-title="Cooling_Manifold_Beta.step">
-<img src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" alt="Cooling_Manifold_Beta.step" class="w-full h-full object-contain" />
-</button>
-<div class="flex flex-col gap-1 min-w-0">
-<h3 class="font-bold text-sm text-slate-900 break-words" title="Cooling_Manifold_Beta.step">Cooling_Manifold_Beta.step</h3>
-<p class="text-[10px] text-slate-500 font-medium">128.20 x 95.70 x 64.10 mm</p>
-<p class="text-[10px] text-slate-500 font-medium">61220.30 mm³ | 44882.64 mm²</p>
-</div>
-</div>
-<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
-<p class="text-xs font-bold text-slate-900">Material: Titanium Ti64 - Raw Finish - $$$$</p>
-<p class="text-[10px] text-slate-500">Color: Raw Metallic</p>
-<p class="text-[10px] text-slate-500">Post Process: Support Removal + QC</p>
-<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
-<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-f</p>
-<p class="text-[10px] text-slate-500">Surface Class: Pressure-Test Ready</p>
-<p class="text-[10px] text-slate-500">Layer Height: 40μm</p>
-<p class="text-[10px] text-slate-500">Heat Treatment: Stress Relief</p>
-<p class="text-[10px] text-slate-500">Build Orientation: Critical Face Up</p>
-<p class="text-[10px] text-slate-500">Support Strategy: Dense Internal Supports</p>
-<p class="text-[10px] text-slate-500">Inspection: CMM + Visual QC</p>
-<p class="text-[10px] text-slate-500">Surface Roughness Target: Ra 6.3</p>
-<p class="text-[10px] text-slate-500">Packaging: Vacuum Bag + Foam Protection</p>
-</div>
-<div class="md:col-span-1 flex md:justify-center">
-<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">1</div>
-</div>
-<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
-<p class="text-base font-bold text-primary">$188.90</p>
-<p class="text-[10px] text-slate-400 font-medium mt-0.5">$188.90/piece</p>
-<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 5-7 Days</p>
-</div>
-<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
-<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
-<span>Expand</span>
-<span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
-</button>
-</div>
-</div>
-<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
+<div class="order-model-collapsed-meta collapsed-indicators flex-wrap items-center gap-4 text-xs text-slate-500">
 <div class="relative inline-flex items-center gap-1.5 pr-4">
 <span class="material-symbols-outlined text-[14px]">attachment</span>
 <span class="font-medium">Attachments</span>
@@ -591,14 +581,54 @@ Log Out
 <span class="font-medium">Notes</span>
 </div>
 </div>
-<div class="model-details mt-0">
-<div class="mt-5 grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-3 md:items-start">
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-4 md:pl-2">
-<p><span class="font-semibold text-slate-700">Dimensions:</span> 128.20 x 95.70 x 64.10 mm</p>
-<p><span class="font-semibold text-slate-700">Volume:</span> 61220.30 mm³</p>
-<p><span class="font-semibold text-slate-700">Surface Area:</span> 44882.64 mm²</p>
 </div>
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-3">
+<div class="model-details mt-0">
+<div class="order-model-footer mt-5">
+<div>
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
+</label>
+<div class="bg-slate-50 border border-slate-100 rounded-lg p-3 flex items-center justify-center h-[62px]">
+<p class="text-xs text-slate-400">No attachments</p>
+</div>
+</div>
+<div>
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
+</label>
+<div class="relative">
+<textarea class="w-full bg-slate-100 border border-slate-200 rounded-lg text-xs p-3 text-slate-700 resize-none cursor-not-allowed opacity-70" placeholder="Add notes here..." rows="2" maxlength="500" readonly></textarea>
+<span class="absolute bottom-2 right-2 text-xs text-slate-400">0 / 500</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+
+<!-- Card 5: Cooling_Manifold_Beta -->
+<article class="model-card border border-slate-200 rounded-2xl bg-white" data-model-card>
+<div class="p-5 space-y-4">
+<div class="flex items-center justify-end">
+<button class="toggle-model-details inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<span>Expand</span>
+<span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+<div class="order-model-layout">
+<div class="order-model-media">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" data-preview-title="Cooling_Manifold_Beta.step">
+<img src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" alt="Cooling_Manifold_Beta.step" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0 w-[200px]">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="Cooling_Manifold_Beta.step">Cooling_Manifold_Beta.step</h3>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">128.20 x 95.70 x 64.10 mm</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">61220.30 mm³</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">44882.64 mm²</p>
+</div>
+</div>
+<div class="order-model-config collapsible-block">
+<div class="space-y-1 text-xs leading-relaxed text-slate-500">
 <p><span class="font-semibold text-slate-700">Material:</span> Titanium Ti64</p>
 <p><span class="font-semibold text-slate-700">Color:</span> Raw Metallic</p>
 <p><span class="font-semibold text-slate-700">Process:</span> Support Removal + QC</p>
@@ -607,9 +637,29 @@ Log Out
 <p><span class="font-semibold text-slate-700">Surface Class:</span> Pressure-Test Ready</p>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+<div class="order-model-qty">
+<div class="order-model-qty-value" aria-label="Quantity 1">1</div>
+</div>
+<div class="order-model-price proto-part-price-block proto-part-price-block--end">
+<p class="text-base font-bold text-primary">$188.90</p>
+<p class="text-xs text-slate-400 font-medium mt-0.5">$188.90/piece</p>
+<p class="mt-1 text-xs font-medium text-slate-500">Est. 5-7 Days</p>
+</div>
+<div class="order-model-collapsed-meta collapsed-indicators flex-wrap items-center gap-4 text-xs text-slate-500">
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="font-medium">Attachments</span>
+</div>
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-medium">Notes</span>
+</div>
+</div>
+</div>
+<div class="model-details mt-0">
+<div class="order-model-footer mt-5">
 <div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
 <span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
 </label>
 <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 flex items-center justify-center h-[62px]">
@@ -617,12 +667,12 @@ Log Out
 </div>
 </div>
 <div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
 <span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
 </label>
 <div class="relative">
-<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Add notes here..." rows="2" maxlength="500"></textarea>
-<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
+<textarea class="w-full bg-slate-100 border border-slate-200 rounded-lg text-xs p-3 text-slate-700 resize-none cursor-not-allowed opacity-70" placeholder="Add notes here..." rows="2" maxlength="500" readonly></textarea>
+<span class="absolute bottom-2 right-2 text-xs text-slate-400">0 / 500</span>
 </div>
 </div>
 </div>
@@ -630,61 +680,29 @@ Log Out
 </div>
 </article>
 
-<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
-<div class="p-5">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
-<div class="md:col-span-4 flex items-center gap-3 pl-2">
-<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" data-preview-title="Pump_Bracket_Gamma.step">
-<img src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" alt="Pump_Bracket_Gamma.step" class="w-full h-full object-contain" />
-</button>
-<div class="flex flex-col gap-1 min-w-0">
-<h3 class="font-bold text-sm text-slate-900 break-words" title="Pump_Bracket_Gamma.step">Pump_Bracket_Gamma.step</h3>
-<p class="text-[10px] text-slate-500 font-medium">156.00 x 88.00 x 42.00 mm</p>
-<p class="text-[10px] text-slate-500 font-medium">48880.15 mm³ | 29112.83 mm²</p>
-</div>
-</div>
-<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
-<p class="text-xs font-bold text-slate-900">Material: Stainless Steel 316L - Metallic Gray - $$$</p>
-<p class="text-[10px] text-slate-500">Color: Metallic Gray</p>
-<p class="text-[10px] text-slate-500">Post Process: Shot Peened + Deburred</p>
-<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
-<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-f</p>
-<p class="text-[10px] text-slate-500">Surface Class: Inspection Points Attached</p>
-</div>
-<div class="md:col-span-1 flex md:justify-center">
-<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">1</div>
-</div>
-<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
-<p class="text-base font-bold text-primary">$96.40</p>
-<p class="text-[10px] text-slate-400 font-medium mt-0.5">$96.40/piece</p>
-<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 4-6 Days</p>
-</div>
-<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
-<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<!-- Card 6: Pump_Bracket_Gamma -->
+<article class="model-card border border-slate-200 rounded-2xl bg-white" data-model-card>
+<div class="p-5 space-y-4">
+<div class="flex items-center justify-end">
+<button class="toggle-model-details inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
 <span>Expand</span>
 <span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
 </button>
 </div>
+<div class="order-model-layout">
+<div class="order-model-media">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" data-preview-title="Pump_Bracket_Gamma.step">
+<img src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" alt="Pump_Bracket_Gamma.step" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0 w-[200px]">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="Pump_Bracket_Gamma.step">Pump_Bracket_Gamma.step</h3>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">156.00 x 88.00 x 42.00 mm</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">48880.15 mm³</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">29112.83 mm²</p>
 </div>
-<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
-<div class="relative inline-flex items-center gap-1.5 pr-4">
-<span class="material-symbols-outlined text-[14px]">attachment</span>
-<span class="font-medium">Attachments</span>
-<span class="absolute -top-2 -right-1 inline-flex min-w-[18px] h-[18px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">2</span>
 </div>
-<div class="relative inline-flex items-center gap-1.5 pr-4">
-<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
-<span class="font-medium">Notes</span>
-</div>
-</div>
-<div class="model-details mt-0">
-<div class="mt-5 grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-3 md:items-start">
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-4 md:pl-2">
-<p><span class="font-semibold text-slate-700">Dimensions:</span> 156.00 x 88.00 x 42.00 mm</p>
-<p><span class="font-semibold text-slate-700">Volume:</span> 48880.15 mm³</p>
-<p><span class="font-semibold text-slate-700">Surface Area:</span> 29112.83 mm²</p>
-</div>
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-3">
+<div class="order-model-config collapsible-block">
+<div class="space-y-1 text-xs leading-relaxed text-slate-500">
 <p><span class="font-semibold text-slate-700">Material:</span> Stainless Steel 316L</p>
 <p><span class="font-semibold text-slate-700">Color:</span> Metallic Gray</p>
 <p><span class="font-semibold text-slate-700">Process:</span> Shot Peened + Deburred</p>
@@ -693,9 +711,30 @@ Log Out
 <p><span class="font-semibold text-slate-700">Surface Class:</span> Inspection Points Attached</p>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+<div class="order-model-qty">
+<div class="order-model-qty-value" aria-label="Quantity 1">1</div>
+</div>
+<div class="order-model-price proto-part-price-block proto-part-price-block--end">
+<p class="text-base font-bold text-primary">$96.40</p>
+<p class="text-xs text-slate-400 font-medium mt-0.5">$96.40/piece</p>
+<p class="mt-1 text-xs font-medium text-slate-500">Est. 4-6 Days</p>
+</div>
+<div class="order-model-collapsed-meta collapsed-indicators flex-wrap items-center gap-4 text-xs text-slate-500">
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="font-medium">Attachments</span>
+<span class="absolute -top-2 -right-1 inline-flex min-w-[18px] h-[18px] items-center justify-center rounded-full bg-red-500 px-1 text-xs font-bold text-white">2</span>
+</div>
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-medium">Notes</span>
+</div>
+</div>
+</div>
+<div class="model-details mt-0">
+<div class="order-model-footer mt-5">
 <div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
 <span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
 </label>
 <div class="bg-white border border-slate-200 rounded-lg p-2 flex flex-col gap-2 h-[62px] overflow-y-auto">
@@ -716,12 +755,12 @@ Log Out
 </div>
 </div>
 <div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
 <span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
 </label>
 <div class="relative">
-<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Add notes here..." rows="2" maxlength="500"></textarea>
-<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
+<textarea class="w-full bg-slate-100 border border-slate-200 rounded-lg text-xs p-3 text-slate-700 resize-none cursor-not-allowed opacity-70" placeholder="Add notes here..." rows="2" maxlength="500" readonly></textarea>
+<span class="absolute bottom-2 right-2 text-xs text-slate-400">0 / 500</span>
 </div>
 </div>
 </div>
@@ -729,61 +768,29 @@ Log Out
 </div>
 </article>
 
-<article class="model-card border border-slate-200 rounded-2xl overflow-hidden bg-white" data-model-card>
-<div class="p-5">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start md:items-center">
-<div class="md:col-span-4 flex items-center gap-3 pl-2">
-<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" data-preview-title="Nozzle_Array_Epsilon.stl">
-<img src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" alt="Nozzle_Array_Epsilon.stl" class="w-full h-full object-contain" />
-</button>
-<div class="flex flex-col gap-1 min-w-0">
-<h3 class="font-bold text-sm text-slate-900 break-words" title="Nozzle_Array_Epsilon.stl">Nozzle_Array_Epsilon.stl</h3>
-<p class="text-[10px] text-slate-500 font-medium">92.40 x 48.70 x 36.50 mm</p>
-<p class="text-[10px] text-slate-500 font-medium">18332.20 mm³ | 11228.40 mm²</p>
-</div>
-</div>
-<div class="md:col-span-3 flex flex-col gap-1 min-w-0">
-<p class="text-xs font-bold text-slate-900">Material: AlSi10Mg - Natural Silver - $$</p>
-<p class="text-[10px] text-slate-500">Color: Natural Silver</p>
-<p class="text-[10px] text-slate-500">Post Process: Fine Bead Blast</p>
-<p class="text-[10px] text-slate-500">Printer: SLM1-280*280*350mm</p>
-<p class="text-[10px] text-slate-500">Tolerance: ISO 2768-f</p>
-<p class="text-[10px] text-slate-500">Surface Class: Sharp Outlet Edges</p>
-</div>
-<div class="md:col-span-1 flex md:justify-center">
-<div class="inline-flex w-12 h-8 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-semibold text-slate-900">1</div>
-</div>
-<div class="md:col-span-2 flex flex-col md:items-center justify-center text-left md:text-center">
-<p class="text-base font-bold text-primary">$74.50</p>
-<p class="text-[10px] text-slate-400 font-medium mt-0.5">$74.50/piece</p>
-<p class="mt-1 text-[9px] font-medium text-slate-500">Est. 2-4 Days</p>
-</div>
-<div class="md:col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:pl-2 md:border-l md:border-slate-100 min-w-0">
-<button class="toggle-model-details inline-flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
+<!-- Card 7: Nozzle_Array_Epsilon -->
+<article class="model-card border border-slate-200 rounded-2xl bg-white" data-model-card>
+<div class="p-5 space-y-4">
+<div class="flex items-center justify-end">
+<button class="toggle-model-details inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary-hover transition-colors whitespace-nowrap" type="button" aria-expanded="false">
 <span>Expand</span>
 <span class="material-symbols-outlined text-[14px] transition-transform duration-200">expand_more</span>
 </button>
 </div>
+<div class="order-model-layout">
+<div class="order-model-media">
+<button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 flex items-center justify-center cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" data-preview-title="Nozzle_Array_Epsilon.stl">
+<img src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" alt="Nozzle_Array_Epsilon.stl" class="w-full h-full object-contain" />
+</button>
+<div class="flex flex-col gap-1 min-w-0 w-[200px]">
+<h3 class="font-bold text-sm text-slate-900 break-words" title="Nozzle_Array_Epsilon.stl">Nozzle_Array_Epsilon.stl</h3>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">92.40 x 48.70 x 36.50 mm</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">18332.20 mm³</p>
+<p class="text-xs text-slate-500 font-medium collapsible-lines">11228.40 mm²</p>
 </div>
-<div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
-<div class="relative inline-flex items-center gap-1.5 pr-4">
-<span class="material-symbols-outlined text-[14px]">attachment</span>
-<span class="font-medium">Attachments</span>
 </div>
-<div class="relative inline-flex items-center gap-1.5 pr-4">
-<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
-<span class="font-medium">Notes</span>
-<span class="absolute -top-2 -right-2 inline-flex h-[18px] items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white">...</span>
-</div>
-</div>
-<div class="model-details mt-0">
-<div class="mt-5 grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-3 md:items-start">
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-4 md:pl-2">
-<p><span class="font-semibold text-slate-700">Dimensions:</span> 92.40 x 48.70 x 36.50 mm</p>
-<p><span class="font-semibold text-slate-700">Volume:</span> 18332.20 mm³</p>
-<p><span class="font-semibold text-slate-700">Surface Area:</span> 11228.40 mm²</p>
-</div>
-<div class="space-y-1 text-[11px] leading-relaxed text-slate-500 md:col-span-3">
+<div class="order-model-config collapsible-block">
+<div class="space-y-1 text-xs leading-relaxed text-slate-500">
 <p><span class="font-semibold text-slate-700">Material:</span> Aluminum AlSi10Mg</p>
 <p><span class="font-semibold text-slate-700">Color:</span> Natural Silver</p>
 <p><span class="font-semibold text-slate-700">Process:</span> Fine Bead Blast</p>
@@ -792,9 +799,30 @@ Log Out
 <p><span class="font-semibold text-slate-700">Surface Class:</span> Sharp Outlet Edges</p>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+<div class="order-model-qty">
+<div class="order-model-qty-value" aria-label="Quantity 1">1</div>
+</div>
+<div class="order-model-price proto-part-price-block proto-part-price-block--end">
+<p class="text-base font-bold text-primary">$74.50</p>
+<p class="text-xs text-slate-400 font-medium mt-0.5">$74.50/piece</p>
+<p class="mt-1 text-xs font-medium text-slate-500">Est. 2-4 Days</p>
+</div>
+<div class="order-model-collapsed-meta collapsed-indicators flex-wrap items-center gap-4 text-xs text-slate-500">
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="font-medium">Attachments</span>
+</div>
+<div class="relative inline-flex items-center gap-1.5 pr-4">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-medium">Notes</span>
+<span class="absolute -top-2 -right-2 inline-flex h-[18px] items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-bold text-white">...</span>
+</div>
+</div>
+</div>
+<div class="model-details mt-0">
+<div class="order-model-footer mt-5">
 <div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
 <span class="material-symbols-outlined text-[14px]">attachment</span> Attachments
 </label>
 <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 flex items-center justify-center h-[62px]">
@@ -802,12 +830,12 @@ Log Out
 </div>
 </div>
 <div>
-<label class="flex items-center gap-1 text-[11px] font-medium text-slate-500 mb-2">
+<label class="flex items-center gap-1 text-xs font-medium text-slate-500 mb-2">
 <span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span> Notes
 </label>
 <div class="relative">
-<textarea class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" rows="2" maxlength="500">Please keep the channel edges sharp and avoid additional smoothing on the outlet openings.</textarea>
-<span class="absolute bottom-2 right-2 text-[10px] text-slate-400">92 / 500</span>
+<textarea class="w-full bg-slate-100 border border-slate-200 rounded-lg text-xs p-3 text-slate-700 resize-none cursor-not-allowed opacity-70" rows="2" maxlength="500" readonly>Please keep the channel edges sharp and avoid additional smoothing on the outlet openings.</textarea>
+<span class="absolute bottom-2 right-2 text-xs text-slate-400">92 / 500</span>
 </div>
 </div>
 </div>
@@ -825,8 +853,8 @@ Log Out
 <section class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-6">
 <div>
 <div class="flex justify-between items-center mb-4">
-<h3 class="text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Address</h3>
-<button class="text-[10px] font-bold tracking-[0.08em] text-primary hover:underline">+ Add New</button>
+<h3 class="text-xs font-bold tracking-[0.08em] text-slate-500">Shipping Address</h3>
+<button class="text-xs font-bold tracking-[0.08em] text-primary hover:underline">+ Add New</button>
 </div>
 <div class="relative">
 <select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
@@ -841,7 +869,7 @@ Log Out
 <button class="absolute top-4 right-4 text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
 <div class="flex items-start gap-3">
 <span class="material-symbols-outlined text-primary text-xl mt-0.5">location_on</span>
-<div class="text-[11px] text-slate-600 leading-relaxed">
+<div class="text-xs text-slate-600 leading-relaxed">
 <p class="font-bold text-slate-900">1212 123 <span class="text-primary ml-1">Default</span></p>
 <p>Company: 123, Tax ID: 123</p>
 <p>123123, kriseooooooo@gmail.com</p>
@@ -857,8 +885,8 @@ Log Out
 </label>
 <div id="billing-address-section" class="hidden pt-2 border-t border-slate-100">
 <div class="flex justify-between items-center mb-4">
-<h3 class="text-[10px] font-bold tracking-[0.08em] text-slate-500">Billing Address</h3>
-<button class="text-[10px] font-bold tracking-[0.08em] text-primary hover:underline">+ Add New</button>
+<h3 class="text-xs font-bold tracking-[0.08em] text-slate-500">Billing Address</h3>
+<button class="text-xs font-bold tracking-[0.08em] text-primary hover:underline">+ Add New</button>
 </div>
 <div class="relative">
 <select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
@@ -873,7 +901,7 @@ Log Out
 <button class="absolute top-4 right-4 text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
 <div class="flex items-start gap-3">
 <span class="material-symbols-outlined text-primary text-xl mt-0.5">location_on</span>
-<div class="text-[11px] text-slate-600 leading-relaxed">
+<div class="text-xs text-slate-600 leading-relaxed">
 <p class="font-bold text-slate-900">Billing Company HQ <span class="text-primary ml-1">Default</span></p>
 <p>Company: ProtoTi Europe, Tax ID: DE888123</p>
 <p>finance@prototi.com, +49 0000 123456</p>
@@ -886,7 +914,7 @@ Log Out
 </section>
 <!-- Shipping Method -->
 <section class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
-<h3 class="mb-4 text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Method</h3>
+<h3 class="mb-4 text-xs font-bold tracking-[0.08em] text-slate-500">Shipping Method</h3>
 <div class="relative mb-4">
 <select id="shipping-method-select" class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
 <option value="tariff-free" data-badge="5-7 Business Days" data-copy="Carrier: Occasionally Delayed Due to Customs Inspection!">Tariff-Free Shipping</option>
@@ -902,27 +930,27 @@ Log Out
 <span class="material-symbols-outlined text-slate-600">local_shipping</span>
 <span id="shipping-method-label" class="text-xs font-bold text-slate-900">Tariff-Free Shipping</span>
 </div>
-<span id="shipping-method-badge" class="bg-blue-100 text-primary text-[9px] font-bold px-2 py-0.5 rounded-sm">5-7 Business Days</span>
+<span id="shipping-method-badge" class="bg-blue-100 text-primary text-xs font-bold px-2 py-0.5 rounded-sm">5-7 Business Days</span>
 </div>
-<p id="shipping-method-copy" class="text-[10px] text-slate-500">Carrier: Occasionally Delayed Due to Customs Inspection!</p>
+<p id="shipping-method-copy" class="text-xs text-slate-500">Carrier: Occasionally Delayed Due to Customs Inspection!</p>
 </div>
 </section>
 <!-- Payment Method -->
 <section class="bg-white p-6 rounded-lg card-shadow">
 <h2 class="font-bold text-base tracking-tight text-slate-900 mb-6">Payment Instrument (支付方式)</h2>
 <div class="space-y-3">
-<label class="flex items-center p-4 rounded-lg border-2 border-primary bg-blue-50/20 cursor-pointer">
-<input checked="" class="w-4 h-4 border-slate-300 text-primary focus:ring-primary mr-4" name="payment" type="radio"/>
+<label data-payment-option class="flex items-center p-4 rounded-lg border-2 border-primary bg-blue-50/20 cursor-pointer">
+<input id="payment-paypal" checked="" class="w-4 h-4 border-slate-300 text-primary focus:ring-primary mr-4" name="payment" type="radio" value="paypal"/>
 <div class="flex items-center flex-1">
 <div class="bg-white p-1 rounded border border-slate-100 mr-3">
 <svg class="w-12 h-4" viewbox="0 0 40 15"><path d="M12.9 11.2c.2-.5.4-1 .6-1.5L15 4.3c.1-.4 0-.7-.3-.8-.1-.1-.3-.1-.5-.1h-2.1c-.3 0-.6.2-.7.6l-.3 1.2h-2.9l.4-1.2c.1-.4-.1-.6-.4-.6h-2c-.3 0-.6.2-.7.5L3.8 11.2c-.1.3 0 .6.3.8.1.1.2.1.4.1h2.1c.3 0 .6-.2.7-.5l.3-1.1h2.9l-.3 1.1c-.1.3.1.6.4.6h2.1c.2-.1.5-.3.6-.6zM7.5 8.7h1.4l.2-.9H7.8l-.3.9zm13.3-5.3c-.4-.1-.8-.1-1.2-.1h-3c-.4 0-.8.3-.9.7L14.1 9.4l-.1.4-.4 1.5c-.1.4.1.7.5.7h2.2c.4 0 .7-.3.8-.7l.2-.8h3.3c1.7 0 3.1-1.4 3.1-3s-1.4-3.1-3.1-3.1zm-.6 3.6h-1.6l.3-1.2h1.6c.4 0 .8.4.8.8-.1.3-.4.4-.8.4z" fill="#003087"></path><path d="M30.7 3.4h-2.1c-.4 0-.7.3-.8.7l-.3 1.3h-2l.3-1.3c.1-.4-.2-.7-.6-.7h-2.1c-.4 0-.7.3-.8.7l-1.5 6.7c-.1.4.2.7.6.7h2.1c.4 0 .7-.3.8-.7l.3-1.4h2l-.3 1.4c-.1.4.2.7.6.7h2.1c.4 0 .7-.3.8-.7l1.5-6.7c.1-.4-.2-.7-.6-.7z" fill="#003087"></path></svg>
 </div>
 <span class="text-sm font-medium text-slate-900">PayPal Fast and Secure Payment</span>
 </div>
-<span class="text-[10px] font-bold tracking-[0.08em] text-success">Recommended</span>
+<span class="text-xs font-bold tracking-[0.08em] text-success">Recommended</span>
 </label>
-<label class="flex items-center p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer">
-<input class="w-4 h-4 border-slate-300 text-primary focus:ring-primary mr-4" name="payment" type="radio"/>
+<label data-payment-option class="flex items-center p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer">
+<input id="payment-card" class="w-4 h-4 border-slate-300 text-primary focus:ring-primary mr-4" name="payment" type="radio" value="card"/>
 <div class="flex items-center flex-1">
 <div class="flex gap-1 mr-3">
 <div class="w-8 h-5 bg-slate-100 rounded-sm flex items-center justify-center"><span class="text-[8px] font-bold text-slate-400">VISA</span></div>
@@ -931,15 +959,15 @@ Log Out
 <span class="text-sm font-medium text-slate-900">Credit or Debit Card</span>
 </div>
 </label>
-<label class="flex items-center p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer">
-<input class="w-4 h-4 border-slate-300 text-primary focus:ring-primary mr-4" name="payment" type="radio"/>
+<label id="bank-transfer-option" data-payment-option class="flex items-center p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer">
+<input id="payment-bank-transfer" class="w-4 h-4 border-slate-300 text-primary focus:ring-primary mr-4" name="payment" type="radio" value="bank-transfer"/>
 <div class="flex items-center flex-1">
 <span class="material-symbols-outlined mr-3 text-slate-400">account_balance</span>
 <span class="text-sm font-medium text-slate-900">Bank Transfer</span>
 </div>
 </label>
 </div>
-<button class="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-primary py-4 text-sm font-bold tracking-[0.04em] text-white transition-all hover:bg-primary-hover shadow-md shadow-primary/20 active:scale-[0.99]">
+<button id="confirmPaymentButton" class="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-primary py-4 text-sm font-bold tracking-[0.04em] text-white transition-all hover:bg-primary-hover shadow-md shadow-primary/20 active:scale-[0.99]">
 <span>Confirm Payment</span>
 </button>
 </section>
@@ -980,8 +1008,9 @@ Log Out
 
 <!-- Coupons Card -->
 <div class="bg-white p-6 rounded-lg card-shadow sticky top-24">
-<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-3 mb-4">
     <h2 class="font-bold text-base tracking-tight text-slate-900">Coupons</h2>
+    <span class="ml-auto text-xs text-emerald-600 font-medium">1 coupon available</span>
     <button class="text-slate-400 hover:text-primary transition-colors" title="Refresh coupons"><span class="material-symbols-outlined text-sm">refresh</span></button>
 </div>
 <div class="space-y-3">
@@ -1006,7 +1035,7 @@ Log Out
                 <p class="mt-4 text-sm text-slate-500">-45 uses left</p>
                 <p class="mt-3 text-sm text-slate-500">Expires: Jul 1, 2026</p>
             </div>
-            <span class="bg-lime-100 text-lime-700 text-[11px] font-medium px-3 py-1 rounded-md whitespace-nowrap">Cash Savings</span>
+            <span class="bg-lime-100 text-lime-700 text-xs font-medium px-3 py-1 rounded-md whitespace-nowrap">Cash Savings</span>
         </div>
     </div>
 </div>
@@ -1036,19 +1065,19 @@ Log Out
         label.textContent = expanded ? 'Collapse' : 'Expand';
         icon.textContent = expanded ? 'expand_less' : 'expand_more';
         icon.classList.toggle('rotate-180', !expanded);
-    }
 
-    function prepareCardSummary(card) {
-        const topGrid = card.querySelector('.grid');
-        if (!topGrid) return;
-        const columns = Array.from(topGrid.children);
-        const fileSummary = columns[0]?.querySelector('div.flex.flex-col.gap-1.min-w-0');
-        const configSummary = columns[1];
-        const badgesRow = card.querySelector('.model-details')?.previousElementSibling;
-
-        fileSummary?.classList.add('summary-file');
-        configSummary?.classList.add('summary-config');
-        badgesRow?.classList.add('summary-badges');
+        // Toggle collapsed indicators visibility
+        const indicators = card.querySelector('.collapsed-indicators');
+        if (indicators) {
+            indicators.style.display = expanded ? 'none' : 'flex';
+        }
+        // Toggle collapsible blocks and lines
+        card.querySelectorAll('.collapsible-block').forEach(el => {
+            el.style.display = expanded ? '' : 'none';
+        });
+        card.querySelectorAll('.collapsible-lines').forEach(el => {
+            el.style.display = expanded ? '' : 'none';
+        });
     }
 
     function syncToggleAllLabel() {
@@ -1058,7 +1087,6 @@ Log Out
     }
 
     modelCards.forEach((card) => {
-        prepareCardSummary(card);
         setCardExpanded(card, false);
         const button = card.querySelector('.toggle-model-details');
         button.addEventListener('click', () => {
@@ -1079,14 +1107,14 @@ Log Out
 </script>
 <!-- Footer -->
 <footer class="bg-white border-t border-slate-200 pt-12 pb-6">
-<div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 grid grid-cols-1 md:grid-cols-3 gap-10">
+<div class="max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20 grid grid-cols-1 md:grid-cols-4 gap-10 items-center">
 <div>
 <img src="/logo.svg" alt="ProtoTi" class="h-10 mb-4" />
 <p class="text-sm text-slate-500">Shenzhen ProtoTi Technology Co., LTD</p>
 <p class="text-sm text-slate-400 mt-1">User Name: kriseoooooo@gmail.com</p>
 </div>
 <div>
-<h4 class="font-bold text-slate-800 mb-4">Contact</h4>
+<h4 class="font-bold text-slate-800 mb-2">Contact</h4>
 <p class="text-sm text-slate-500 flex items-center gap-2 mb-2">
 <span class="material-symbols-outlined text-sm">call</span> Phone: +86 18126397112
 </p>
@@ -1095,24 +1123,144 @@ Log Out
 </p>
 </div>
 <div>
-<div class="md:max-w-[332px] md:ml-auto">
-<h4 class="font-bold text-slate-800 mb-4">Office</h4>
+<h4 class="font-bold text-slate-800 mb-2">Office</h4>
 <p class="text-sm text-slate-500 flex items-start gap-2">
 <span class="material-symbols-outlined text-sm mt-0.5">location_on</span>
 Address: 8th Floor, Biaofan Technology Building, Tower C, No.6 Gongye Road, Baoan, Shenzhen, China, 518104
 </p>
-<div class="mt-6 flex items-center gap-3">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/200px-MasterCard_Logo.svg.png" alt="Mastercard" class="h-6 object-contain" />
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa" class="h-5 object-contain" />
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/200px-PayPal.svg.png" alt="PayPal" class="h-5 object-contain" />
+</div>
+<div class="flex items-center justify-end">
+<div class="flex items-center gap-4">
+<!-- Mastercard -->
+<svg class="h-8" viewBox="0 0 152 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="152" height="100" rx="8" fill="#1A1F36"/>
+  <circle cx="58" cy="50" r="30" fill="#EB001B"/>
+  <circle cx="94" cy="50" r="30" fill="#F79E1B"/>
+  <path d="M76 27.5a29.9 29.9 0 0 0-11.2 22.5c0 9.1 4.1 17.3 11.2 22.5A29.9 29.9 0 0 0 87.2 50 29.9 29.9 0 0 0 76 27.5z" fill="#FF5F00"/>
+</svg>
+<!-- Visa -->
+<svg class="h-8" viewBox="0 0 152 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="152" height="100" rx="8" fill="#1A1F71"/>
+  <path d="M57 65l7.5-40h9.5L66.5 65H57zm38-40l-9 27.4L84.5 42c-.7-3.5-3.2-4.5-6.2-4.5H63.8l-.3 1.3C67 40 72 42.7 74 45l7 20h10l15-40H95zm24 40h9l-8-40h-7.6c-2.2 0-4 1.3-4.8 3.2L95 65h10l2-5.5h12.2L120 65zm-10.5-13.2l5-13.8 2.9 13.8h-7.9zM53 25L42.2 65H33L27.5 32c-.3-1.4-1.2-2.5-2.7-3.2C22.3 27.5 18.5 26 15 25.5l.3-1.5h15c2.3 0 4.2 1.5 4.6 4l3.7 20L49 25h4z" fill="white"/>
+</svg>
+<!-- PayPal -->
+<svg class="h-8" viewBox="0 0 152 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="152" height="100" rx="8" fill="#F5F7FA"/>
+  <rect x="0.5" y="0.5" width="151" height="99" rx="7.5" stroke="#E2E8F0"/>
+  <path d="M55.5 30h-9.8c-.7 0-1.3.5-1.4 1.1l-4 25.2c-.1.5.3.9.8.9h5c.7 0 1.3-.5 1.4-1.2l1.1-6.8c.1-.7.7-1.2 1.4-1.2h3.2c6.6 0 10.4-3.2 11.4-9.5.5-2.8 0-4.9-1.3-6.5C61.8 30.7 59 30 55.5 30z" fill="#003087"/>
+  <path d="M55.5 30c3.5 0 6.3.7 7.8 2.1 1.3 1.5 1.8 3.7 1.3 6.5-1 6.3-4.8 9.5-11.4 9.5h-3.2c-.7 0-1.3.5-1.4 1.2l-1.1 6.8c-.1.7-.7 1.2-1.4 1.2h-4.7" fill="#003087"/>
+  <path d="M72 30h-9.8c-.7 0-1.3.5-1.4 1.1l-4 25.2c-.1.5.3.9.8.9h5c.5 0 .9-.3 1-.8l1.1-7.2c.1-.7.7-1.2 1.4-1.2h3.2c6.6 0 10.4-3.2 11.4-9.5.5-2.8 0-4.9-1.3-6.5C77.8 30.7 75.5 30 72 30z" fill="#0070E0"/>
+  <text x="88" y="57" font-family="Arial,sans-serif" font-weight="bold" font-size="18" fill="#003087">Pay</text>
+  <text x="110" y="57" font-family="Arial,sans-serif" font-weight="bold" font-size="18" fill="#0070E0">Pal</text>
+</svg>
 </div>
 </div>
 </div>
-</div>
-<div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 mt-8 pt-6 border-t border-slate-100">
+<div class="max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20 mt-8 pt-6 border-t border-slate-100">
 <p class="text-sm text-slate-400 text-center">© 2018-2025 ProtoTi. All Rights Reserved.</p>
 </div>
 </footer>
+<div id="bankTransferModal" class="fixed inset-0 z-[125] hidden items-center justify-center bg-slate-950/55 px-3 py-3 backdrop-blur-sm sm:px-6 sm:py-3" aria-hidden="true">
+<div class="absolute inset-0" data-bank-transfer-close></div>
+<div class="relative z-10 flex h-[800px] w-full max-w-[min(96vw,640px)] flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="bankTransferModalTitle">
+<div class="flex items-center justify-between gap-4 border-b border-slate-200 px-5 py-3 sm:px-7 sm:py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[1.5rem] text-primary">account_balance</span>
+<div>
+<h3 id="bankTransferModalTitle" class="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">Bank Transfer Instructions</h3>
+<p class="mt-0.5 text-sm text-slate-500">Please complete the transfer with the details below, then submit your order.</p>
+</div>
+</div>
+<button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-900" data-bank-transfer-close>
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+</div>
+<div class="overflow-y-auto px-5 py-4 sm:px-7 sm:py-5">
+<div class="space-y-3">
+<div class="flex items-center justify-between gap-4 rounded-lg border border-blue-100 bg-[radial-gradient(circle_at_top_left,_rgba(219,234,254,0.95),_rgba(255,255,255,0.98)_75%)] px-4 py-2.5">
+<div class="flex items-center gap-2">
+<p class="text-sm font-medium text-slate-400">Order Number</p>
+<p id="bankTransferOrderNumber" class="text-base font-semibold tracking-tight text-slate-900">ORD260319-112007</p>
+</div>
+<div class="flex items-center gap-2">
+<p class="text-sm font-medium text-slate-400">Payment Amount</p>
+<p id="bankTransferPaymentAmount" class="text-base font-semibold tracking-tight text-primary">$2173.36 USD</p>
+</div>
+</div>
+<section>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[1.25rem] text-primary">info</span>
+<h4 class="text-base font-semibold tracking-tight text-slate-900">Bank Account Information</h4>
+</div>
+<div class="mt-3 overflow-hidden rounded-xl border border-slate-200 bg-slate-50/80">
+<div class="grid gap-1 border-b border-slate-200 px-4 py-2.5 md:grid-cols-[200px_minmax(0,1fr)] md:items-start">
+<span class="text-sm font-medium text-slate-400">SWIFT/BIC Code</span>
+<span class="text-base font-medium tracking-tight text-slate-900 break-words">CHASHKHH (CHASHKHHXXX if 11 characters are required)</span>
+</div>
+<div class="grid gap-1 border-b border-slate-200 px-4 py-2.5 md:grid-cols-[200px_minmax(0,1fr)] md:items-start">
+<span class="text-sm font-medium text-slate-400">Account Number</span>
+<span class="text-base font-medium tracking-tight text-slate-900 break-words">63003668377</span>
+</div>
+<div class="grid gap-1 border-b border-slate-200 px-4 py-2.5 md:grid-cols-[200px_minmax(0,1fr)] md:items-start">
+<span class="text-sm font-medium text-slate-400">Account Name</span>
+<span class="text-base font-medium tracking-tight text-slate-900 break-words">JPMorgan Chase Bank N.A., Hong Kong Branch</span>
+</div>
+<div class="grid gap-1 border-b border-slate-200 px-4 py-2.5 md:grid-cols-[200px_minmax(0,1fr)] md:items-start">
+<span class="text-sm font-medium text-slate-400">Bank Name</span>
+<span class="text-base font-medium tracking-tight text-slate-900 break-words">Shenzhen Prototi Technology Co., Ltd.</span>
+</div>
+<div class="grid gap-1 px-4 py-2.5 md:grid-cols-[200px_minmax(0,1fr)] md:items-start">
+<span class="text-sm font-medium text-slate-400">Bank Address</span>
+<span class="text-base font-medium tracking-tight text-slate-900 break-words">18/F, 20/F, 22-29/F, CHATER HOUSE, 8 CONNAUGHT ROAD</span>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[1.25rem] text-primary">format_list_numbered</span>
+<h4 class="text-base font-semibold tracking-tight text-slate-900">Transfer Steps</h4>
+</div>
+<div class="mt-3 space-y-2.5">
+<div class="flex items-start gap-3">
+<span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">1</span>
+<p class="pt-0.5 text-sm leading-6 text-slate-800">Log in to your online banking or visit your bank.</p>
+</div>
+<div class="flex items-start gap-3">
+<span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">2</span>
+<p class="pt-0.5 text-sm leading-6 text-slate-800">Transfer <span id="bankTransferStepAmount" class="font-semibold text-primary">$2173.36 USD</span> to the account above.</p>
+</div>
+<div class="flex items-start gap-3">
+<span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">3</span>
+<p class="pt-0.5 text-sm leading-6 text-slate-800">Include your order number <span id="bankTransferStepOrderNumber" class="font-semibold text-primary">ORD260319-112007</span> in the transfer remarks/reference.</p>
+</div>
+<div class="flex items-start gap-3">
+<span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">4</span>
+<p class="pt-0.5 text-sm leading-6 text-slate-800">Click "Submit Order" below after completing the transfer.</p>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[1.25rem] text-primary">description</span>
+<h4 class="text-base font-semibold tracking-tight text-slate-900">Remarks</h4>
+</div>
+<div class="mt-3 rounded-xl border border-amber-100 bg-amber-50/70 px-4 py-3.5 text-sm leading-6 text-slate-600">
+<p>Country/Region: Hong Kong</p>
+<p class="mt-1.5">Type of Account: Business Account</p>
+<p class="mt-1.5">Bank Code: 007</p>
+<p class="mt-1.5">Branch Code: 863</p>
+<p class="mt-1.5">Remark: For the payment of goods, please make a SWIFT(T/T) or CHATS(HK Local) / ACH(HK local) payment.</p>
+<p class="mt-1.5">Payment Message: Please include the following memo/message to receiver when making a payment: [Buyer Name] [Invoice/Contract Number] [Product]</p>
+</div>
+</section>
+</div>
+</div>
+<div class="flex items-center justify-end gap-3 border-t border-slate-200 px-5 py-2.5 sm:px-7">
+<button type="button" class="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-2 text-sm font-semibold text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50" data-bank-transfer-close>Cancel</button>
+<button id="bankTransferSubmitButton" type="button" class="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow-md shadow-primary/20 transition-all hover:bg-primary-hover active:scale-[0.99]">Submit Order</button>
+</div>
+</div>
+</div>
 <div id="modelPreviewModal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-slate-950/55 px-3 py-4 backdrop-blur-sm sm:px-6 sm:py-8">
 <div class="absolute inset-0" data-model-preview-close></div>
 <div class="relative z-10 flex h-[92vh] w-full max-w-[min(96vw,1920px)] flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-2xl">
@@ -1247,6 +1395,19 @@ if (
   syncCouponSelectAction();
 }
 
+const paymentOptions = Array.from(document.querySelectorAll('[data-payment-option]'));
+const paymentRadios = Array.from(document.querySelectorAll('input[name="payment"]'));
+const bankTransferOption = document.getElementById('bank-transfer-option');
+const bankTransferRadio = document.getElementById('payment-bank-transfer');
+const confirmPaymentButton = document.getElementById('confirmPaymentButton');
+const orderReference = document.getElementById('order-reference');
+const bankTransferModal = document.getElementById('bankTransferModal');
+const bankTransferOrderNumber = document.getElementById('bankTransferOrderNumber');
+const bankTransferPaymentAmount = document.getElementById('bankTransferPaymentAmount');
+const bankTransferStepAmount = document.getElementById('bankTransferStepAmount');
+const bankTransferStepOrderNumber = document.getElementById('bankTransferStepOrderNumber');
+const bankTransferCloseTargets = document.querySelectorAll('[data-bank-transfer-close]');
+const bankTransferSubmitButton = document.getElementById('bankTransferSubmitButton');
 const modelPreviewModal = document.getElementById('modelPreviewModal');
 const modelPreviewImage = document.getElementById('modelPreviewImage');
 const modelPreviewTitle = document.getElementById('modelPreviewTitle');
@@ -1259,6 +1420,64 @@ let previewRotateY = 18;
 let isPreviewDragging = false;
 let previewPointerX = 0;
 let previewPointerY = 0;
+
+function syncOverlayScrollLock() {
+  const hasOpenOverlay =
+    (bankTransferModal && !bankTransferModal.classList.contains('hidden')) ||
+    (modelPreviewModal && !modelPreviewModal.classList.contains('hidden'));
+  document.body.style.overflow = hasOpenOverlay ? 'hidden' : '';
+}
+
+function syncPaymentOptionState() {
+  paymentOptions.forEach((option) => {
+    const radio = option.querySelector('input[name="payment"]');
+    const isSelected = Boolean(radio?.checked);
+    option.classList.toggle('border-2', isSelected);
+    option.classList.toggle('border-primary', isSelected);
+    option.classList.toggle('bg-blue-50/20', isSelected);
+    option.classList.toggle('border', !isSelected);
+    option.classList.toggle('border-slate-200', !isSelected);
+    option.classList.toggle('hover:border-slate-300', !isSelected);
+    option.classList.toggle('hover:bg-slate-50', !isSelected);
+  });
+}
+
+function getOrderReferenceValue() {
+  return orderReference?.textContent?.replace(/^Order\s*#\s*/i, '').trim() || 'ORD260319-112007';
+}
+
+function getBankTransferAmountValue() {
+  const amountText = summaryTotal?.textContent?.replace('≈', '').trim() || '$2173.36';
+  return `${amountText} USD`;
+}
+
+function syncBankTransferModalContent() {
+  const orderNumber = getOrderReferenceValue();
+  const paymentAmount = getBankTransferAmountValue();
+  if (bankTransferOrderNumber) bankTransferOrderNumber.textContent = orderNumber;
+  if (bankTransferPaymentAmount) bankTransferPaymentAmount.textContent = paymentAmount;
+  if (bankTransferStepAmount) bankTransferStepAmount.textContent = paymentAmount;
+  if (bankTransferStepOrderNumber) bankTransferStepOrderNumber.textContent = orderNumber;
+}
+
+function openBankTransferModal() {
+  if (!bankTransferModal) return;
+  if (bankTransferRadio) bankTransferRadio.checked = true;
+  syncPaymentOptionState();
+  syncBankTransferModalContent();
+  bankTransferModal.classList.remove('hidden');
+  bankTransferModal.classList.add('flex');
+  bankTransferModal.setAttribute('aria-hidden', 'false');
+  syncOverlayScrollLock();
+}
+
+function closeBankTransferModal() {
+  if (!bankTransferModal) return;
+  bankTransferModal.classList.add('hidden');
+  bankTransferModal.classList.remove('flex');
+  bankTransferModal.setAttribute('aria-hidden', 'true');
+  syncOverlayScrollLock();
+}
 
 function applyModelPreviewTransform() {
   if (!modelPreviewImage) return;
@@ -1279,7 +1498,7 @@ function openModelPreview(src, title) {
   resetModelPreviewTransform();
   modelPreviewModal.classList.remove('hidden');
   modelPreviewModal.classList.add('flex');
-  document.body.style.overflow = 'hidden';
+  syncOverlayScrollLock();
 }
 
 function closeModelPreview() {
@@ -1288,7 +1507,34 @@ function closeModelPreview() {
   modelPreviewModal.classList.remove('flex');
   modelPreviewImage.src = '';
   resetModelPreviewTransform();
-  document.body.style.overflow = '';
+  syncOverlayScrollLock();
+}
+
+paymentRadios.forEach((radio) => radio.addEventListener('change', syncPaymentOptionState));
+syncPaymentOptionState();
+
+if (bankTransferOption && bankTransferRadio) {
+  bankTransferOption.addEventListener('click', () => {
+    window.requestAnimationFrame(() => {
+      if (bankTransferRadio.checked) {
+        openBankTransferModal();
+      }
+    });
+  });
+}
+
+if (confirmPaymentButton) {
+  confirmPaymentButton.addEventListener('click', () => {
+    if (bankTransferRadio?.checked) {
+      openBankTransferModal();
+    }
+  });
+}
+
+bankTransferCloseTargets.forEach((target) => target.addEventListener('click', closeBankTransferModal));
+
+if (bankTransferSubmitButton) {
+  bankTransferSubmitButton.addEventListener('click', closeBankTransferModal);
 }
 
 modelPreviewTriggers.forEach((trigger) => {
@@ -1333,7 +1579,12 @@ window.addEventListener('pointerup', () => {
 });
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && modelPreviewModal && !modelPreviewModal.classList.contains('hidden')) {
+  if (event.key !== 'Escape') return;
+  if (bankTransferModal && !bankTransferModal.classList.contains('hidden')) {
+    closeBankTransferModal();
+    return;
+  }
+  if (modelPreviewModal && !modelPreviewModal.classList.contains('hidden')) {
     closeModelPreview();
   }
 });

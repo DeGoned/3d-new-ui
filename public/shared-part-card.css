@@ -1,0 +1,68 @@
+.proto-part-summary {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.proto-part-summary__count {
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.proto-part-manual-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  line-height: 1.2;
+}
+
+button[data-delete-btn],
+.delete-model-btn,
+.proto-part-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 0.375rem;
+  padding: 0.375rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+button[data-delete-btn] svg {
+  flex-shrink: 0;
+}
+
+button[data-delete-btn]:hover,
+.delete-model-btn:hover,
+.proto-part-delete-btn:hover {
+  background: #fef2f2;
+}
+
+.proto-part-price-block {
+  width: 176px;
+  max-width: 100%;
+}
+
+.proto-part-price-block--center {
+  align-items: center;
+  text-align: center;
+}
+
+.proto-part-price-block--end {
+  align-items: flex-end;
+  text-align: right;
+}
+
+@media (max-width: 1023px) {
+  .proto-part-price-block {
+    width: auto;
+  }
+
+  .proto-part-price-block--end {
+    align-items: flex-start;
+    text-align: left;
+  }
+}

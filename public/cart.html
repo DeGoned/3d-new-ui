@@ -7,6 +7,7 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+  <link href="./shared-part-card.css" rel="stylesheet" />
   <style>
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -22,6 +23,64 @@
     }
     .modal-scale-in {
       animation: modal-scale-in 0.18s cubic-bezier(0.34, 1.36, 0.64, 1) both;
+    }
+    .cart-model-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .cart-model-topbar--actions {
+      justify-content: flex-end;
+    }
+    .cart-model-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .cart-model-footer {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 1024px) {
+      .cart-model-layout,
+      .cart-model-footer {
+        display: grid;
+        grid-template-columns: minmax(320px, 380px) minmax(220px, 280px) 88px 176px minmax(0, 1fr);
+        column-gap: 1.5rem;
+      }
+      .cart-model-layout {
+        align-items: start;
+        row-gap: 1.5rem;
+      }
+      .cart-model-layout > :first-child {
+        grid-column: 1;
+        align-self: center;
+      }
+      .cart-model-layout > :nth-child(2) {
+        grid-column: 2;
+        align-self: center;
+      }
+      .cart-model-layout > :nth-child(3) {
+        grid-column: 3;
+        justify-self: center;
+        align-self: center;
+      }
+      .cart-model-layout > :last-child {
+        grid-column: 4;
+        justify-self: end;
+        align-self: center;
+      }
+      .cart-model-footer {
+        align-items: start;
+      }
+      .cart-model-footer > :first-child {
+        grid-column: 1;
+      }
+      .cart-model-footer > :last-child {
+        grid-column: 2 / 6;
+      }
     }
   </style>
   <script>
@@ -51,7 +110,7 @@
 </head>
 <body class="bg-background text-on-background min-h-screen flex flex-col">
   <div class="fixed top-0 w-full z-50 bg-[#0060fe] text-white text-sm h-10 flex items-center">
-    <div class="flex justify-between items-center w-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+    <div class="flex justify-between items-center w-full max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20">
       <div class="flex items-center gap-6">
         <a href="tel:+8618126397112" class="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
           <span class="material-symbols-outlined text-sm">call</span>
@@ -69,7 +128,7 @@
   </div>
 
   <nav class="fixed top-10 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-slate-200/70 shadow-[0_2px_15px_rgba(0,0,0,0.03)] h-16">
-    <div class="flex justify-between items-center h-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+    <div class="flex justify-between items-center h-full max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20">
       <div class="flex items-center gap-5">
         <a href="/home-v3.html" class="flex items-center shrink-0">
           <img src="/logo.svg" alt="ProtoTi" class="h-7" />
@@ -108,7 +167,7 @@
   </nav>
 
   <div class="mt-[6.5rem] border-y border-amber-200/80 bg-amber-50/80 text-amber-900">
-    <div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 py-3 flex items-center justify-between gap-4">
+    <div class="max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20 py-3 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3 text-sm font-medium">
         <span class="material-symbols-outlined text-[18px] text-amber-500">error</span>
         <span>Important: Cart items are retained for 30 days maximum</span>
@@ -128,57 +187,42 @@
             <h1 class="text-2xl font-bold tracking-tight text-slate-900">Shopping Cart</h1>
           </div>
           <div class="text-sm text-slate-500 md:text-right">
-            <p>5 cart items &nbsp; / &nbsp; 6 total parts</p>
+            <p class="proto-part-summary"><span class="proto-part-summary__count">5</span> cart items &nbsp; / &nbsp; <span class="proto-part-summary__count">6</span> total parts</p>
           </div>
         </div>
 
-        <article class="border-t border-slate-200 pt-10 bg-amber-50/40 rounded-2xl px-2 -mx-2">
-          <div class="space-y-6">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center justify-center w-6 shrink-0">
-                <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
-              </div>
-              <div class="flex-1 grid grid-cols-12 gap-3 items-center">
-                <div class="col-span-4 flex items-center gap-3 pl-2">
-                  <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" data-preview-title="4in Tri Tee r2.step">
-                    <img src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" alt="4in Tri Tee r2.step" class="w-full h-full object-contain" />
-                  </button>
-                  <div class="flex flex-col gap-1 min-w-0">
-                    <span class="inline-flex w-fit items-center rounded-md bg-amber-100 px-2 py-1 text-[10px] font-semibold text-amber-700">Manual Quotation Required</span>
-                    <h2 class="font-bold text-sm text-slate-900 break-words">4in Tri Tee r2.step</h2>
-                  </div>
-                </div>
-                <div class="col-span-3 flex flex-col gap-1 min-w-0">
-                  <p class="text-xs font-bold text-slate-900">Process: CNC Machining</p>
-                </div>
-                <div class="col-span-1 flex justify-center">
-                  <input type="number" value="1" min="1" class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-                </div>
-                <div class="col-span-2 flex flex-col items-center justify-center text-center">
-                  <p class="text-base font-bold text-amber-500">≈ $1341.83</p>
-                  <p class="mt-0.5 text-[11px] font-medium text-amber-500/80">≈ $1341.83/piece</p>
-                  <p class="mt-0.5 text-[10px] font-medium text-slate-500">Est. 8-13 Days</p>
-                </div>
-                <div class="col-span-2 flex items-center justify-end border-l border-slate-100 pl-2 pr-4 min-w-0">
-                  <button data-delete-btn class="inline-flex items-center gap-1 text-[10px] font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:-translate-y-0.5">
-                      <polyline points="3 6 5 6 21 6"></polyline>
-                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
-                    </svg>
-                    Delete
-                  </button>
-                </div>
-              </div>
+        <article class="rounded-2xl border border-slate-200 bg-amber-50/40 p-5">
+          <div class="space-y-4">
+            <!-- Top bar: yellow label + delete button -->
+            <div class="cart-model-topbar">
+              <span class="proto-part-manual-badge inline-flex w-fit items-center rounded-md bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700">Manual Quotation Required</span>
+              <button data-delete-btn class="inline-flex items-center gap-1 text-xs font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 whitespace-nowrap group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+                Delete
+              </button>
             </div>
-            <div class="flex gap-4">
-              <div class="w-6 shrink-0"></div>
-              <div class="flex-1 grid grid-cols-12 gap-3 items-start">
-                <div class="col-span-4 pl-2 space-y-1 text-[11px] leading-relaxed text-slate-500">
-                  <p><span class="font-semibold text-slate-700">Dimensions:</span> 260.35 × 118.92 × 189.64 mm</p>
-                  <p><span class="font-semibold text-slate-700">Volume:</span> 216444.62 mm³</p>
-                  <p><span class="font-semibold text-slate-700">Surface Area:</span> 223382.00 mm²</p>
+
+            <!-- Main content: SINGLE ROW, all vertically centered -->
+            <div class="cart-model-layout">
+              <!-- Block 1: Checkbox + Image + Filename -->
+              <div class="flex items-center gap-4 shrink-0">
+                <div class="flex items-center justify-center w-6 shrink-0">
+                  <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
                 </div>
-                <div class="col-span-3 space-y-1 text-[11px] leading-relaxed text-slate-500">
+                <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="/manual-quote-preview.svg" data-preview-title="4in Tri Tee r2.step">
+                  <img src="/manual-quote-preview.svg" alt="4in Tri Tee r2.step" class="w-full h-full object-contain" />
+                </button>
+                <div class="flex flex-col gap-1 min-w-0 w-[200px]">
+                  <h2 class="font-bold text-sm text-slate-900 break-words">4in Tri Tee r2.step</h2>
+                  <p class="text-xs text-slate-500 font-medium">260.35 x 118.92 x 189.64 mm</p>
+                  <p class="text-xs text-slate-500 font-medium">216444.62 mm³</p>
+                  <p class="text-xs text-slate-500 font-medium">223382.00 mm²</p>
+                </div>
+              </div>
+
+              <!-- Block 2: ALL details (config) -->
+              <div class="flex-1 min-w-0">
+                <div class="space-y-1 text-xs leading-relaxed text-slate-500">
                   <p><span class="font-semibold text-slate-700">Process:</span> CNC Machining</p>
                   <p><span class="font-semibold text-slate-700">Material:</span> 123123 <span class="text-primary font-semibold">(Custom)</span></p>
                   <p><span class="font-semibold text-slate-700">Color:</span> 123123 <span class="text-primary font-semibold">(Custom)</span></p>
@@ -194,17 +238,25 @@
                   <p><span class="font-semibold text-slate-700">Request Manual Quote:</span> Not if necessary</p>
                 </div>
               </div>
-            </div>
-            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-              <div>
-                <label class="mb-2 block text-[11px] font-medium text-slate-500">Notes</label>
-                <div class="relative">
-                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
-                  <span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
-                </div>
+
+
+              <!-- Block 3: Quantity -->
+              <div class="flex items-center justify-center shrink-0">
+                <input type="number" value="1" min="1" class="w-14 h-9 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
               </div>
+
+              <!-- Block 4: Price -->
+              <div class="proto-part-price-block proto-part-price-block--end flex flex-col items-end text-right shrink-0 w-[140px]">
+                <p class="text-base font-bold text-amber-500">≈ $1341.83</p>
+                <p class="mt-0.5 text-xs font-medium text-amber-500/80">≈ $1341.83/piece</p>
+                <p class="mt-0.5 text-xs font-medium text-slate-500">Est. 8-13 Days</p>
+              </div>
+            </div>
+
+            <!-- Attachments + Notes (full width, below) -->
+            <div class="cart-model-footer mt-6">
               <div>
-                <div class="mb-2 flex items-center gap-4 text-[11px]">
+                <div class="mb-2 flex items-center gap-4 text-xs">
                   <label class="font-medium text-slate-500">Attachments</label>
                   <button class="font-semibold text-primary hover:underline">Upload</button>
                 </div>
@@ -212,56 +264,48 @@
                   No attachments
                 </div>
               </div>
+              <div>
+                <label class="mb-2 block text-xs font-medium text-slate-500">Notes</label>
+                <div class="relative">
+                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
+                  <span class="absolute bottom-2 right-2 text-xs text-slate-400">0 / 500</span>
+                </div>
+              </div>
             </div>
           </div>
         </article>
 
-        <article class="border-t border-slate-200 pt-10">
-          <div class="space-y-6">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center justify-center w-6 shrink-0">
-                <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
-              </div>
-              <div class="flex-1 grid grid-cols-12 gap-3 items-center">
-                <div class="col-span-4 flex items-center gap-3 pl-2">
-                  <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" data-preview-title="90101001-Exhaust-Manifold-Tubing-rev-.step">
-                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" alt="90101001-Exhaust-Manifold-Tubing-rev-.step" class="w-full h-full object-contain" />
-                  </button>
-                  <div class="flex flex-col gap-1 min-w-0">
-                    <h2 class="font-bold text-sm text-slate-900 break-words">90101001-Exhaust-Manifold-Tubing-rev-.step</h2>
-                  </div>
-                </div>
-                <div class="col-span-3 flex flex-col gap-1 min-w-0">
-                  <p class="text-xs font-bold text-slate-900">Material: 1.2 SLM - Stainless Steel 316L - $$$</p>
-                </div>
-                <div class="col-span-1 flex justify-center">
-                  <input type="number" value="1" min="1" class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-                </div>
-                <div class="col-span-2 flex flex-col items-center justify-center text-center">
-                  <p class="text-base font-bold text-primary">$215.33</p>
-                  <p class="mt-0.5 text-[11px] font-medium text-slate-400">$215.33/piece</p>
-                  <p class="mt-0.5 text-[10px] font-medium text-slate-500">Est. 3-5 Days</p>
-                </div>
-                <div class="col-span-2 flex items-center justify-end border-l border-slate-100 pl-2 pr-4 min-w-0">
-                  <button data-delete-btn class="inline-flex items-center gap-1 text-[10px] font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:-translate-y-0.5">
-                      <polyline points="3 6 5 6 21 6"></polyline>
-                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
-                    </svg>
-                    Delete
-                  </button>
-                </div>
-              </div>
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <div class="space-y-4">
+            <!-- Top bar: delete button only -->
+            <div class="cart-model-topbar cart-model-topbar--actions">
+              <button data-delete-btn class="inline-flex items-center gap-1 text-xs font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 whitespace-nowrap group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+                Delete
+              </button>
             </div>
-            <div class="flex gap-4">
-              <div class="w-6 shrink-0"></div>
-              <div class="flex-1 grid grid-cols-12 gap-3 items-start">
-                <div class="col-span-4 pl-2 space-y-1 text-[11px] leading-relaxed text-slate-500">
-                  <p><span class="font-semibold text-slate-700">Dimensions:</span> 303.14 × 156.77 × 102.27 mm</p>
-                  <p><span class="font-semibold text-slate-700">Volume:</span> 185468.61 mm³</p>
-                  <p><span class="font-semibold text-slate-700">Surface Area:</span> 163195.11 mm²</p>
+
+            <!-- Main content: SINGLE ROW, all vertically centered -->
+            <div class="cart-model-layout">
+              <!-- Block 1: Checkbox + Image + Filename -->
+              <div class="flex items-center gap-4 shrink-0">
+                <div class="flex items-center justify-center w-6 shrink-0">
+                  <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
                 </div>
-                <div class="col-span-3 space-y-1 text-[11px] leading-relaxed text-slate-500">
+                <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" data-preview-title="90101001-Exhaust-Manifold-Tubing-rev-.step">
+                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzZpUM03yLGjPJBbjgXDJPQqHs-4vwak6__2g4eoXPAdTGdvZqsH66zgU-NoCamha8oOubt5aUlqCKtBZBDxDwvHiNWyD9KMy7TTkIHjPp1JTBl4NwAT1odGhGaPdxxC80G6zYIj_brnITP3qAvOegIPWwFKx1QPIKtSsRonGsoG8VMGY3F2TTQBv4iduDiTOGt6M-s3I4vmPbHt6jGGOuhtU9xKzXHc_Sk1yEb0h5oicHRhCGiaQqwSaFGE9vu4n3OiPovWLxxw" alt="90101001-Exhaust-Manifold-Tubing-rev-.step" class="w-full h-full object-contain" />
+                </button>
+                <div class="flex flex-col gap-1 min-w-0 w-[200px]">
+                  <h2 class="font-bold text-sm text-slate-900 break-words">90101001-Exhaust-Manifold-Tubing-rev-.step</h2>
+                  <p class="text-xs text-slate-500 font-medium">303.14 x 156.77 x 102.27 mm</p>
+                  <p class="text-xs text-slate-500 font-medium">185468.61 mm³</p>
+                  <p class="text-xs text-slate-500 font-medium">163195.11 mm²</p>
+                </div>
+              </div>
+
+              <!-- Block 2: ALL details (config) -->
+              <div class="flex-1 min-w-0">
+                <div class="space-y-1 text-xs leading-relaxed text-slate-500">
                   <p><span class="font-semibold text-slate-700">Material:</span> Stainless Steel 316L</p>
                   <p><span class="font-semibold text-slate-700">Color:</span> Metallic Gray</p>
                   <p><span class="font-semibold text-slate-700">Process:</span> Sand Blasted - Matte</p>
@@ -270,17 +314,24 @@
                   <p><span class="font-semibold text-slate-700">Surface Class:</span> Standard Production</p>
                 </div>
               </div>
-            </div>
-            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-              <div>
-                <label class="mb-2 block text-[11px] font-medium text-slate-500">Notes</label>
-                <div class="relative">
-                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
-                  <span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
-                </div>
+
+              <!-- Block 3: Quantity -->
+              <div class="flex items-center justify-center shrink-0">
+                <input type="number" value="1" min="1" class="w-14 h-9 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
               </div>
+
+              <!-- Block 4: Price -->
+              <div class="proto-part-price-block proto-part-price-block--end flex flex-col items-end text-right shrink-0 w-[140px]">
+                <p class="text-base font-bold text-primary">$215.33</p>
+                <p class="mt-0.5 text-xs font-medium text-slate-400">$215.33/piece</p>
+                <p class="mt-0.5 text-xs font-medium text-slate-500">Est. 3-5 Days</p>
+              </div>
+            </div>
+
+            <!-- Attachments + Notes (full width, below) -->
+            <div class="cart-model-footer mt-6">
               <div>
-                <div class="mb-2 flex items-center gap-4 text-[11px]">
+                <div class="mb-2 flex items-center gap-4 text-xs">
                   <label class="font-medium text-slate-500">Attachments</label>
                   <button class="font-semibold text-primary hover:underline">Upload</button>
                 </div>
@@ -288,56 +339,48 @@
                   No attachments
                 </div>
               </div>
+              <div>
+                <label class="mb-2 block text-xs font-medium text-slate-500">Notes</label>
+                <div class="relative">
+                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
+                  <span class="absolute bottom-2 right-2 text-xs text-slate-400">0 / 500</span>
+                </div>
+              </div>
             </div>
           </div>
         </article>
 
-        <article class="border-t border-slate-200 pt-10">
-          <div class="space-y-6">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center justify-center w-6 shrink-0">
-                <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
-              </div>
-              <div class="flex-1 grid grid-cols-12 gap-3 items-center">
-                <div class="col-span-4 flex items-center gap-3 pl-2">
-                  <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" data-preview-title="FUEL RAIL SECONDARY.stp">
-                    <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" alt="FUEL RAIL SECONDARY.stp" class="w-full h-full object-contain" />
-                  </button>
-                  <div class="flex flex-col gap-1 min-w-0">
-                    <h2 class="font-bold text-sm text-slate-900 break-words">FUEL RAIL SECONDARY.stp</h2>
-                  </div>
-                </div>
-                <div class="col-span-3 flex flex-col gap-1 min-w-0">
-                  <p class="text-xs font-bold text-slate-900">Material: 1.2 SLM - Stainless Steel 316L - $$$</p>
-                </div>
-                <div class="col-span-1 flex justify-center">
-                  <input type="number" value="1" min="1" class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-                </div>
-                <div class="col-span-2 flex flex-col items-center justify-center text-center">
-                  <p class="text-base font-bold text-primary">$59.00</p>
-                  <p class="mt-0.5 text-[11px] font-medium text-slate-400">$59.00/piece</p>
-                  <p class="mt-0.5 text-[10px] font-medium text-slate-500">Est. 3-5 Days</p>
-                </div>
-                <div class="col-span-2 flex items-center justify-end border-l border-slate-100 pl-2 pr-4 min-w-0">
-                  <button data-delete-btn class="inline-flex items-center gap-1 text-[10px] font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:-translate-y-0.5">
-                      <polyline points="3 6 5 6 21 6"></polyline>
-                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
-                    </svg>
-                    Delete
-                  </button>
-                </div>
-              </div>
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <div class="space-y-4">
+            <!-- Top bar: delete button only -->
+            <div class="cart-model-topbar cart-model-topbar--actions">
+              <button data-delete-btn class="inline-flex items-center gap-1 text-xs font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 whitespace-nowrap group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+                Delete
+              </button>
             </div>
-            <div class="flex gap-4">
-              <div class="w-6 shrink-0"></div>
-              <div class="flex-1 grid grid-cols-12 gap-3 items-start">
-                <div class="col-span-4 pl-2 space-y-1 text-[11px] leading-relaxed text-slate-500">
-                  <p><span class="font-semibold text-slate-700">Dimensions:</span> 240.00 × 34.00 × 62.00 mm</p>
-                  <p><span class="font-semibold text-slate-700">Volume:</span> 52891.68 mm³</p>
-                  <p><span class="font-semibold text-slate-700">Surface Area:</span> 41350.53 mm²</p>
+
+            <!-- Main content: SINGLE ROW, all vertically centered -->
+            <div class="cart-model-layout">
+              <!-- Block 1: Checkbox + Image + Filename -->
+              <div class="flex items-center gap-4 shrink-0">
+                <div class="flex items-center justify-center w-6 shrink-0">
+                  <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
                 </div>
-                <div class="col-span-3 space-y-1 text-[11px] leading-relaxed text-slate-500">
+                <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" data-preview-title="FUEL RAIL SECONDARY.stp">
+                  <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" alt="FUEL RAIL SECONDARY.stp" class="w-full h-full object-contain" />
+                </button>
+                <div class="flex flex-col gap-1 min-w-0 w-[200px]">
+                  <h2 class="font-bold text-sm text-slate-900 break-words">FUEL RAIL SECONDARY.stp</h2>
+                  <p class="text-xs text-slate-500 font-medium">240.00 x 34.00 x 62.00 mm</p>
+                  <p class="text-xs text-slate-500 font-medium">52891.68 mm³</p>
+                  <p class="text-xs text-slate-500 font-medium">41350.53 mm²</p>
+                </div>
+              </div>
+
+              <!-- Block 2: ALL details (config) -->
+              <div class="flex-1 min-w-0">
+                <div class="space-y-1 text-xs leading-relaxed text-slate-500">
                   <p><span class="font-semibold text-slate-700">Material:</span> Stainless Steel 316L</p>
                   <p><span class="font-semibold text-slate-700">Color:</span> Metallic Gray</p>
                   <p><span class="font-semibold text-slate-700">Process:</span> Sand Blasted - Matte</p>
@@ -346,17 +389,24 @@
                   <p><span class="font-semibold text-slate-700">Surface Class:</span> Sealing Faces Protected</p>
                 </div>
               </div>
-            </div>
-            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-              <div>
-                <label class="mb-2 block text-[11px] font-medium text-slate-500">Notes</label>
-                <div class="relative">
-                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
-                  <span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
-                </div>
+
+              <!-- Block 3: Quantity -->
+              <div class="flex items-center justify-center shrink-0">
+                <input type="number" value="1" min="1" class="w-14 h-9 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
               </div>
+
+              <!-- Block 4: Price -->
+              <div class="proto-part-price-block proto-part-price-block--end flex flex-col items-end text-right shrink-0 w-[140px]">
+                <p class="text-base font-bold text-primary">$59.00</p>
+                <p class="mt-0.5 text-xs font-medium text-slate-400">$59.00/piece</p>
+                <p class="mt-0.5 text-xs font-medium text-slate-500">Est. 3-5 Days</p>
+              </div>
+            </div>
+
+            <!-- Attachments + Notes (full width, below) -->
+            <div class="cart-model-footer mt-6">
               <div>
-                <div class="mb-2 flex items-center gap-4 text-[11px]">
+                <div class="mb-2 flex items-center gap-4 text-xs">
                   <label class="font-medium text-slate-500">Attachments</label>
                   <button class="font-semibold text-primary hover:underline">Upload</button>
                 </div>
@@ -364,56 +414,48 @@
                   No attachments
                 </div>
               </div>
+              <div>
+                <label class="mb-2 block text-xs font-medium text-slate-500">Notes</label>
+                <div class="relative">
+                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
+                  <span class="absolute bottom-2 right-2 text-xs text-slate-400">0 / 500</span>
+                </div>
+              </div>
             </div>
           </div>
         </article>
 
-        <article class="border-t border-slate-200 pt-10">
-          <div class="space-y-6">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center justify-center w-6 shrink-0">
-                <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
-              </div>
-              <div class="flex-1 grid grid-cols-12 gap-3 items-center">
-                <div class="col-span-4 flex items-center gap-3 pl-2">
-                  <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" data-preview-title="Turbo_Valve_Housing_A.stl">
-                    <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" alt="Turbo_Valve_Housing_A.stl" class="w-full h-full object-contain" />
-                  </button>
-                  <div class="flex flex-col gap-1 min-w-0">
-                    <h2 class="font-bold text-sm text-slate-900 break-words">Turbo_Valve_Housing_A.stl</h2>
-                  </div>
-                </div>
-                <div class="col-span-3 flex flex-col gap-1 min-w-0">
-                  <p class="text-xs font-bold text-slate-900">Material: AlSi10Mg - Natural Silver - $$</p>
-                </div>
-                <div class="col-span-1 flex justify-center">
-                  <input type="number" value="2" min="1" class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-                </div>
-                <div class="col-span-2 flex flex-col items-center justify-center text-center">
-                  <p class="text-base font-bold text-primary">$132.40</p>
-                  <p class="mt-0.5 text-[11px] font-medium text-slate-400">$66.20/piece</p>
-                  <p class="mt-0.5 text-[10px] font-medium text-slate-500">Est. 4-6 Days</p>
-                </div>
-                <div class="col-span-2 flex items-center justify-end border-l border-slate-100 pl-2 pr-4 min-w-0">
-                  <button data-delete-btn class="inline-flex items-center gap-1 text-[10px] font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:-translate-y-0.5">
-                      <polyline points="3 6 5 6 21 6"></polyline>
-                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
-                    </svg>
-                    Delete
-                  </button>
-                </div>
-              </div>
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <div class="space-y-4">
+            <!-- Top bar: delete button only -->
+            <div class="cart-model-topbar cart-model-topbar--actions">
+              <button data-delete-btn class="inline-flex items-center gap-1 text-xs font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 whitespace-nowrap group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+                Delete
+              </button>
             </div>
-            <div class="flex gap-4">
-              <div class="w-6 shrink-0"></div>
-              <div class="flex-1 grid grid-cols-12 gap-3 items-start">
-                <div class="col-span-4 pl-2 space-y-1 text-[11px] leading-relaxed text-slate-500">
-                  <p><span class="font-semibold text-slate-700">Dimensions:</span> 180.60 × 122.40 × 76.30 mm</p>
-                  <p><span class="font-semibold text-slate-700">Volume:</span> 84210.88 mm³</p>
-                  <p><span class="font-semibold text-slate-700">Surface Area:</span> 61244.19 mm²</p>
+
+            <!-- Main content: SINGLE ROW, all vertically centered -->
+            <div class="cart-model-layout">
+              <!-- Block 1: Checkbox + Image + Filename -->
+              <div class="flex items-center gap-4 shrink-0">
+                <div class="flex items-center justify-center w-6 shrink-0">
+                  <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
                 </div>
-                <div class="col-span-3 space-y-1 text-[11px] leading-relaxed text-slate-500">
+                <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" data-preview-title="Turbo_Valve_Housing_A.stl">
+                  <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=400&q=80" alt="Turbo_Valve_Housing_A.stl" class="w-full h-full object-contain" />
+                </button>
+                <div class="flex flex-col gap-1 min-w-0 w-[200px]">
+                  <h2 class="font-bold text-sm text-slate-900 break-words">Turbo_Valve_Housing_A.stl</h2>
+                  <p class="text-xs text-slate-500 font-medium">180.60 x 122.40 x 76.30 mm</p>
+                  <p class="text-xs text-slate-500 font-medium">84210.88 mm³</p>
+                  <p class="text-xs text-slate-500 font-medium">61244.19 mm²</p>
+                </div>
+              </div>
+
+              <!-- Block 2: ALL details (config) -->
+              <div class="flex-1 min-w-0">
+                <div class="space-y-1 text-xs leading-relaxed text-slate-500">
                   <p><span class="font-semibold text-slate-700">Material:</span> AlSi10Mg</p>
                   <p><span class="font-semibold text-slate-700">Color:</span> Natural Silver</p>
                   <p><span class="font-semibold text-slate-700">Process:</span> Bead Blasted</p>
@@ -422,17 +464,24 @@
                   <p><span class="font-semibold text-slate-700">Surface Class:</span> Standard Structural</p>
                 </div>
               </div>
-            </div>
-            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-              <div>
-                <label class="mb-2 block text-[11px] font-medium text-slate-500">Notes</label>
-                <div class="relative">
-                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
-                  <span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
-                </div>
+
+              <!-- Block 3: Quantity -->
+              <div class="flex items-center justify-center shrink-0">
+                <input type="number" value="2" min="1" class="w-14 h-9 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
               </div>
+
+              <!-- Block 4: Price -->
+              <div class="proto-part-price-block proto-part-price-block--end flex flex-col items-end text-right shrink-0 w-[140px]">
+                <p class="text-base font-bold text-primary">$132.40</p>
+                <p class="mt-0.5 text-xs font-medium text-slate-400">$66.20/piece</p>
+                <p class="mt-0.5 text-xs font-medium text-slate-500">Est. 4-6 Days</p>
+              </div>
+            </div>
+
+            <!-- Attachments + Notes (full width, below) -->
+            <div class="cart-model-footer mt-6">
               <div>
-                <div class="mb-2 flex items-center gap-4 text-[11px]">
+                <div class="mb-2 flex items-center gap-4 text-xs">
                   <label class="font-medium text-slate-500">Attachments</label>
                   <button class="font-semibold text-primary hover:underline">Upload</button>
                 </div>
@@ -440,56 +489,48 @@
                   No attachments
                 </div>
               </div>
+              <div>
+                <label class="mb-2 block text-xs font-medium text-slate-500">Notes</label>
+                <div class="relative">
+                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
+                  <span class="absolute bottom-2 right-2 text-xs text-slate-400">0 / 500</span>
+                </div>
+              </div>
             </div>
           </div>
         </article>
 
-        <article class="border-t border-slate-200 pt-10">
-          <div class="space-y-6">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center justify-center w-6 shrink-0">
-                <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
-              </div>
-              <div class="flex-1 grid grid-cols-12 gap-3 items-center">
-                <div class="col-span-4 flex items-center gap-3 pl-2">
-                  <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" data-preview-title="Cooling_Manifold_Beta.step">
-                    <img src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" alt="Cooling_Manifold_Beta.step" class="w-full h-full object-contain" />
-                  </button>
-                  <div class="flex flex-col gap-1 min-w-0">
-                    <h2 class="font-bold text-sm text-slate-900 break-words">Cooling_Manifold_Beta.step</h2>
-                  </div>
-                </div>
-                <div class="col-span-3 flex flex-col gap-1 min-w-0">
-                  <p class="text-xs font-bold text-slate-900">Material: Titanium Ti64 - Raw Finish - $$$$</p>
-                </div>
-                <div class="col-span-1 flex justify-center">
-                  <input type="number" value="1" min="1" class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-                </div>
-                <div class="col-span-2 flex flex-col items-center justify-center text-center">
-                  <p class="text-base font-bold text-primary">$188.90</p>
-                  <p class="mt-0.5 text-[11px] font-medium text-slate-400">$188.90/piece</p>
-                  <p class="mt-0.5 text-[10px] font-medium text-slate-500">Est. 5-7 Days</p>
-                </div>
-                <div class="col-span-2 flex items-center justify-end border-l border-slate-100 pl-2 pr-4 min-w-0">
-                  <button data-delete-btn class="inline-flex items-center gap-1 text-[10px] font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap group">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:-translate-y-0.5">
-                      <polyline points="3 6 5 6 21 6"></polyline>
-                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
-                    </svg>
-                    Delete
-                  </button>
-                </div>
-              </div>
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <div class="space-y-4">
+            <!-- Top bar: delete button only -->
+            <div class="cart-model-topbar cart-model-topbar--actions">
+              <button data-delete-btn class="inline-flex items-center gap-1 text-xs font-medium text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1.5 rounded-md transition-all duration-200 whitespace-nowrap group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+                Delete
+              </button>
             </div>
-            <div class="flex gap-4">
-              <div class="w-6 shrink-0"></div>
-              <div class="flex-1 grid grid-cols-12 gap-3 items-start">
-                <div class="col-span-4 pl-2 space-y-1 text-[11px] leading-relaxed text-slate-500">
-                  <p><span class="font-semibold text-slate-700">Dimensions:</span> 128.20 × 95.70 × 64.10 mm</p>
-                  <p><span class="font-semibold text-slate-700">Volume:</span> 61220.30 mm³</p>
-                  <p><span class="font-semibold text-slate-700">Surface Area:</span> 44882.64 mm²</p>
+
+            <!-- Main content: SINGLE ROW, all vertically centered -->
+            <div class="cart-model-layout">
+              <!-- Block 1: Checkbox + Image + Filename -->
+              <div class="flex items-center gap-4 shrink-0">
+                <div class="flex items-center justify-center w-6 shrink-0">
+                  <input type="checkbox" checked data-cart-item-checkbox aria-label="Select cart item" class="w-5 h-5 rounded-[6px] border-slate-300 text-primary focus:ring-primary cursor-pointer" />
                 </div>
-                <div class="col-span-3 space-y-1 text-[11px] leading-relaxed text-slate-500">
+                <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" data-preview-title="Cooling_Manifold_Beta.step">
+                  <img src="https://images.unsplash.com/photo-1565035010268-a3816f98589a?auto=format&fit=crop&w=400&q=80" alt="Cooling_Manifold_Beta.step" class="w-full h-full object-contain" />
+                </button>
+                <div class="flex flex-col gap-1 min-w-0 w-[200px]">
+                  <h2 class="font-bold text-sm text-slate-900 break-words">Cooling_Manifold_Beta.step</h2>
+                  <p class="text-xs text-slate-500 font-medium">128.20 x 95.70 x 64.10 mm</p>
+                  <p class="text-xs text-slate-500 font-medium">61220.30 mm³</p>
+                  <p class="text-xs text-slate-500 font-medium">44882.64 mm²</p>
+                </div>
+              </div>
+
+              <!-- Block 2: ALL details (config) -->
+              <div class="flex-1 min-w-0">
+                <div class="space-y-1 text-xs leading-relaxed text-slate-500">
                   <p><span class="font-semibold text-slate-700">Material:</span> Titanium Ti64</p>
                   <p><span class="font-semibold text-slate-700">Color:</span> Raw Metallic</p>
                   <p><span class="font-semibold text-slate-700">Process:</span> Support Removal + QC</p>
@@ -505,22 +546,36 @@
                   <p><span class="font-semibold text-slate-700">Packaging:</span> Vacuum Bag + Foam Protection</p>
                 </div>
               </div>
-            </div>
-            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-              <div>
-                <label class="mb-2 block text-[11px] font-medium text-slate-500">Notes</label>
-                <div class="relative">
-                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
-                  <span class="absolute bottom-2 right-2 text-[10px] text-slate-400">0 / 500</span>
-                </div>
+
+              <!-- Block 3: Quantity -->
+              <div class="flex items-center justify-center shrink-0">
+                <input type="number" value="1" min="1" class="w-14 h-9 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary bg-slate-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
               </div>
+
+              <!-- Block 4: Price -->
+              <div class="proto-part-price-block proto-part-price-block--end flex flex-col items-end text-right shrink-0 w-[140px]">
+                <p class="text-base font-bold text-primary">$188.90</p>
+                <p class="mt-0.5 text-xs font-medium text-slate-400">$188.90/piece</p>
+                <p class="mt-0.5 text-xs font-medium text-slate-500">Est. 5-7 Days</p>
+              </div>
+            </div>
+
+            <!-- Attachments + Notes (full width, below) -->
+            <div class="cart-model-footer mt-6">
               <div>
-                <div class="mb-2 flex items-center gap-4 text-[11px]">
+                <div class="mb-2 flex items-center gap-4 text-xs">
                   <label class="font-medium text-slate-500">Attachments</label>
                   <button class="font-semibold text-primary hover:underline">Upload</button>
                 </div>
                 <div class="h-[62px] rounded-lg border border-slate-200 bg-slate-50 px-4 flex items-center text-xs text-slate-400">
                   No attachments
+                </div>
+              </div>
+              <div>
+                <label class="mb-2 block text-xs font-medium text-slate-500">Notes</label>
+                <div class="relative">
+                  <textarea rows="2" maxlength="500" class="w-full bg-white border border-slate-200 rounded-lg text-xs p-3 focus:ring-1 focus:ring-primary focus:border-primary text-slate-700 resize-none" placeholder="Click to add notes..."></textarea>
+                  <span class="absolute bottom-2 right-2 text-xs text-slate-400">0 / 500</span>
                 </div>
               </div>
             </div>
@@ -531,24 +586,24 @@
       <aside class="space-y-6">
         <section class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-6">
           <div>
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Address</h3>
-              <button class="text-[10px] font-bold tracking-[0.08em] text-primary hover:underline">+ Add New</button>
-            </div>
-            <div class="relative">
-              <select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
-                <option>1212 123 (Default)</option>
-                <option>Main Warehouse - Building 4</option>
-              </select>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
-                <span class="material-symbols-outlined text-lg">expand_more</span>
+            <h3 class="text-xs font-bold tracking-[0.08em] text-slate-500 mb-4">Shipping Address</h3>
+            <div class="flex items-center gap-3">
+              <div class="relative flex-1">
+                <select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
+                  <option>1212 123 (Default)</option>
+                  <option>Main Warehouse - Building 4</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                  <span class="material-symbols-outlined text-lg">expand_more</span>
+                </div>
               </div>
+              <button class="text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0">+ Add New</button>
             </div>
             <div class="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-100 relative">
               <button class="absolute top-4 right-4 text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
               <div class="flex items-start gap-3">
                 <span class="material-symbols-outlined text-primary text-xl mt-0.5">location_on</span>
-                <div class="text-[11px] text-slate-600 leading-relaxed">
+                <div class="text-xs text-slate-600 leading-relaxed">
                   <p class="font-bold text-slate-900">1212 123 <span class="text-primary ml-1">Default</span></p>
                   <p>Company: 123, Tax ID: 123</p>
                   <p>123123, kriseooooooo@gmail.com</p>
@@ -560,7 +615,7 @@
           </div>
 
           <div>
-            <h3 class="mb-4 text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Method</h3>
+            <h3 class="mb-4 text-xs font-bold tracking-[0.08em] text-slate-500">Shipping Method</h3>
             <div class="relative mb-4">
               <select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
                 <option>Tariff-Free Shipping</option>
@@ -576,9 +631,9 @@
                   <span class="material-symbols-outlined text-slate-600">local_shipping</span>
                   <span class="text-xs font-bold text-slate-900">Tariff-Free Shipping</span>
                 </div>
-                <span class="bg-blue-100 text-primary text-[9px] font-bold px-2 py-0.5 rounded-sm">5-7 Business Days</span>
+                <span class="bg-blue-100 text-primary text-xs font-bold px-2 py-0.5 rounded-sm">5-7 Business Days</span>
               </div>
-              <p class="text-[10px] text-slate-500">Carrier: Occasionally Delayed Due to Customs Inspection!</p>
+              <p class="text-xs text-slate-500">Carrier: Occasionally Delayed Due to Customs Inspection!</p>
             </div>
           </div>
         </section>
@@ -617,14 +672,14 @@
   </main>
 
   <footer class="mt-auto bg-white border-t border-slate-200 pt-12 pb-6">
-    <div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 grid grid-cols-1 md:grid-cols-3 gap-10">
+    <div class="max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20 grid grid-cols-1 md:grid-cols-4 gap-10 items-center">
       <div>
         <img src="/logo.svg" alt="ProtoTi" class="h-10 mb-4" />
         <p class="text-sm text-slate-500">Shenzhen ProtoTi Technology Co., LTD</p>
         <p class="text-sm text-slate-400 mt-1">User Name: kriseoooooo@gmail.com</p>
       </div>
       <div>
-        <h4 class="font-bold text-slate-800 mb-4">Contact</h4>
+        <h4 class="font-bold text-slate-800 mb-2">Contact</h4>
         <p class="text-sm text-slate-500 flex items-center gap-2 mb-2">
           <span class="material-symbols-outlined text-sm">call</span> Phone: +86 18126397112
         </p>
@@ -633,21 +688,40 @@
         </p>
       </div>
       <div>
-        <div class="md:max-w-[332px] md:ml-auto">
-          <h4 class="font-bold text-slate-800 mb-4">Office</h4>
-          <p class="text-sm text-slate-500 flex items-start gap-2">
-            <span class="material-symbols-outlined text-sm mt-0.5">location_on</span>
-            Address: 8th Floor, Biaofan Technology Building, Tower C, No.6 Gongye Road, Baoan, Shenzhen, China, 518104
-          </p>
-          <div class="mt-6 flex items-center gap-3">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/200px-MasterCard_Logo.svg.png" alt="Mastercard" class="h-6 object-contain" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa" class="h-5 object-contain" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/200px-PayPal.svg.png" alt="PayPal" class="h-5 object-contain" />
-          </div>
+        <h4 class="font-bold text-slate-800 mb-2">Office</h4>
+        <p class="text-sm text-slate-500 flex items-start gap-2">
+          <span class="material-symbols-outlined text-sm mt-0.5">location_on</span>
+          Address: 8th Floor, Biaofan Technology Building, Tower C, No.6 Gongye Road, Baoan, Shenzhen, China, 518104
+        </p>
+      </div>
+      <div class="flex items-center justify-end">
+        <div class="flex items-center gap-4">
+          <!-- Mastercard -->
+          <svg class="h-8" viewBox="0 0 152 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="152" height="100" rx="8" fill="#1A1F36"/>
+            <circle cx="58" cy="50" r="30" fill="#EB001B"/>
+            <circle cx="94" cy="50" r="30" fill="#F79E1B"/>
+            <path d="M76 27.5a29.9 29.9 0 0 0-11.2 22.5c0 9.1 4.1 17.3 11.2 22.5A29.9 29.9 0 0 0 87.2 50 29.9 29.9 0 0 0 76 27.5z" fill="#FF5F00"/>
+          </svg>
+          <!-- Visa -->
+          <svg class="h-8" viewBox="0 0 152 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="152" height="100" rx="8" fill="#1A1F71"/>
+            <path d="M57 65l7.5-40h9.5L66.5 65H57zm38-40l-9 27.4L84.5 42c-.7-3.5-3.2-4.5-6.2-4.5H63.8l-.3 1.3C67 40 72 42.7 74 45l7 20h10l15-40H95zm24 40h9l-8-40h-7.6c-2.2 0-4 1.3-4.8 3.2L95 65h10l2-5.5h12.2L120 65zm-10.5-13.2l5-13.8 2.9 13.8h-7.9zM53 25L42.2 65H33L27.5 32c-.3-1.4-1.2-2.5-2.7-3.2C22.3 27.5 18.5 26 15 25.5l.3-1.5h15c2.3 0 4.2 1.5 4.6 4l3.7 20L49 25h4z" fill="white"/>
+          </svg>
+          <!-- PayPal -->
+          <svg class="h-8" viewBox="0 0 152 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="152" height="100" rx="8" fill="#F5F7FA"/>
+            <rect x="0.5" y="0.5" width="151" height="99" rx="7.5" stroke="#E2E8F0"/>
+            <path d="M55.5 30h-9.8c-.7 0-1.3.5-1.4 1.1l-4 25.2c-.1.5.3.9.8.9h5c.7 0 1.3-.5 1.4-1.2l1.1-6.8c.1-.7.7-1.2 1.4-1.2h3.2c6.6 0 10.4-3.2 11.4-9.5.5-2.8 0-4.9-1.3-6.5C61.8 30.7 59 30 55.5 30z" fill="#003087"/>
+            <path d="M55.5 30c3.5 0 6.3.7 7.8 2.1 1.3 1.5 1.8 3.7 1.3 6.5-1 6.3-4.8 9.5-11.4 9.5h-3.2c-.7 0-1.3.5-1.4 1.2l-1.1 6.8c-.1.7-.7 1.2-1.4 1.2h-4.7" fill="#003087"/>
+            <path d="M72 30h-9.8c-.7 0-1.3.5-1.4 1.1l-4 25.2c-.1.5.3.9.8.9h5c.5 0 .9-.3 1-.8l1.1-7.2c.1-.7.7-1.2 1.4-1.2h3.2c6.6 0 10.4-3.2 11.4-9.5.5-2.8 0-4.9-1.3-6.5C77.8 30.7 75.5 30 72 30z" fill="#0070E0"/>
+            <text x="88" y="57" font-family="Arial,sans-serif" font-weight="bold" font-size="18" fill="#003087">Pay</text>
+            <text x="110" y="57" font-family="Arial,sans-serif" font-weight="bold" font-size="18" fill="#0070E0">Pal</text>
+          </svg>
         </div>
       </div>
     </div>
-    <div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 mt-8 pt-6 border-t border-slate-100">
+    <div class="max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20 mt-8 pt-6 border-t border-slate-100">
       <p class="text-sm text-slate-400 text-center">© 2018-2025 ProtoTi. All Rights Reserved.</p>
     </div>
   </footer>

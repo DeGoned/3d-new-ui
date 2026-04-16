@@ -201,7 +201,7 @@
 <div class="space-y-1.5">
 <div class="flex justify-between items-center px-1">
 <label class="text-xs font-bold tracking-[0.08em] text-on-surface-variant" for="password">Password</label>
-<a class="text-[11px] font-bold tracking-[0.04em] text-primary transition-colors hover:text-primary-container" href="#" id="forgot-password-link">Forgot Password?</a>
+<a class="text-xs font-bold tracking-[0.04em] text-primary transition-colors hover:text-primary-container" href="#" id="forgot-password-link">Forgot Password?</a>
 </div>
 <div class="relative group">
 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-outline group-focus-within:text-primary transition-colors">
@@ -373,7 +373,7 @@
 <div aria-hidden="true" class="absolute inset-0 flex items-center">
 <div class="w-full border-t border-outline-variant/20"></div>
 </div>
-<div class="relative flex justify-center text-[10px] font-bold tracking-[0.08em]">
+<div class="relative flex justify-center text-xs font-bold tracking-[0.08em]">
 <span class="bg-surface-container-lowest px-4 text-outline">Or continue with</span>
 </div>
 </div>
@@ -401,6 +401,76 @@
 </div><!-- /flip-container -->
 </div><!-- /perspective -->
 </main>
+
+<!-- Announcement Modal -->
+<div id="announcement-modal" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-opacity duration-300">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl mx-4 flex flex-col max-h-[90vh] transform transition-transform duration-300">
+        <!-- Header -->
+        <div class="flex items-start justify-between px-8 pt-8 pb-4">
+            <div class="flex items-start gap-3">
+                <div class="w-1 h-12 bg-primary rounded-full mt-0.5 shrink-0"></div>
+                <div>
+                    <h2 class="font-headline text-xl font-bold text-on-surface leading-tight">Upgrade Your Quoting Experience</h2>
+                    <h2 class="font-headline text-xl font-bold text-on-surface leading-tight">— CNC Instant Quote is Now Live</h2>
+                </div>
+            </div>
+            <button id="close-announcement-btn" class="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors shrink-0 mt-1">
+                <span class="material-symbols-outlined text-lg">close</span>
+            </button>
+        </div>
+        <!-- Body -->
+        <div class="overflow-y-auto px-8 pb-4 flex-1">
+            <div class="bg-slate-50 rounded-xl p-6 text-sm text-slate-700 leading-relaxed space-y-4">
+                <p>Dear Valued Customer,</p>
+                <p>We've just launched a <strong class="text-on-surface text-base">major upgrade</strong> to our quoting system — built to help you <strong class="text-on-surface text-base">quote</strong> faster, <strong class="text-on-surface text-base">order</strong> easier, and <strong class="text-on-surface text-base">scale</strong> more efficiently.</p>
+
+                <div>
+                    <h3 class="font-bold text-on-surface mb-2">Why Switch to the New Version?</h3>
+                    <ul class="space-y-3 ml-2">
+                        <li>
+                            <p class="font-semibold text-on-surface">&#9889; Instant Quote for CNC</p>
+                            <p class="text-slate-500 ml-4">Get pricing in seconds with support for 1M+ configuration combinations</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-on-surface">&#129520; Smarter &amp; Faster Workflow</p>
+                            <p class="text-slate-500 ml-4">Intelligent defaults and a simplified process reduce time spent on every order</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-on-surface">&#9201; More Reliable Lead Times</p>
+                            <p class="text-slate-500 ml-4">Improved delivery estimates help you plan with confidence</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-on-surface">&#128588; Flexible Manual Quoting</p>
+                            <p class="text-slate-500 ml-4">Complex part? Submit your request with a target price — our engineers will respond within 24 hours</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-on-surface mb-2">Built for Better Pricing</h3>
+                    <ul class="space-y-2 ml-2">
+                        <li class="text-slate-500">&#128200; Automatic quantity discounts — the more you order, the lower the unit price</li>
+                        <li class="text-slate-500">&#127919; Up to <strong class="text-on-surface">40% savings</strong> on selected materials</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-on-surface mb-2">What's Coming Next</h3>
+                    <ul class="space-y-1 ml-2 text-slate-500">
+                        <li>&#128230; Real-time order tracking &amp; workflow updates</li>
+                        <li>&#128231; Smart email notification system</li>
+                        <li>&#128193; Batch upload &amp; editing for multiple parts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="flex justify-end px-8 py-5">
+            <button id="ok-announcement-btn" class="px-8 py-2.5 bg-primary text-white font-bold text-sm rounded-lg shadow-lg shadow-primary/20 hover:brightness-110 active:scale-[0.98] transition-all">OK</button>
+        </div>
+    </div>
+</div>
+
 <script>
     // Handle Login/Register Flip Navigation
     const flipContainer = document.getElementById('flip-container');
@@ -455,6 +525,22 @@
         setTimeout(() => {
             window.location.href = '/home-v3.html';
         }, 2000);
+    });
+
+    // Welcome Announcement Modal
+    const announcementModal = document.getElementById('announcement-modal');
+    const closeAnnouncementBtn = document.getElementById('close-announcement-btn');
+    const okAnnouncementBtn = document.getElementById('ok-announcement-btn');
+
+    function closeAnnouncement() {
+        announcementModal.classList.add('opacity-0', 'pointer-events-none');
+        announcementModal.querySelector('.bg-white').classList.add('scale-95');
+        setTimeout(() => announcementModal.classList.add('hidden'), 300);
+    }
+    closeAnnouncementBtn.addEventListener('click', closeAnnouncement);
+    okAnnouncementBtn.addEventListener('click', closeAnnouncement);
+    announcementModal.addEventListener('click', (e) => {
+        if (e.target === announcementModal) closeAnnouncement();
     });
 
     // Forgot Password → inner flip to reset form

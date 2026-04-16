@@ -7,6 +7,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="./shared-part-card.css" rel="stylesheet"/>
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -50,7 +51,7 @@
 <body class="bg-background text-on-surface min-h-screen flex flex-col">
 <!-- Blue Info Bar -->
 <div class="fixed top-0 w-full z-50 bg-[#0060fe] text-white text-sm h-10 flex items-center">
-<div class="flex justify-between items-center w-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+<div class="flex justify-between items-center w-full max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20">
 <div class="flex items-center gap-6">
 <a href="tel:+8618126397112" class="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
 <span class="material-symbols-outlined text-sm">call</span>
@@ -68,7 +69,7 @@
 </div>
 <!-- TopNavBar -->
 <nav class="fixed top-10 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-outline-variant/30 shadow-[0_2px_15px_rgba(0,0,0,0.03)] h-16">
-<div class="flex justify-between items-center h-full max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14">
+<div class="flex justify-between items-center h-full max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20">
 <div class="flex items-center gap-5">
 <a href="/home-v3.html" class="flex items-center shrink-0">
 <img src="/logo.svg" alt="ProtoTi" class="h-7" />
@@ -141,44 +142,49 @@ Log Out
         <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer" id="selectAll">
     </div>
     <div class="flex-1 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-4 pl-2 text-[11px] font-bold tracking-[0.08em] text-slate-500">File Info</div>
-        <div class="col-span-3 text-[11px] font-bold tracking-[0.08em] text-slate-500">Configuration</div>
-        <div class="col-span-1 text-center text-[11px] font-bold tracking-[0.08em] text-slate-500">Quantity</div>
-        <div class="col-span-2 text-center text-[11px] font-bold tracking-[0.08em] text-slate-500">Price & Time</div>
-        <div class="col-span-2 pl-2 text-[11px] font-bold tracking-[0.08em] text-slate-500">Actions</div>
+        <div class="col-span-4 pl-2 text-xs font-bold tracking-[0.08em] text-slate-500">File Info</div>
+        <div class="col-span-3 text-xs font-bold tracking-[0.08em] text-slate-500">Configuration</div>
+        <div class="col-span-1 text-center text-xs font-bold tracking-[0.08em] text-slate-500">Quantity</div>
+        <div class="col-span-2 text-center text-xs font-bold tracking-[0.08em] text-slate-500">Price & Time</div>
+        <div class="col-span-2 pl-2 text-xs font-bold tracking-[0.08em] text-slate-500">Actions</div>
     </div>
 </div>
 
 <!-- Manual Quote Item -->
-<div class="py-5 flex items-center gap-4 border-b border-slate-200 bg-amber-50/40 hover:bg-amber-50/70 hover:-translate-y-0.5 transition-all duration-300 relative group">
+<div class="py-5 flex flex-col gap-3 border-b border-slate-200 bg-amber-50/40 hover:bg-amber-50/70 hover:-translate-y-0.5 transition-all duration-300 relative group">
+    <!-- Row 1: Yellow label -->
+    <div class="flex items-center gap-4 pl-10">
+        <span class="proto-part-manual-badge inline-flex w-fit items-center rounded-md bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700">Manual Quotation Required</span>
+    </div>
+    <!-- Row 2: All model info -->
+    <div class="flex items-center gap-4">
     <div class="flex items-center justify-center w-6 shrink-0">
         <input type="checkbox" checked class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer quote-item-checkbox">
     </div>
     <div class="flex-1 grid grid-cols-12 gap-3 items-center">
         <div class="col-span-4 flex items-center gap-3 pl-2">
-            <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80" data-preview-title="4in Tri Tee r2.step">
-                <img alt="4in Tri Tee r2.step" class="w-full h-full object-contain" src="https://images.unsplash.com/photo-1581092335397-9fa3411081c7?auto=format&fit=crop&w=400&q=80"/>
+            <button type="button" class="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shrink-0 cursor-zoom-in transition-transform hover:scale-[1.03]" data-model-preview-trigger data-preview-src="/manual-quote-preview.svg" data-preview-title="4in Tri Tee r2.step">
+                <img alt="4in Tri Tee r2.step" class="w-full h-full object-contain" src="/manual-quote-preview.svg"/>
             </button>
             <div class="flex flex-col gap-1 min-w-0">
-                <span class="inline-flex w-fit items-center rounded-md bg-amber-100 px-2 py-1 text-[10px] font-semibold text-amber-700">Manual Quotation Required</span>
                 <h3 class="font-bold text-sm text-slate-900 truncate" title="4in Tri Tee r2.step">4in Tri Tee r2.step</h3>
-                <p class="text-[10px] text-slate-500 font-medium">260.35 x 118.92 x 189.64 mm</p>
-                <p class="text-[10px] text-slate-500 font-medium">216444.62 mm³ | 223382.00 mm²</p>
+                <p class="text-xs text-slate-500 font-medium">260.35 x 118.92 x 189.64 mm</p>
+                <p class="text-xs text-slate-500 font-medium">216444.62 mm³ | 223382.00 mm²</p>
             </div>
         </div>
 
         <div class="col-span-3 flex flex-col gap-1 min-w-0">
-            <p class="text-xs font-bold text-slate-900 truncate">Process: CNC Machining</p>
-            <p class="text-[10px] text-slate-500 truncate">Material: 123123 <span class="text-primary font-semibold">(Custom)</span></p>
-            <p class="text-[10px] text-slate-500 truncate">Color: 123123 <span class="text-primary font-semibold">(Custom)</span></p>
-            <p class="text-[10px] text-slate-500 truncate">Surface Finish: As Machined (Ra 3.2)</p>
-            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t border-amber-200/70" id="extraConfigManual">
-                <p class="text-[10px] text-slate-500 truncate">Tolerance: ISO 2768-medium (m)</p>
-                <p class="text-[10px] text-slate-500 truncate">Machining Complexity: 3 Axis Multi-Setup</p>
-                <p class="text-[10px] text-slate-500 truncate">Cosmetic Requirement: Functional Only</p>
-                <p class="text-[10px] text-slate-500 truncate">Threads: No</p>
+            <p class="text-xs text-slate-500 truncate">Process: CNC Machining</p>
+            <p class="text-xs text-slate-500 truncate">Material: 123123 <span class="text-primary font-semibold">(Custom)</span></p>
+            <p class="text-xs text-slate-500 truncate">Color: 123123 <span class="text-primary font-semibold">(Custom)</span></p>
+            <p class="text-xs text-slate-500 truncate">Surface Finish: As Machined (Ra 3.2)</p>
+            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t-0" id="extraConfigManual">
+                <p class="text-xs text-slate-500 truncate">Tolerance: ISO 2768-medium (m)</p>
+                <p class="text-xs text-slate-500 truncate">Machining Complexity: 3 Axis Multi-Setup</p>
+                <p class="text-xs text-slate-500 truncate">Cosmetic Requirement: Functional Only</p>
+                <p class="text-xs text-slate-500 truncate">Threads: No</p>
             </div>
-            <button class="text-[10px] text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfigManual">
+            <button class="text-xs text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfigManual">
                 <span>More</span>
                 <span class="material-symbols-outlined text-[12px] transition-transform duration-200">expand_more</span>
             </button>
@@ -188,29 +194,30 @@ Log Out
             <input class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="number" value="1" min="1"/>
         </div>
 
-        <div class="col-span-2 flex flex-col items-center justify-center">
+        <div class="proto-part-price-block proto-part-price-block--center col-span-2 flex flex-col items-center justify-center">
             <p class="text-base font-bold text-amber-500">≈ $1341.83</p>
-            <p class="text-[10px] text-amber-500/80 font-medium mt-0.5">≈ $1341.83/piece</p>
-            <p class="mt-0.5 text-center text-[9px] font-medium text-slate-500">Est. 8-13 Business Days</p>
+            <p class="text-xs text-amber-500/80 font-medium mt-0.5">≈ $1341.83/piece</p>
+            <p class="mt-0.5 text-center text-xs font-medium text-slate-500">Est. 8-13 Business Days</p>
         </div>
 
-        <div class="col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 pl-2 border-l border-slate-100 min-w-0">
-            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="edit">edit</span> Edit Configurations
+        <div class="col-span-2 flex flex-col items-start gap-1 pl-2 min-w-0">
+            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-xs font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="edit">edit</span> Edit Configurations
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="attachment">attachment</span> Attachment
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="attachment">attachment</span> Attachment
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span> Duplicate
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="content_copy">content_copy</span> Duplicate
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="4in Tri Tee r2.step">
-                <span class="material-symbols-outlined text-[14px]" data-icon="delete">delete</span> Delete
+            <button class="ml-[-8px] flex items-center gap-1 text-xs font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="4in Tri Tee r2.step">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="delete">delete</span> Delete
             </button>
         </div>
+    </div>
     </div>
 </div>
 
@@ -227,25 +234,25 @@ Log Out
             </button>
             <div class="flex flex-col gap-1 min-w-0">
                 <h3 class="font-bold text-sm text-slate-900 truncate" title="Turbine_Housing_V4.stl">Turbine_Housing_V4.stl</h3>
-                <p class="text-[10px] text-slate-500 font-medium">142 x 88 x 42 mm</p>
-                <p class="text-[10px] text-slate-500 font-medium">124.5 cm³</p>
+                <p class="text-xs text-slate-500 font-medium">142 x 88 x 42 mm</p>
+                <p class="text-xs text-slate-500 font-medium">124.5 cm³</p>
             </div>
         </div>
 
         <!-- Configuration -->
         <div class="col-span-3 flex flex-col gap-1 min-w-0">
-            <p class="text-xs font-bold text-slate-900 truncate" title="Material: 1.2 SLM - Stainless Steel 316L - $$$">Material: 1.2 SLM - Stainless Steel 316L - $$$</p>
-            <p class="text-[10px] text-slate-500 truncate">Color: Metallic Gray</p>
-            <p class="text-[10px] text-slate-500 truncate">Post Process: Sand Blasted - Matte</p>
-            <p class="text-[10px] text-slate-500 truncate">Printer: SLM1-280*280*350mm</p>
+            <p class="text-xs text-slate-500 truncate" title="Material: 1.2 SLM - Stainless Steel 316L - $$$">Material: 1.2 SLM - Stainless Steel 316L - $$$</p>
+            <p class="text-xs text-slate-500 truncate">Color: Metallic Gray</p>
+            <p class="text-xs text-slate-500 truncate">Post Process: Sand Blasted - Matte</p>
+            <p class="text-xs text-slate-500 truncate">Printer: SLM1-280*280*350mm</p>
             
             <!-- Collapsible Extra Configuration -->
-            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t border-slate-100" id="extraConfig1">
-                <p class="text-[10px] text-slate-500 truncate">Infill: 100% Solid</p>
-                <p class="text-[10px] text-slate-500 truncate">Layer Height: 0.1mm</p>
-                <p class="text-[10px] text-slate-500 truncate">Thread Insert: None</p>
+            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t-0" id="extraConfig1">
+                <p class="text-xs text-slate-500 truncate">Infill: 100% Solid</p>
+                <p class="text-xs text-slate-500 truncate">Layer Height: 0.1mm</p>
+                <p class="text-xs text-slate-500 truncate">Thread Insert: None</p>
             </div>
-            <button class="text-[10px] text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfig1">
+            <button class="text-xs text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfig1">
                 <span>More</span>
                 <span class="material-symbols-outlined text-[12px] transition-transform duration-200">expand_more</span>
             </button>
@@ -257,28 +264,28 @@ Log Out
         </div>
 
         <!-- Price & Time -->
-        <div class="col-span-2 flex flex-col items-center justify-center">
+        <div class="proto-part-price-block proto-part-price-block--center col-span-2 flex flex-col items-center justify-center">
             <p class="text-base font-bold text-primary">$284.50</p>
-            <p class="text-[10px] text-slate-400 font-medium mt-0.5">$284.50/piece</p>
-            <p class="mt-0.5 text-center text-[9px] font-medium text-slate-500">Est. 4-6 Days</p>
+            <p class="text-xs text-slate-400 font-medium mt-0.5">$284.50/piece</p>
+            <p class="mt-0.5 text-center text-xs font-medium text-slate-500">Est. 4-6 Days</p>
         </div>
 
         <!-- Actions -->
-        <div class="col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 pl-2 border-l border-slate-100 min-w-0">
-            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="edit">edit</span> Edit Configurations
+        <div class="col-span-2 flex flex-col items-start gap-1 pl-2 min-w-0">
+            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-xs font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="edit">edit</span> Edit Configurations
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="attachment">attachment</span> Attachment
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="attachment">attachment</span> Attachment
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span> Duplicate
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="content_copy">content_copy</span> Duplicate
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Turbine_Housing_V4.stl">
-                <span class="material-symbols-outlined text-[14px]" data-icon="delete">delete</span> Delete
+            <button class="ml-[-8px] flex items-center gap-1 text-xs font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Turbine_Housing_V4.stl">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="delete">delete</span> Delete
             </button>
         </div>
     </div>
@@ -296,8 +303,8 @@ Log Out
             </div>
             <div class="flex flex-col gap-1 min-w-0">
                 <h3 class="font-bold text-sm text-slate-900 truncate" title="Base_Plate_Alpha.obj">Base_Plate_Alpha.obj</h3>
-                <p class="text-[10px] text-slate-500 font-medium">200 x 200 x 10 mm</p>
-                <p class="text-[10px] text-slate-500 font-medium">400.0 cm³</p>
+                <p class="text-xs text-slate-500 font-medium">200 x 200 x 10 mm</p>
+                <p class="text-xs text-slate-500 font-medium">400.0 cm³</p>
             </div>
         </div>
 
@@ -312,26 +319,26 @@ Log Out
         </div>
 
         <!-- Price & Time -->
-        <div class="col-span-2 flex flex-col items-center justify-center text-center">
-            <p class="text-[11px] font-bold text-slate-400">Not Configured</p>
+        <div class="proto-part-price-block proto-part-price-block--center col-span-2 flex flex-col items-center justify-center text-center">
+            <p class="text-xs font-bold text-slate-400">Not Configured</p>
         </div>
 
         <!-- Actions -->
-        <div class="col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 pl-2 border-l border-slate-100 min-w-0">
-            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
+        <div class="col-span-2 flex flex-col items-start gap-1 pl-2 min-w-0">
+            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-xs font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
                 <span class="material-symbols-outlined text-[14px]" data-icon="settings">settings</span> Configure Now
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="attachment">attachment</span> Attachment
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="attachment">attachment</span> Attachment
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span> Duplicate
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="content_copy">content_copy</span> Duplicate
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Base_Plate_Alpha.obj">
-                <span class="material-symbols-outlined text-[14px]" data-icon="delete">delete</span> Delete
+            <button class="ml-[-8px] flex items-center gap-1 text-xs font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Base_Plate_Alpha.obj">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="delete">delete</span> Delete
             </button>
 </div>
 </div>
@@ -349,21 +356,21 @@ Log Out
             </button>
             <div class="flex flex-col gap-1 min-w-0">
                 <h3 class="font-bold text-sm text-slate-900 truncate" title="Turbo_Valve_Housing_A.stl">Turbo_Valve_Housing_A.stl</h3>
-                <p class="text-[10px] text-slate-500 font-medium">180.6 x 122.4 x 76.3 mm</p>
-                <p class="text-[10px] text-slate-500 font-medium">84.2 cm³</p>
+                <p class="text-xs text-slate-500 font-medium">180.6 x 122.4 x 76.3 mm</p>
+                <p class="text-xs text-slate-500 font-medium">84.2 cm³</p>
             </div>
         </div>
         <div class="col-span-3 flex flex-col gap-1 min-w-0">
-            <p class="text-xs font-bold text-slate-900 truncate">Material: AlSi10Mg - Natural Silver - $$</p>
-            <p class="text-[10px] text-slate-500 truncate">Color: Natural Silver</p>
-            <p class="text-[10px] text-slate-500 truncate">Post Process: Bead Blasted</p>
-            <p class="text-[10px] text-slate-500 truncate">Printer: SLM1-280*280*350mm</p>
-            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t border-slate-100" id="extraConfig3">
-                <p class="text-[10px] text-slate-500 truncate">Tolerance: ISO 2768-m</p>
-                <p class="text-[10px] text-slate-500 truncate">Support Strategy: Auto</p>
-                <p class="text-[10px] text-slate-500 truncate">Surface Class: Standard</p>
+            <p class="text-xs text-slate-500 truncate">Material: AlSi10Mg - Natural Silver - $$</p>
+            <p class="text-xs text-slate-500 truncate">Color: Natural Silver</p>
+            <p class="text-xs text-slate-500 truncate">Post Process: Bead Blasted</p>
+            <p class="text-xs text-slate-500 truncate">Printer: SLM1-280*280*350mm</p>
+            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t-0" id="extraConfig3">
+                <p class="text-xs text-slate-500 truncate">Tolerance: ISO 2768-m</p>
+                <p class="text-xs text-slate-500 truncate">Support Strategy: Auto</p>
+                <p class="text-xs text-slate-500 truncate">Surface Class: Standard</p>
             </div>
-            <button class="text-[10px] text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfig3">
+            <button class="text-xs text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfig3">
                 <span>More</span>
                 <span class="material-symbols-outlined text-[12px] transition-transform duration-200">expand_more</span>
             </button>
@@ -371,26 +378,26 @@ Log Out
         <div class="col-span-1 flex justify-center">
             <input class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="number" value="2" min="1"/>
         </div>
-        <div class="col-span-2 flex flex-col items-center justify-center">
+        <div class="proto-part-price-block proto-part-price-block--center col-span-2 flex flex-col items-center justify-center">
             <p class="text-base font-bold text-primary">$132.40</p>
-            <p class="text-[10px] text-slate-400 font-medium mt-0.5">$66.20/piece</p>
-            <p class="mt-0.5 text-center text-[9px] font-medium text-slate-500">Est. 4-6 Days</p>
+            <p class="text-xs text-slate-400 font-medium mt-0.5">$66.20/piece</p>
+            <p class="mt-0.5 text-center text-xs font-medium text-slate-500">Est. 4-6 Days</p>
         </div>
-        <div class="col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 pl-2 border-l border-slate-100 min-w-0">
-            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="edit">edit</span> Edit Configurations
+        <div class="col-span-2 flex flex-col items-start gap-1 pl-2 min-w-0">
+            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-xs font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="edit">edit</span> Edit Configurations
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="attachment">attachment</span> Attachment
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="attachment">attachment</span> Attachment
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span> Duplicate
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="content_copy">content_copy</span> Duplicate
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Turbo_Valve_Housing_A.stl">
-                <span class="material-symbols-outlined text-[14px]" data-icon="delete">delete</span> Delete
+            <button class="ml-[-8px] flex items-center gap-1 text-xs font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Turbo_Valve_Housing_A.stl">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="delete">delete</span> Delete
             </button>
         </div>
     </div>
@@ -408,21 +415,21 @@ Log Out
             </div>
             <div class="flex flex-col gap-1 min-w-0">
                 <h3 class="font-bold text-sm text-slate-900 truncate" title="Cooling_Manifold_Beta.step">Cooling_Manifold_Beta.step</h3>
-                <p class="text-[10px] text-slate-500 font-medium">128.2 x 95.7 x 64.1 mm</p>
-                <p class="text-[10px] text-slate-500 font-medium">61.2 cm³</p>
+                <p class="text-xs text-slate-500 font-medium">128.2 x 95.7 x 64.1 mm</p>
+                <p class="text-xs text-slate-500 font-medium">61.2 cm³</p>
             </div>
         </div>
         <div class="col-span-3 flex flex-col gap-1 min-w-0">
-            <p class="text-xs font-bold text-slate-900 truncate">Material: Titanium Ti64 - Raw Finish - $$$$</p>
-            <p class="text-[10px] text-slate-500 truncate">Color: Raw Metallic</p>
-            <p class="text-[10px] text-slate-500 truncate">Post Process: Support Removal + QC</p>
-            <p class="text-[10px] text-slate-500 truncate">Printer: SLM1-280*280*350mm</p>
-            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t border-slate-100" id="extraConfig4">
-                <p class="text-[10px] text-slate-500 truncate">Tolerance: ISO 2768-f</p>
-                <p class="text-[10px] text-slate-500 truncate">Inspection: Visual + Critical Dimensions</p>
-                <p class="text-[10px] text-slate-500 truncate">Cleaning: Ultrasonic</p>
+            <p class="text-xs text-slate-500 truncate">Material: Titanium Ti64 - Raw Finish - $$$$</p>
+            <p class="text-xs text-slate-500 truncate">Color: Raw Metallic</p>
+            <p class="text-xs text-slate-500 truncate">Post Process: Support Removal + QC</p>
+            <p class="text-xs text-slate-500 truncate">Printer: SLM1-280*280*350mm</p>
+            <div class="hidden flex-col gap-1 mt-1 pt-1 border-t-0" id="extraConfig4">
+                <p class="text-xs text-slate-500 truncate">Tolerance: ISO 2768-f</p>
+                <p class="text-xs text-slate-500 truncate">Inspection: Visual + Critical Dimensions</p>
+                <p class="text-xs text-slate-500 truncate">Cleaning: Ultrasonic</p>
             </div>
-            <button class="text-[10px] text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfig4">
+            <button class="text-xs text-primary font-semibold hover:underline self-start mt-1 flex items-center gap-0.5 toggle-config-btn" data-target="extraConfig4">
                 <span>More</span>
                 <span class="material-symbols-outlined text-[12px] transition-transform duration-200">expand_more</span>
             </button>
@@ -430,26 +437,26 @@ Log Out
         <div class="col-span-1 flex justify-center">
             <input class="w-12 h-8 border-slate-200 rounded-md text-sm text-center focus:ring-primary focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="number" value="1" min="1"/>
         </div>
-        <div class="col-span-2 flex flex-col items-center justify-center">
+        <div class="proto-part-price-block proto-part-price-block--center col-span-2 flex flex-col items-center justify-center">
             <p class="text-base font-bold text-primary">$188.90</p>
-            <p class="text-[10px] text-slate-400 font-medium mt-0.5">$188.90/piece</p>
-            <p class="mt-0.5 text-center text-[9px] font-medium text-slate-500">Est. 5-7 Days</p>
+            <p class="text-xs text-slate-400 font-medium mt-0.5">$188.90/piece</p>
+            <p class="mt-0.5 text-center text-xs font-medium text-slate-500">Est. 5-7 Days</p>
         </div>
-        <div class="col-span-2 flex flex-wrap items-center gap-x-2 gap-y-1 pl-2 border-l border-slate-100 min-w-0">
-            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="edit">edit</span> Edit Configurations
+        <div class="col-span-2 flex flex-col items-start gap-1 pl-2 min-w-0">
+            <button onclick="window.location.href='model-configuration.html'" class="flex items-center gap-1 text-xs font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="edit">edit</span> Edit Configurations
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="chat_bubble_outline">chat_bubble_outline</span> Notes
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="attachment">attachment</span> Attachment
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="attachment">attachment</span> Attachment
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
-                <span class="material-symbols-outlined text-[14px]" data-icon="content_copy">content_copy</span> Duplicate
+            <button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-primary transition-colors whitespace-nowrap">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="content_copy">content_copy</span> Duplicate
             </button>
-            <button class="flex items-center gap-1 text-[10px] font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Cooling_Manifold_Beta.step">
-                <span class="material-symbols-outlined text-[14px]" data-icon="delete">delete</span> Delete
+            <button class="ml-[-8px] flex items-center gap-1 text-xs font-medium text-red-500 hover:text-red-600 transition-colors whitespace-nowrap delete-model-btn" data-filename="Cooling_Manifold_Beta.step">
+                <span class="material-symbols-outlined text-[14px] inline-flex items-center justify-center w-4" data-icon="delete">delete</span> Delete
             </button>
         </div>
     </div>
@@ -465,8 +472,8 @@ Log Out
 <section class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-6 order-2">
 <div>
 <div class="flex justify-between items-center mb-4">
-<h3 class="text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Address</h3>
-<button id="addNewAddressBtn" class="text-[10px] font-bold tracking-[0.08em] text-primary hover:underline">+ Add New</button>
+<h3 class="text-xs font-bold tracking-[0.08em] text-slate-500">Shipping Address</h3>
+<button id="addNewAddressBtn" class="text-xs font-bold tracking-[0.08em] text-primary hover:underline">+ Add New</button>
 </div>
 <div class="relative">
     <select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
@@ -481,7 +488,7 @@ Log Out
 <button id="editAddressBtn" class="absolute top-4 right-4 text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
 <div class="flex items-start gap-3">
 <span class="material-symbols-outlined text-primary text-xl mt-0.5">location_on</span>
-<div class="text-[11px] text-slate-600 leading-relaxed">
+<div class="text-xs text-slate-600 leading-relaxed">
 <p class="font-bold text-slate-900">1212 123 <span class="text-primary ml-1">Default</span></p>
 <p>Company: 123, Tax ID: 123</p>
 <p>123123, kriseooooooo@gmail.com</p>
@@ -492,7 +499,7 @@ Log Out
 </div>
 </div>
 <div>
-<h3 class="mb-4 text-[10px] font-bold tracking-[0.08em] text-slate-500">Shipping Method</h3>
+<h3 class="mb-4 text-xs font-bold tracking-[0.08em] text-slate-500">Shipping Method</h3>
 <div class="relative mb-4">
     <select class="w-full bg-white bg-none border border-slate-200 rounded-lg text-sm text-slate-700 py-3 pl-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
         <option>Tariff-Free Shipping</option>
@@ -508,9 +515,9 @@ Log Out
 <span class="material-symbols-outlined text-slate-600">local_shipping</span>
 <span class="text-xs font-bold text-slate-900">Tariff-Free Shipping</span>
 </div>
-<span class="bg-blue-100 text-primary text-[9px] font-bold px-2 py-0.5 rounded-sm">5-7 Business Days</span>
+<span class="bg-blue-100 text-primary text-xs font-bold px-2 py-0.5 rounded-sm">5-7 Business Days</span>
 </div>
-<p class="text-[10px] text-slate-500">Carrier: Occasionally Delayed Due to Customs Inspection!</p>
+<p class="text-xs text-slate-500">Carrier: Occasionally Delayed Due to Customs Inspection!</p>
 </div>
 </div>
 </section>
@@ -549,14 +556,14 @@ Log Out
 </aside>
 </main>
 <footer class="mt-auto bg-white border-t border-slate-200 pt-12 pb-6">
-<div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 grid grid-cols-1 md:grid-cols-3 gap-10">
+<div class="max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20 grid grid-cols-1 md:grid-cols-4 gap-10 items-center">
 <div>
 <img src="/logo.svg" alt="ProtoTi" class="h-10 mb-4" />
 <p class="text-sm text-slate-500">Shenzhen ProtoTi Technology Co., LTD</p>
 <p class="text-sm text-slate-400 mt-1">User Name: kriseoooooo@gmail.com</p>
 </div>
 <div>
-<h4 class="font-bold text-slate-800 mb-4">Contact</h4>
+<h4 class="font-bold text-slate-800 mb-2">Contact</h4>
 <p class="text-sm text-slate-500 flex items-center gap-2 mb-2">
 <span class="material-symbols-outlined text-sm">call</span> Phone: +86 18126397112
 </p>
@@ -565,21 +572,40 @@ Log Out
 </p>
 </div>
 <div>
-<div class="md:max-w-[332px] md:ml-auto">
-<h4 class="font-bold text-slate-800 mb-4">Office</h4>
+<h4 class="font-bold text-slate-800 mb-2">Office</h4>
 <p class="text-sm text-slate-500 flex items-start gap-2">
 <span class="material-symbols-outlined text-sm mt-0.5">location_on</span>
 Address: 8th Floor, Biaofan Technology Building, Tower C, No.6 Gongye Road, Baoan, Shenzhen, China, 518104
 </p>
-<div class="mt-6 flex items-center gap-3">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/200px-MasterCard_Logo.svg.png" alt="Mastercard" class="h-6 object-contain" />
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa" class="h-5 object-contain" />
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/200px-PayPal.svg.png" alt="PayPal" class="h-5 object-contain" />
+</div>
+<div class="flex items-center justify-end">
+<div class="flex items-center gap-4">
+<!-- Mastercard -->
+<svg class="h-8" viewBox="0 0 152 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="152" height="100" rx="8" fill="#1A1F36"/>
+  <circle cx="58" cy="50" r="30" fill="#EB001B"/>
+  <circle cx="94" cy="50" r="30" fill="#F79E1B"/>
+  <path d="M76 27.5a29.9 29.9 0 0 0-11.2 22.5c0 9.1 4.1 17.3 11.2 22.5A29.9 29.9 0 0 0 87.2 50 29.9 29.9 0 0 0 76 27.5z" fill="#FF5F00"/>
+</svg>
+<!-- Visa -->
+<svg class="h-8" viewBox="0 0 152 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="152" height="100" rx="8" fill="#1A1F71"/>
+  <path d="M57 65l7.5-40h9.5L66.5 65H57zm38-40l-9 27.4L84.5 42c-.7-3.5-3.2-4.5-6.2-4.5H63.8l-.3 1.3C67 40 72 42.7 74 45l7 20h10l15-40H95zm24 40h9l-8-40h-7.6c-2.2 0-4 1.3-4.8 3.2L95 65h10l2-5.5h12.2L120 65zm-10.5-13.2l5-13.8 2.9 13.8h-7.9zM53 25L42.2 65H33L27.5 32c-.3-1.4-1.2-2.5-2.7-3.2C22.3 27.5 18.5 26 15 25.5l.3-1.5h15c2.3 0 4.2 1.5 4.6 4l3.7 20L49 25h4z" fill="white"/>
+</svg>
+<!-- PayPal -->
+<svg class="h-8" viewBox="0 0 152 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="152" height="100" rx="8" fill="#F5F7FA"/>
+  <rect x="0.5" y="0.5" width="151" height="99" rx="7.5" stroke="#E2E8F0"/>
+  <path d="M55.5 30h-9.8c-.7 0-1.3.5-1.4 1.1l-4 25.2c-.1.5.3.9.8.9h5c.7 0 1.3-.5 1.4-1.2l1.1-6.8c.1-.7.7-1.2 1.4-1.2h3.2c6.6 0 10.4-3.2 11.4-9.5.5-2.8 0-4.9-1.3-6.5C61.8 30.7 59 30 55.5 30z" fill="#003087"/>
+  <path d="M55.5 30c3.5 0 6.3.7 7.8 2.1 1.3 1.5 1.8 3.7 1.3 6.5-1 6.3-4.8 9.5-11.4 9.5h-3.2c-.7 0-1.3.5-1.4 1.2l-1.1 6.8c-.1.7-.7 1.2-1.4 1.2h-4.7" fill="#003087"/>
+  <path d="M72 30h-9.8c-.7 0-1.3.5-1.4 1.1l-4 25.2c-.1.5.3.9.8.9h5c.5 0 .9-.3 1-.8l1.1-7.2c.1-.7.7-1.2 1.4-1.2h3.2c6.6 0 10.4-3.2 11.4-9.5.5-2.8 0-4.9-1.3-6.5C77.8 30.7 75.5 30 72 30z" fill="#0070E0"/>
+  <text x="88" y="57" font-family="Arial,sans-serif" font-weight="bold" font-size="18" fill="#003087">Pay</text>
+  <text x="110" y="57" font-family="Arial,sans-serif" font-weight="bold" font-size="18" fill="#0070E0">Pal</text>
+</svg>
 </div>
 </div>
 </div>
-</div>
-<div class="max-w-[1620px] mx-auto px-8 lg:px-12 xl:px-14 mt-8 pt-6 border-t border-slate-100">
+<div class="max-w-[1920px] mx-auto px-6 md:px-12 xl:px-20 mt-8 pt-6 border-t border-slate-100">
 <p class="text-sm text-slate-400 text-center">© 2018-2025 ProtoTi. All Rights Reserved.</p>
 </div>
 </footer>
@@ -600,39 +626,39 @@ Address: 8th Floor, Biaofan Technology Building, Tower C, No.6 Gongye Road, Baoa
                 <!-- Name Row -->
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">First Name <span class="text-red-500">*</span></label>
+                        <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">First Name <span class="text-red-500">*</span></label>
                         <input id="addr_firstName" type="text" placeholder="John" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Last Name <span class="text-red-500">*</span></label>
+                        <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">Last Name <span class="text-red-500">*</span></label>
                         <input id="addr_lastName" type="text" placeholder="Smith" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                     </div>
                 </div>
                 <!-- Company + Tax ID -->
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Company Name</label>
+                        <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">Company Name</label>
                         <input id="addr_company" type="text" placeholder="Acme Corp." class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Tax ID / VAT Number</label>
+                        <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">Tax ID / VAT Number</label>
                         <input id="addr_taxId" type="text" placeholder="DE123456789" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                     </div>
                 </div>
                 <!-- Email + Phone -->
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Email <span class="text-red-500">*</span></label>
+                        <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">Email <span class="text-red-500">*</span></label>
                         <input id="addr_email" type="email" placeholder="john@example.com" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Phone</label>
+                        <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">Phone</label>
                         <input id="addr_phone" type="tel" placeholder="+1 555 000 0000" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                     </div>
                 </div>
                 <!-- Country -->
                 <div>
-                    <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Country / Region <span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">Country / Region <span class="text-red-500">*</span></label>
                     <div class="relative">
                         <select id="addr_country" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 pr-10 text-sm text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer">
                             <option value="">Select country…</option>
@@ -672,26 +698,26 @@ Address: 8th Floor, Biaofan Technology Building, Tower C, No.6 Gongye Road, Baoa
                 </div>
                 <!-- Street Address -->
                 <div>
-                    <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Street Address <span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">Street Address <span class="text-red-500">*</span></label>
                     <input id="addr_line1" type="text" placeholder="123 Main Street" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                 </div>
                 <!-- Address Line 2 -->
                 <div>
-                    <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Address Line 2 <span class="text-slate-300 font-normal normal-case">Optional</span></label>
+                    <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">Address Line 2 <span class="text-slate-300 font-normal normal-case">Optional</span></label>
                     <input id="addr_line2" type="text" placeholder="Apt, Suite, Unit…" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                 </div>
                 <!-- Postal + City + State -->
                 <div class="grid grid-cols-3 gap-4">
                     <div>
-                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">Postal Code <span class="text-red-500">*</span></label>
+                        <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">Postal Code <span class="text-red-500">*</span></label>
                         <input id="addr_postal" type="text" placeholder="10001" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">City <span class="text-red-500">*</span></label>
+                        <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">City <span class="text-red-500">*</span></label>
                         <input id="addr_city" type="text" placeholder="New York" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-[10px] font-bold tracking-[0.08em] text-slate-500">State / Province</label>
+                        <label class="mb-1.5 block text-xs font-bold tracking-[0.08em] text-slate-500">State / Province</label>
                         <input id="addr_state" type="text" placeholder="NY" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                     </div>
                 </div>

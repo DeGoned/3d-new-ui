@@ -363,6 +363,7 @@ const OrderDetailsView = ({ order, onBack }: { order: OrderRecord; onBack: () =>
               item={toPartCardItem(item)}
               eyebrow={`Order Item #${item.orderItemId}`}
               tone="soft"
+              borderless
               topAction={
                 <button className="inline-flex items-center gap-2 rounded-full border border-outline bg-white px-4 py-2 text-xs font-bold tracking-[0.04em] text-slate-600 transition-colors hover:border-primary/30 hover:text-primary">
                   <Receipt size={14} />
